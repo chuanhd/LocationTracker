@@ -1,0 +1,32 @@
+PODS:
+  - Alamofire (4.5.0)
+  - GoogleMaps (2.3.1):
+    - GoogleMaps/Maps (= 2.3.1)
+  - GoogleMaps/Base (2.3.1)
+  - GoogleMaps/Maps (2.3.1):
+    - GoogleMaps/Base
+  - GooglePlaces (2.3.1):
+    - GoogleMaps/Base (= 2.3.1)
+  - Locksmith (3.0.0)
+  - SideMenu (2.3.3)
+  - SwiftyJSON (3.1.4)
+
+DEPENDENCIES:
+  - Alamofire
+  - GoogleMaps
+  - GooglePlaces
+  - Locksmith
+  - SideMenu
+  - SwiftyJSON
+
+SPEC CHECKSUMS:
+  Alamofire: f28cdffd29de33a7bfa022cbd63ae95a27fae140
+  GoogleMaps: c66a71058b9b1294bcdd5463a68e357fa50c079f
+  GooglePlaces: 4a7b22debfa1af65017b82943431822607e45201
+  Locksmith: 310b4cc5031af5728bf4db5d4de547a5100c6a3b
+  SideMenu: a447554ae5c982e8077666389e1c8b0c8656e065
+  SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
+
+PODFILE CHECKSUM: d9b4519e7fe0cfcaba5534fb164cb3679957476f
+
+COCOAPODS: 1.2.1

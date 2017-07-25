@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="GroupMemberCollectionViewCell" customModule="LocationTracker" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="60" height="80"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="60" height="80"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hBA-lQ-YCu">
+                        <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="60" id="Oyo-5m-uhd"/>
+                            <constraint firstAttribute="width" constant="60" id="oTe-RM-GlL"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5xn-8i-Gdr">
+                        <rect key="frame" x="0.0" y="60" width="60" height="20"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+            </view>
+            <constraints>
+                <constraint firstItem="5xn-8i-Gdr" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="2aw-o8-bcY"/>
+                <constraint firstAttribute="bottom" secondItem="5xn-8i-Gdr" secondAttribute="bottom" id="6EB-T5-wva"/>
+                <constraint firstItem="hBA-lQ-YCu" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="6ZR-5O-sx9"/>
+                <constraint firstAttribute="trailing" secondItem="hBA-lQ-YCu" secondAttribute="trailing" id="JnS-cA-ItE"/>
+                <constraint firstAttribute="bottom" secondItem="5xn-8i-Gdr" secondAttribute="bottom" id="eoN-KI-DNd"/>
+                <constraint firstAttribute="trailing" secondItem="5xn-8i-Gdr" secondAttribute="trailing" id="fpL-jY-Eiv"/>
+                <constraint firstItem="hBA-lQ-YCu" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="gS6-if-f6s"/>
+                <constraint firstAttribute="trailing" secondItem="5xn-8i-Gdr" secondAttribute="trailing" id="j0R-HL-xeu"/>
+                <constraint firstItem="5xn-8i-Gdr" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="lfO-it-nHo"/>
+                <constraint firstItem="5xn-8i-Gdr" firstAttribute="top" relation="greaterThanOrEqual" secondItem="hBA-lQ-YCu" secondAttribute="bottom" id="z3y-v8-sbM"/>
+            </constraints>
+            <connections>
+                <outlet property="imgAvatar" destination="hBA-lQ-YCu" id="l3a-00-jtC"/>
+                <outlet property="lblUsername" destination="5xn-8i-Gdr" id="vFJ-Wy-Ihm"/>
+            </connections>
+        </collectionViewCell>
+    </objects>
+</document>
