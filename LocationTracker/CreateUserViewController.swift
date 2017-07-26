@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CreateUserViewController: UIView {
+class CreateUserViewController: UIViewController {
 
     /*
     // Only override draw() if you perform custom drawing.

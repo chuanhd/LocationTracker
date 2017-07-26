@@ -27,9 +27,16 @@ class CirclesViewController: UIViewController, SegueHandler {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        
-        ConnectionService.load(UserProfile.login) { (_ myProfile : UserProfile?, _ error : Error?) in
-            
+        ConnectionService.load(UserProfile.login) {(_ response : ServerResponse, _ myProfile : UserProfile?, _ error : Error?) in
+            switch response.code {
+            case .SUCCESS:
+                break
+            case .USER_NOT_EXIST:
+                self.presentCreateNewUserViewController()
+                break
+            default:
+                break
+            }
         }
         
         let _camera = GMSCameraPosition.camera(withLatitude: -33.86, longitude: 151.20, zoom: Constants.GoogleMapsConfigs.DEFAULT_ZOOM);
@@ -62,12 +69,16 @@ class CirclesViewController: UIViewController, SegueHandler {
         // Pass the selected object to the new view controller.
         switch (segueIdentifier(for: segue)) {
             case .PresentCreateNewUserView:
-                guard let controller = segue.destination as? CreateUserViewController else {
+                guard let _ = segue.destination as? CreateUserViewController else {
                     fatalError("CreateUserViewController not found");
                 }
             
             
         }
+    }
+    
+    private func presentCreateNewUserViewController() {
+        self.performSegue(withIdentifier: SegueIdentifier.PresentCreateNewUserView.rawValue, sender: nil)
     }
 
 }

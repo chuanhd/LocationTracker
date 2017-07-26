@@ -16,14 +16,14 @@ struct Resource<T> {
     let url : URL!
     var params : Dictionary<String, Any>?
     var method : HTTPMethod = HTTPMethod.get
-    let parse:(Data) -> T?
+    let parse:(Data) -> (ServerResponse, T?)
 }
 
 extension Resource {
     init(withURL url : URL,
          withMethod httpMethod : HTTPMethod = .get,
          withParams params : Dictionary<String, Any>?,
-         withParseBlock parse : @escaping (Data) -> T?) {
+         withParseBlock parse : @escaping (Data) -> (ServerResponse, T?)) {
         self.url = url
         self.method = httpMethod
         self.parse = parse
@@ -66,6 +66,31 @@ extension App.User : Url {
     }
 }
 
+enum SERVER_RESPONSE_CODE : String {
+    case SUCCESS = "SUCCESS"
+    case FAILURE = "FAILURE"
+    case USER_NOT_EXIST = "USER_NOT_EXISTS"
+}
+
+struct ServerResponse {
+    let code : SERVER_RESPONSE_CODE
+    let status : String?
+}
+
+extension ServerResponse {
+    
+    init() {
+        self.code = .FAILURE
+        self.status = "Unknown error"
+    }
+    
+    init(withCode _code : SERVER_RESPONSE_CODE,
+         withStatus _status : String?) {
+        self.code = _code
+        self.status = _status
+    }
+}
+
 extension App.Myself : Url {
     var url : URL {
         switch self {
@@ -81,8 +106,11 @@ extension App.Myself : Url {
 
 class ConnectionService {
     
-    class func load<T>(_ resource : Resource<T>, completion: @escaping (_ result : T?, _ error : Error?) -> ()) {
-        Alamofire.request(resource.url, method: resource.method).validate().responseJSON { response in
+    class func load<T>(_ resource : Resource<T>, completion: @escaping (_ response : ServerResponse, _ result : T?, _ error : Error?) -> ()) {
+        
+        print("Unique token id: \(AppController.sharedInstance.mUniqueToken)")
+        
+        Alamofire.request(resource.url, method: resource.method, parameters : resource.params).validate().responseJSON { response in
             print("Request: \(String(describing: response.request))")   // original url request
             print("Response: \(String(describing: response.response))") // http url response
             print("Result: \(response.result)")                         // response serialization result
@@ -101,11 +129,12 @@ class ConnectionService {
             case .success:
                 print("Validation Successful")
                 if let data = response.data {
-                    completion(resource.parse(data), nil)
+                    let parsed = resource.parse(data)
+                    completion(parsed.0, parsed.1, nil)
                 }
             case .failure(let error):
                 print(error)
-                completion(nil, error)
+                completion(ServerResponse(), nil, error)
             }
         }
     }

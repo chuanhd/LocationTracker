@@ -17,7 +17,6 @@
 		AC52DFBE1F21061C0032F853 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC52DFBD1F21061C0032F853 /* LocationService.swift */; };
 		AC52DFC11F24EDDC0032F853 /* GroupLocationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC52DFC01F24EDDC0032F853 /* GroupLocationPresenter.swift */; };
 		AC8C80561F1FA7E300CEC79B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8C80551F1FA7E300CEC79B /* AppDelegate.swift */; };
-		AC8C80581F1FA7E300CEC79B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8C80571F1FA7E300CEC79B /* ViewController.swift */; };
 		AC8C805B1F1FA7E300CEC79B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AC8C80591F1FA7E300CEC79B /* Main.storyboard */; };
 		AC8C805D1F1FA7E300CEC79B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AC8C805C1F1FA7E300CEC79B /* Assets.xcassets */; };
 		AC8C80601F1FA7E300CEC79B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AC8C805E1F1FA7E300CEC79B /* LaunchScreen.storyboard */; };
@@ -68,7 +67,6 @@
 		AC52DFC01F24EDDC0032F853 /* GroupLocationPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupLocationPresenter.swift; sourceTree = "<group>"; };
 		AC8C80521F1FA7E300CEC79B /* LocationTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LocationTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC8C80551F1FA7E300CEC79B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		AC8C80571F1FA7E300CEC79B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		AC8C805A1F1FA7E300CEC79B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		AC8C805C1F1FA7E300CEC79B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AC8C805F1F1FA7E300CEC79B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -237,7 +235,6 @@
 				AC52DFB31F2101C60032F853 /* Models */,
 				AC52DFB01F20FFA30032F853 /* Others */,
 				AC8C80551F1FA7E300CEC79B /* AppDelegate.swift */,
-				AC8C80571F1FA7E300CEC79B /* ViewController.swift */,
 				AC8C80591F1FA7E300CEC79B /* Main.storyboard */,
 				AC8C805C1F1FA7E300CEC79B /* Assets.xcassets */,
 				AC8C805E1F1FA7E300CEC79B /* LaunchScreen.storyboard */,
@@ -570,7 +567,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AC8C80581F1FA7E300CEC79B /* ViewController.swift in Sources */,
 				AC52DFB21F20FFC60032F853 /* Consts.swift in Sources */,
 				AC98FE991F24FB6200261588 /* UserService.swift in Sources */,
 				AC98FE941F24F74600261588 /* GroupMemberCollectionViewCell.swift in Sources */,

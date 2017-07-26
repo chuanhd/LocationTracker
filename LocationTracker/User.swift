@@ -27,9 +27,6 @@ class UserProfile {
         mLatitude = _lat
         mLongtitude = _long
     }
-    
-    
-    
 }
 
 
@@ -37,10 +34,25 @@ extension UserProfile {
     static let login = Resource<UserProfile>(withURL : App.Myself.login.url,
                                              withMethod : HTTPMethod.post,
                                              withParams : ["deviceid" : AppController.sharedInstance.mUniqueToken]) { data in
-        let json = JSON(data : data)
-        
-        print("JSON: \(json)") // serialized json response
-        
-        return nil
+                                                
+                                                let _json = JSON(data : data)
+                                                
+                                                print("JSON: \(_json)") // serialized json response
+
+                                                
+                                                if let _codeStr = _json["code"].string,
+                                                    let _code = SERVER_RESPONSE_CODE(rawValue: _codeStr),
+                                                let _status = _json["status"].string{
+                                                    switch _code {
+                                                    case .SUCCESS:
+                                                        break
+                                                    case .USER_NOT_EXIST:
+                                                        return (ServerResponse(withCode : .USER_NOT_EXIST, withStatus : _status), nil)
+                                                    default:
+                                                        break
+                                                    }
+                                                }
+      
+                                                return (ServerResponse(), nil)
     }
 }

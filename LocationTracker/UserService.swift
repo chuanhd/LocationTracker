@@ -11,9 +11,9 @@ import Alamofire
 import SwiftyJSON
 
 class UserService {
-    class func login(withDeviceId deviceId : String, completionHandler completion: (_ result: JSON, _ error: NSError?) -> Void) {
-        ConnectionService.load(UserProfile.login) { (myProfile : UserProfile?, error : Error?) in
-            
-        }
-    }
+//    class func login(withDeviceId deviceId : String, completionHandler completion: (_ result: JSON, _ error: NSError?) -> Void) {
+//        ConnectionService.load(UserProfile.login) { (myProfile : UserProfile?, error : Error?) in
+//            
+//        }
+//    }
 }
