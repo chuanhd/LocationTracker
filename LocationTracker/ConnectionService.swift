@@ -13,10 +13,22 @@ import SwiftyJSON
 private let BASE_URL = URL(string:"http://localhost:3000")
 
 struct Resource<T> {
-    let url : String!
+    let url : URL!
     var params : Dictionary<String, Any>?
-    let method = HTTPMethod.get
+    var method : HTTPMethod = HTTPMethod.get
     let parse:(Data) -> T?
+}
+
+extension Resource {
+    init(withURL url : URL,
+         withMethod httpMethod : HTTPMethod = .get,
+         withParams params : Dictionary<String, Any>?,
+         withParseBlock parse : @escaping (Data) -> T?) {
+        self.url = url
+        self.method = httpMethod
+        self.parse = parse
+        self.params = params
+    }
 }
 
 protocol Url {
@@ -54,9 +66,22 @@ extension App.User : Url {
     }
 }
 
+extension App.Myself : Url {
+    var url : URL {
+        switch self {
+        case .login:
+            return URL(string: "api/user", relativeTo: BASE_URL)!
+        case .updateMyLocation:
+            return URL(string: "", relativeTo: BASE_URL)!
+        case .updateMyInfo:
+            return URL(string: "", relativeTo: BASE_URL)!
+        }
+    }
+}
+
 class ConnectionService {
     
-    func load<T>(_ resource : Resource<T>, completion: @escaping (_ result : T?, _ error : Error?) -> ()) {
+    class func load<T>(_ resource : Resource<T>, completion: @escaping (_ result : T?, _ error : Error?) -> ()) {
         Alamofire.request(resource.url, method: resource.method).validate().responseJSON { response in
             print("Request: \(String(describing: response.request))")   // original url request
             print("Response: \(String(describing: response.response))") // http url response

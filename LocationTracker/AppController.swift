@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import Alamofire
 
 class AppController {
     
@@ -24,4 +24,8 @@ class AppController {
     private init() {}
     
     
+}
+
+extension AppController {
+
 }

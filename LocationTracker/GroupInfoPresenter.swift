@@ -19,13 +19,13 @@ class GroupInfoPresenter {
     var mUserList : [UserProfile] = []
     
     func doLogin() {
-        mUserService.login(withDeviceId: AppController.sharedInstance.mUniqueToken) { (result : JSON, error : NSError?) in
-            if let _error = error {
-                print(_error)
-            } else {
-                
-            }
-        }
+//        mUserService.login(withDeviceId: AppController.sharedInstance.mUniqueToken) { (result : JSON, error : NSError?) in
+//            if let _error = error {
+//                print(_error)
+//            } else {
+//                
+//            }
+//        }
     }
     
     

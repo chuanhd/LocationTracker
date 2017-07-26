@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		25A43C15653DA716CC6E4AF4 /* Pods_LocationTrackerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7801664FB09C3B184398FB0F /* Pods_LocationTrackerTests.framework */; };
 		7BDBA1318D926CE606372126 /* Pods_LocationTracker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D30F9678E2A8D602BB989CF /* Pods_LocationTracker.framework */; };
+		850A0FFA1F28850F0001DC6E /* SegueHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850A0FF91F28850F0001DC6E /* SegueHandler.swift */; };
+		850A0FFC1F28A89E0001DC6E /* CreateUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850A0FFB1F28A89E0001DC6E /* CreateUserViewController.swift */; };
 		AC52DFB21F20FFC60032F853 /* Consts.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC52DFB11F20FFC60032F853 /* Consts.swift */; };
 		AC52DFB71F21024C0032F853 /* CirclesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC52DFB61F21024C0032F853 /* CirclesViewController.swift */; };
 		AC52DFBB1F2105620032F853 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC52DFBA1F2105620032F853 /* CoreLocation.framework */; };
@@ -57,6 +59,8 @@
 		6C7DABA19BB2631CB234F422 /* Pods-LocationTracker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LocationTracker.release.xcconfig"; path = "Pods/Target Support Files/Pods-LocationTracker/Pods-LocationTracker.release.xcconfig"; sourceTree = "<group>"; };
 		7801664FB09C3B184398FB0F /* Pods_LocationTrackerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LocationTrackerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7B975EC5E2D48CBADE5C0706 /* Pods-LocationTrackerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LocationTrackerTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-LocationTrackerTests/Pods-LocationTrackerTests.release.xcconfig"; sourceTree = "<group>"; };
+		850A0FF91F28850F0001DC6E /* SegueHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegueHandler.swift; sourceTree = "<group>"; };
+		850A0FFB1F28A89E0001DC6E /* CreateUserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateUserViewController.swift; sourceTree = "<group>"; };
 		AC52DFB11F20FFC60032F853 /* Consts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Consts.swift; sourceTree = "<group>"; };
 		AC52DFB61F21024C0032F853 /* CirclesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CirclesViewController.swift; sourceTree = "<group>"; };
 		AC52DFBA1F2105620032F853 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -134,6 +138,7 @@
 			children = (
 				AC52DFB11F20FFC60032F853 /* Consts.swift */,
 				AC98FE9C1F24FD7A00261588 /* Utils.swift */,
+				850A0FF91F28850F0001DC6E /* SegueHandler.swift */,
 			);
 			name = Others;
 			sourceTree = "<group>";
@@ -166,6 +171,7 @@
 			isa = PBXGroup;
 			children = (
 				AC52DFB61F21024C0032F853 /* CirclesViewController.swift */,
+				850A0FFB1F28A89E0001DC6E /* CreateUserViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -574,6 +580,8 @@
 				AC98FE9D1F24FD7A00261588 /* Utils.swift in Sources */,
 				AC8C80561F1FA7E300CEC79B /* AppDelegate.swift in Sources */,
 				AC98FE9B1F24FBE300261588 /* User.swift in Sources */,
+				850A0FFA1F28850F0001DC6E /* SegueHandler.swift in Sources */,
+				850A0FFC1F28A89E0001DC6E /* CreateUserViewController.swift in Sources */,
 				AC52DFC11F24EDDC0032F853 /* GroupLocationPresenter.swift in Sources */,
 				AC98FEA21F24FEC200261588 /* GroupInfoPresenter.swift in Sources */,
 				AC98FEA01F24FDF400261588 /* AppController.swift in Sources */,

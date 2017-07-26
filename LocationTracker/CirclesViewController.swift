@@ -9,10 +9,14 @@
 import UIKit
 import GoogleMaps
 
-class CirclesViewController: UIViewController {
+class CirclesViewController: UIViewController, SegueHandler {
 
     @IBOutlet weak var _gmsMapView: GMSMapView!
     @IBOutlet weak var mMembersCollectionView : UICollectionView!
+    
+    enum SegueIdentifier : String {
+        case PresentCreateNewUserView  = "PresentCreateNewUserView"
+    }
     
     internal let _myLocationMarker = GMSMarker();
     
@@ -23,6 +27,11 @@ class CirclesViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        ConnectionService.load(UserProfile.login) { (_ myProfile : UserProfile?, _ error : Error?) in
+            
+        }
+        
         let _camera = GMSCameraPosition.camera(withLatitude: -33.86, longitude: 151.20, zoom: Constants.GoogleMapsConfigs.DEFAULT_ZOOM);
         _gmsMapView.camera = _camera;
         
@@ -45,15 +54,22 @@ class CirclesViewController: UIViewController {
     }
     
 
-    /*
+    
     // MARK: - Navigation
-
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        switch (segueIdentifier(for: segue)) {
+            case .PresentCreateNewUserView:
+                guard let controller = segue.destination as? CreateUserViewController else {
+                    fatalError("CreateUserViewController not found");
+                }
+            
+            
+        }
     }
-    */
+
 }
 
 extension CirclesViewController : GroupLocationPresenterDelegate {

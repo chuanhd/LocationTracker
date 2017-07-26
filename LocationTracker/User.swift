@@ -7,13 +7,15 @@
 //
 
 import Foundation
+import SwiftyJSON
+import Alamofire
 
 class UserProfile {
     public var mId : Int = -1
     public var mAvatarURLStr : String = ""
     public var mLatitude : Float = -1
     public var mLongtitude : Float = -1
-    
+        
     init(withId _id : Int, withAvatar _avatarURLStr : String, withLat _lat : Float, withLong _long : Float) {
         mId = _id
         mAvatarURLStr = _avatarURLStr
@@ -26,4 +28,19 @@ class UserProfile {
         mLongtitude = _long
     }
     
+    
+    
+}
+
+
+extension UserProfile {
+    static let login = Resource<UserProfile>(withURL : App.Myself.login.url,
+                                             withMethod : HTTPMethod.post,
+                                             withParams : ["deviceid" : AppController.sharedInstance.mUniqueToken]) { data in
+        let json = JSON(data : data)
+        
+        print("JSON: \(json)") // serialized json response
+        
+        return nil
+    }
 }
