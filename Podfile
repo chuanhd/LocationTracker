@@ -11,6 +11,7 @@ target 'LocationTracker' do
   pod 'Alamofire'
   pod 'SwiftyJSON'
   pod 'Locksmith'
+  pod 'Validator', :git => 'https://github.com/adamwaite/Validator.git', :branch => 'master'
 
   # Pods for LocationTracker
 

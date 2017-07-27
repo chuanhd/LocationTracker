@@ -25,7 +25,7 @@ class CirclesViewController: UIViewController, SegueHandler {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         ConnectionService.load(UserProfile.login) {(_ response : ServerResponse, _ myProfile : UserProfile?, _ error : Error?) in
             switch response.code {

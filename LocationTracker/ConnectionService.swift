@@ -97,9 +97,9 @@ extension App.Myself : Url {
         case .login:
             return URL(string: "api/user", relativeTo: BASE_URL)!
         case .updateMyLocation:
-            return URL(string: "", relativeTo: BASE_URL)!
+            return URL(string: "api/location", relativeTo: BASE_URL)!
         case .updateMyInfo:
-            return URL(string: "", relativeTo: BASE_URL)!
+            return URL(string: "api/user/update", relativeTo: BASE_URL)!
         }
     }
 }
@@ -119,7 +119,7 @@ class ConnectionService {
         
         print("Unique token id: \(AppController.sharedInstance.mUniqueToken)")
         
-        Alamofire.request(resource.url, method: resource.method, parameters : params).validate().responseJSON { response in
+        Alamofire.request(resource.url, method: resource.method, parameters : resource.params).validate().responseJSON { response in
             print("Request: \(String(describing: response.request))")   // original url request
             print("Response: \(String(describing: response.response))") // http url response
             print("Result: \(response.result)")                         // response serialization result

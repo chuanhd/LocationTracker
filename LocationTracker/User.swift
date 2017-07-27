@@ -45,7 +45,7 @@ extension UserProfile {
                                                 let _status = _json["status"].string{
                                                     switch _code {
                                                     case .SUCCESS:
-                                                        break
+                                                        return (ServerResponse(withCode : .SUCCESS, withStatus : _status), nil)
                                                     case .USER_NOT_EXIST:
                                                         return (ServerResponse(withCode : .USER_NOT_EXIST, withStatus : _status), nil)
                                                     default:
@@ -76,7 +76,7 @@ extension UserProfile {
                                             let _status = _json["status"].string{
                                             switch _code {
                                             case .SUCCESS:
-                                                break
+                                                return (ServerResponse(withCode : .SUCCESS, withStatus : _status), nil)
                                             case .FAILURE:
                                                 return (ServerResponse(withCode : .FAILURE, withStatus : _status), nil)
                                             default:

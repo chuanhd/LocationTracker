@@ -7,13 +7,58 @@
 //
 
 import UIKit
+import Validator
+
+protocol CreateUserViewControlerDelegate : class {
+    func userInfoUpdateSuccessful()
+}
+
+enum ValidationErrors : Error{
+    case emailInvalid
+    case requireField
+    case minLengthField (minLength : Int)
+}
+
+extension ValidationErrors {
+    var message : String {
+        switch self {
+        case .emailInvalid:
+            return "Email is invalid"
+        case .requireField:
+            return "This field must not be empty"
+        case .minLengthField(let minLength):
+            return "This field must have at least \(minLength) characters"
+        }
+    }
+}
 
 class CreateUserViewController: UIViewController {
 
     @IBOutlet weak var txtEmail: UITextField!
     @IBOutlet weak var txtName : UITextField!
     @IBOutlet weak var txtPhoneNumber : UITextField!
+    @IBOutlet weak var btnDone: UIBarButtonItem!
+    @IBOutlet weak var lblInputStatus: UILabel!
     
+    var validEmail : Bool = false
+    var validName : Bool = false
+    var validPhoneNumber : Bool = false
+    var validFields : Bool  {
+        let result = self.validEmail && self.validName && self.validPhoneNumber
+        
+        self.btnDone.isEnabled = result
+        self.lblInputStatus.isHidden = result
+        
+        return result
+    }
+    
+    weak var delegate : CreateUserViewControlerDelegate?
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        validateRequiredFields()
+    }
     
     /*
     // Only override draw() if you perform custom drawing.
@@ -25,6 +70,74 @@ class CreateUserViewController: UIViewController {
 
     @IBAction func doneBtnPressed(_ sender: Any) {
         ConnectionService.load(UserProfile.createUpdateMyInfoResource(txtEmail.text, txtName.text, txtPhoneNumber.text)) { (_ response : ServerResponse, _ myProfile : UserProfile?, _ error : Error?) in
+            
+            switch response.code {
+            case .SUCCESS:
+                self.createUserSuccessfully()
+                break
+            case .FAILURE:
+                self.createUserFailed()
+                break
+            default:
+                break
+            }
+            
         }
+    }
+    
+    private func createValidationRule(forTextField field : UITextField!, withRules rules : ValidationRuleSet<String>, updateStatusOn _label : UILabel!, _ valid : inout Bool) {
+        field.validationRules = rules
+        
+        field.validationHandler = { result in
+            switch result {
+            case .valid:
+                break;
+            case .invalid(let failureErrors):
+                guard let errors = failureErrors as? [ValidationErrors] else {
+                    break
+                }
+                let messages = errors.map { $0.message }
+                _label.text = messages.first
+                break;
+            }
+        }
+        
+        field.validateOnInputChange(enabled: true)
+    }
+    
+    private func validateRequiredFields() {
+        
+        let requiredField = ValidationRuleLength(min: 0, error: ValidationErrors.requireField)
+        let emailRule = ValidationRulePattern(pattern: EmailValidationPattern.standard, error: ValidationErrors.emailInvalid)
+        
+        var emailRules = ValidationRuleSet<String>()
+        emailRules.add(rule: requiredField)
+        emailRules.add(rule: emailRule)
+        
+        createValidationRule(forTextField: self.txtEmail, withRules: emailRules, updateStatusOn: self.lblInputStatus, &self.validEmail)
+        
+        let phoneNumMinLengthRule = ValidationRuleLength(min: 10, error: ValidationErrors.minLengthField(minLength: 10))
+        var phoneRules = ValidationRuleSet<String>()
+        phoneRules.add(rule: phoneNumMinLengthRule)
+        
+        createValidationRule(forTextField: self.txtPhoneNumber, withRules: phoneRules, updateStatusOn: self.lblInputStatus, &self.validPhoneNumber)
+        
+        var nameRules = ValidationRuleSet<String>()
+        nameRules.add(rule: requiredField)
+        
+        createValidationRule(forTextField: self.txtName, withRules: nameRules, updateStatusOn: self.lblInputStatus, &self.validName)
+        
+    }
+    
+    
+    
+    private func createUserSuccessfully() {
+        self.dismiss(animated: true, completion: nil);
+        
+        delegate?.userInfoUpdateSuccessful()
+    }
+    
+    private func createUserFailed() {
+        
     }
 }

@@ -10,6 +10,7 @@ PODS:
   - Locksmith (3.0.0)
   - SideMenu (2.3.3)
   - SwiftyJSON (3.1.4)
+  - Validator (2.1.1)
 
 DEPENDENCIES:
   - Alamofire
@@ -18,6 +19,17 @@ DEPENDENCIES:
   - Locksmith
   - SideMenu
   - SwiftyJSON
+  - Validator (from `https://github.com/adamwaite/Validator.git`, branch `master`)
+
+EXTERNAL SOURCES:
+  Validator:
+    :branch: master
+    :git: https://github.com/adamwaite/Validator.git
+
+CHECKOUT OPTIONS:
+  Validator:
+    :commit: cf6b85eae142ba94e03dfbe2f67ff8206ed7757b
+    :git: https://github.com/adamwaite/Validator.git
 
 SPEC CHECKSUMS:
   Alamofire: f28cdffd29de33a7bfa022cbd63ae95a27fae140
@@ -26,7 +38,8 @@ SPEC CHECKSUMS:
   Locksmith: 310b4cc5031af5728bf4db5d4de547a5100c6a3b
   SideMenu: a447554ae5c982e8077666389e1c8b0c8656e065
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
+  Validator: 292607746c8d000492cec99f268cc11f13f8f4bc
 
-PODFILE CHECKSUM: d9b4519e7fe0cfcaba5534fb164cb3679957476f
+PODFILE CHECKSUM: 958216ae68e2d0bdd70523605a3eb4154d1fc5cd
 
 COCOAPODS: 1.2.1

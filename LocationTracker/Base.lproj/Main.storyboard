@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Mg9-j1-dVo">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Mg9-j1-dVo">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -140,8 +140,29 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jRB-iq-emS">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="64"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="64" id="p2w-K1-1QU"/>
+                                </constraints>
+                                <items>
+                                    <navigationItem title="Create new account" id="0J4-wu-1DU">
+                                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="tIh-T6-cbk">
+                                            <connections>
+                                                <action selector="doneBtnPressed:" destination="7AH-q8-0I0" id="F3c-fr-lCS"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="All fields are required" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e9a-vY-3tR">
+                                <rect key="frame" x="16" y="85" width="344" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KCz-E9-Hlj" userLabel="Email">
-                                <rect key="frame" x="16" y="85" width="343" height="47"/>
+                                <rect key="frame" x="16" y="122" width="343" height="47"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Email" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sAs-Xo-vmY">
                                         <rect key="frame" x="8" y="13" width="41" height="21"/>
@@ -169,7 +190,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NaA-2X-9Kd" userLabel="Name">
-                                <rect key="frame" x="16" y="140" width="343" height="47"/>
+                                <rect key="frame" x="16" y="177" width="343" height="47"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3hU-5s-159">
                                         <rect key="frame" x="8" y="13" width="45" height="21"/>
@@ -197,7 +218,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7WP-1t-etY" userLabel="Phone">
-                                <rect key="frame" x="16" y="195" width="343" height="47"/>
+                                <rect key="frame" x="16" y="232" width="343" height="47"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Phone" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aEz-7X-8Xd">
                                         <rect key="frame" x="8" y="13" width="49" height="21"/>
@@ -224,32 +245,20 @@
                                     <constraint firstItem="aEz-7X-8Xd" firstAttribute="centerY" secondItem="7WP-1t-etY" secondAttribute="centerY" id="r2f-R3-foQ"/>
                                 </constraints>
                             </view>
-                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jRB-iq-emS">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="64"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="64" id="p2w-K1-1QU"/>
-                                </constraints>
-                                <items>
-                                    <navigationItem title="Create new account" id="0J4-wu-1DU">
-                                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="tIh-T6-cbk">
-                                            <connections>
-                                                <action selector="doneBtnPressed:" destination="7AH-q8-0I0" id="F3c-fr-lCS"/>
-                                            </connections>
-                                        </barButtonItem>
-                                    </navigationItem>
-                                </items>
-                            </navigationBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="e9a-vY-3tR" firstAttribute="top" secondItem="jRB-iq-emS" secondAttribute="bottom" constant="21" id="09o-eF-UhW"/>
                             <constraint firstItem="jRB-iq-emS" firstAttribute="leading" secondItem="ap9-hh-DFy" secondAttribute="leading" id="2Uc-ex-EyL"/>
-                            <constraint firstItem="KCz-E9-Hlj" firstAttribute="top" secondItem="jRB-iq-emS" secondAttribute="bottom" constant="21" id="6Q4-PJ-ro9"/>
                             <constraint firstItem="NaA-2X-9Kd" firstAttribute="leading" secondItem="ap9-hh-DFy" secondAttribute="leadingMargin" id="93x-Ca-5hw"/>
+                            <constraint firstItem="e9a-vY-3tR" firstAttribute="leading" secondItem="ap9-hh-DFy" secondAttribute="leadingMargin" id="A56-GH-q89"/>
+                            <constraint firstItem="e9a-vY-3tR" firstAttribute="centerX" secondItem="ap9-hh-DFy" secondAttribute="centerX" id="Ei9-8Y-ZxY"/>
                             <constraint firstItem="7WP-1t-etY" firstAttribute="leading" secondItem="ap9-hh-DFy" secondAttribute="leadingMargin" id="Geg-QT-6dK"/>
                             <constraint firstItem="jRB-iq-emS" firstAttribute="top" secondItem="HyH-UV-wKj" secondAttribute="bottom" constant="-20" id="JSh-Cg-qHy"/>
                             <constraint firstItem="KCz-E9-Hlj" firstAttribute="leading" secondItem="ap9-hh-DFy" secondAttribute="leadingMargin" id="MtK-cW-lgI"/>
                             <constraint firstItem="7WP-1t-etY" firstAttribute="centerX" secondItem="ap9-hh-DFy" secondAttribute="centerX" id="PSj-S3-jGi"/>
                             <constraint firstAttribute="trailing" secondItem="jRB-iq-emS" secondAttribute="trailing" id="bZM-xI-4Pc"/>
+                            <constraint firstItem="KCz-E9-Hlj" firstAttribute="top" secondItem="e9a-vY-3tR" secondAttribute="bottom" constant="16" id="cCw-pa-8re"/>
                             <constraint firstItem="KCz-E9-Hlj" firstAttribute="centerX" secondItem="ap9-hh-DFy" secondAttribute="centerX" id="cHR-c9-qjZ"/>
                             <constraint firstItem="NaA-2X-9Kd" firstAttribute="centerX" secondItem="ap9-hh-DFy" secondAttribute="centerX" id="e8V-4h-RSc"/>
                             <constraint firstItem="NaA-2X-9Kd" firstAttribute="top" secondItem="KCz-E9-Hlj" secondAttribute="bottom" constant="8" id="qsG-4U-bUx"/>
@@ -257,6 +266,8 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="btnDone" destination="tIh-T6-cbk" id="Nx3-nH-I3T"/>
+                        <outlet property="lblInputStatus" destination="e9a-vY-3tR" id="Wql-m2-yEm"/>
                         <outlet property="txtEmail" destination="ldl-BT-S9m" id="pBt-3V-m5N"/>
                         <outlet property="txtName" destination="ZLw-RJ-XTe" id="brb-nu-90X"/>
                         <outlet property="txtPhoneNumber" destination="DIW-nI-erh" id="VX2-nS-o61"/>
