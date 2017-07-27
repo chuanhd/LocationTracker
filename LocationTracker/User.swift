@@ -33,7 +33,7 @@ class UserProfile {
 extension UserProfile {
     static let login = Resource<UserProfile>(withURL : App.Myself.login.url,
                                              withMethod : HTTPMethod.post,
-                                             withParams : ["deviceid" : AppController.sharedInstance.mUniqueToken]) { data in
+                                             withParams : [ConnectionService.SERVER_REQ_KEY.DEVICE_ID : AppController.sharedInstance.mUniqueToken]) { data in
                                                 
                                                 let _json = JSON(data : data)
                                                 
@@ -54,5 +54,67 @@ extension UserProfile {
                                                 }
       
                                                 return (ServerResponse(), nil)
+                                            }
+
+    
+    static func createUpdateMyInfoResource(_ email : String!, _ name : String!, _ phone : String!) -> Resource<UserProfile> {
+        let params : [String : Any] = [ConnectionService.SERVER_REQ_KEY.DEVICE_ID : AppController.sharedInstance.mUniqueToken,
+                     ConnectionService.SERVER_REQ_KEY.EMAIL : email,
+                     ConnectionService.SERVER_REQ_KEY.USERNAME : name,
+                     ConnectionService.SERVER_REQ_KEY.PHONE_NUMBER : phone]
+        return Resource<UserProfile>(withURL : App.Myself.updateMyInfo.url,
+                                     withMethod : HTTPMethod.post,
+                                     withParams : params) { data in
+                                        
+                                        let _json = JSON(data : data)
+                                        
+                                        print("JSON: \(_json)") // serialized json response
+                                        
+                                        
+                                        if let _codeStr = _json["code"].string,
+                                            let _code = SERVER_RESPONSE_CODE(rawValue: _codeStr),
+                                            let _status = _json["status"].string{
+                                            switch _code {
+                                            case .SUCCESS:
+                                                break
+                                            case .FAILURE:
+                                                return (ServerResponse(withCode : .FAILURE, withStatus : _status), nil)
+                                            default:
+                                                break
+                                            }
+                                        }
+                                        
+                                        return (ServerResponse(), nil)
+        }
+    }
+    
+    static func createUpdateMyLocationResource(_ lat : Float, _ lon : Float) -> Resource<UserProfile> {
+        let params : [String : Any] = [ConnectionService.SERVER_REQ_KEY.DEVICE_ID : AppController.sharedInstance.mUniqueToken,
+                                       ConnectionService.SERVER_REQ_KEY.LATITUDE : lat,
+                                       ConnectionService.SERVER_REQ_KEY.LONGTITUDE : lon]
+        return Resource<UserProfile>(withURL : App.Myself.updateMyInfo.url,
+                                     withMethod : HTTPMethod.post,
+                                     withParams : params) { data in
+                                        
+                                        let _json = JSON(data : data)
+                                        
+                                        print("JSON: \(_json)") // serialized json response
+                                        
+                                        
+                                        if let _codeStr = _json["code"].string,
+                                            let _code = SERVER_RESPONSE_CODE(rawValue: _codeStr),
+                                            let _status = _json["status"].string{
+                                            switch _code {
+                                            case .SUCCESS:
+                                                break
+                                            case .FAILURE:
+                                                return (ServerResponse(withCode : .FAILURE, withStatus : _status), nil)
+                                            default:
+                                                break
+                                            }
+                                        }
+                                        
+                                        return (ServerResponse(), nil)
+        }
     }
 }

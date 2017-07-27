@@ -106,11 +106,20 @@ extension App.Myself : Url {
 
 class ConnectionService {
     
+    struct SERVER_REQ_KEY {
+        static let DEVICE_ID = "deviceid"
+        static let USERNAME = "username"
+        static let EMAIL = "email"
+        static let PHONE_NUMBER = "phonenumber"
+        static let LATITUDE = "lat"
+        static let LONGTITUDE = "lon"
+    }
+    
     class func load<T>(_ resource : Resource<T>, completion: @escaping (_ response : ServerResponse, _ result : T?, _ error : Error?) -> ()) {
         
         print("Unique token id: \(AppController.sharedInstance.mUniqueToken)")
         
-        Alamofire.request(resource.url, method: resource.method, parameters : resource.params).validate().responseJSON { response in
+        Alamofire.request(resource.url, method: resource.method, parameters : params).validate().responseJSON { response in
             print("Request: \(String(describing: response.request))")   // original url request
             print("Response: \(String(describing: response.response))") // http url response
             print("Result: \(response.result)")                         // response serialization result
