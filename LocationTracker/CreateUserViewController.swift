@@ -85,14 +85,19 @@ class CreateUserViewController: UIViewController {
         }
     }
     
-    private func createValidationRule(forTextField field : UITextField!, withRules rules : ValidationRuleSet<String>, updateStatusOn _label : UILabel!, _ valid : inout Bool) {
+    private func createValidationRule(forTextField field : UITextField!, withRules rules : ValidationRuleSet<String>, updateStatusOn _label : UILabel!, handler: @escaping (Bool) -> Void ) {
         field.validationRules = rules
         
         field.validationHandler = { result in
+            
+            var valid : Bool = true
+            
             switch result {
             case .valid:
+                valid = true
                 break;
             case .invalid(let failureErrors):
+                valid = false
                 guard let errors = failureErrors as? [ValidationErrors] else {
                     break
                 }
@@ -100,6 +105,9 @@ class CreateUserViewController: UIViewController {
                 _label.text = messages.first
                 break;
             }
+            
+            handler(valid)
+            
         }
         
         field.validateOnInputChange(enabled: true)
@@ -114,18 +122,25 @@ class CreateUserViewController: UIViewController {
         emailRules.add(rule: requiredField)
         emailRules.add(rule: emailRule)
         
-        createValidationRule(forTextField: self.txtEmail, withRules: emailRules, updateStatusOn: self.lblInputStatus, &self.validEmail)
+        createValidationRule(forTextField: self.txtEmail, withRules: emailRules, updateStatusOn: self.lblInputStatus) { valid in
+            self.validEmail = valid
+        }
         
         let phoneNumMinLengthRule = ValidationRuleLength(min: 10, error: ValidationErrors.minLengthField(minLength: 10))
         var phoneRules = ValidationRuleSet<String>()
         phoneRules.add(rule: phoneNumMinLengthRule)
         
-        createValidationRule(forTextField: self.txtPhoneNumber, withRules: phoneRules, updateStatusOn: self.lblInputStatus, &self.validPhoneNumber)
+        createValidationRule(forTextField: self.txtPhoneNumber, withRules: phoneRules, updateStatusOn: self.lblInputStatus) { valid in
+            self.validPhoneNumber = valid
+        }
         
+        let nameMinLengthRule  = ValidationRuleLength(min: 3, error: ValidationErrors.minLengthField(minLength: 3))
         var nameRules = ValidationRuleSet<String>()
-        nameRules.add(rule: requiredField)
+        nameRules.add(rule: nameMinLengthRule)
         
-        createValidationRule(forTextField: self.txtName, withRules: nameRules, updateStatusOn: self.lblInputStatus, &self.validName)
+        createValidationRule(forTextField: self.txtName, withRules: nameRules, updateStatusOn: self.lblInputStatus) { valid in
+            self.validName = valid
+        }
         
     }
     
