@@ -9,8 +9,9 @@
 import Foundation
 import Alamofire
 import SwiftyJSON
+import AWSS3
 
-private let BASE_URL = URL(string:"http://localhost:3000")
+private let BASE_URL = URL(string:"https://fierce-headland-90970.herokuapp.com/")
 
 struct Resource<T> {
     let url : URL!
@@ -104,6 +105,16 @@ extension App.Myself : Url {
     }
 }
 
+struct UserFriendlyError : Error {
+    var localizedDescription: String?
+    var code : Int
+    
+    init(withDescription desc: String?, withCode code: Int) {
+        self.code = code
+        self.localizedDescription = desc
+    }
+}
+
 class ConnectionService {
     
     struct SERVER_REQ_KEY {
@@ -113,6 +124,7 @@ class ConnectionService {
         static let PHONE_NUMBER = "phonenumber"
         static let LATITUDE = "lat"
         static let LONGTITUDE = "lon"
+        static let AVATAR = "image"
     }
     
     class func load<T>(_ resource : Resource<T>, completion: @escaping (_ response : ServerResponse, _ result : T?, _ error : Error?) -> ()) {
@@ -148,4 +160,48 @@ class ConnectionService {
         }
     }
     
+    class func uploadImageToS3Server(_ image : UIImage, completion: @escaping (_ targetURL : URL?, _ error : Error?) -> ()) {
+        
+        guard let data = UIImagePNGRepresentation(image) else {
+            completion(nil, UserFriendlyError(withDescription: "Can not represent data from selected image", withCode: Constants.ErrorCode.INVALID_DATA))
+            return
+        }
+
+        let expression = AWSS3TransferUtilityUploadExpression()
+        expression.progressBlock = {(task : AWSS3TransferUtilityTask, progress : Progress) in
+            print("upload progress: \(progress)")
+        }
+        
+        let fileName = "public/images/\(AppController.sharedInstance.mUniqueToken)_\(Date().timeIntervalSince1970).png"
+        let completionHandler : AWSS3TransferUtilityUploadCompletionHandlerBlock = { (task : AWSS3TransferUtilityUploadTask, error : Error?) in
+            if let error = error {
+                print("Upload failed error: \(error)");
+                completion(nil, error)
+            } else {
+                print("Successfully uploaded");
+                completion(getS3URL(fileName), nil)
+            }
+        }
+        
+        
+        let transferUtility = AWSS3TransferUtility.default()
+        transferUtility.uploadData(data, bucket: Constants.AmazonS3Config.BucketName, key: fileName, contentType: "image/png", expression: expression, completionHandler: completionHandler).continueWith { (task) -> Any? in
+            
+            if let error = task.error {
+                print("Upload task error: \(error)")
+                completion(nil, error)
+            }
+            
+            if let _ = task.result {
+                print("Begin uploading...")
+            }
+            
+            return nil
+            
+        }
+    }
+    
+    internal class func getS3URL(_ fileName : String) -> URL {
+        return URL(string: "\(Constants.AmazonS3Config.AmazonS3BaseURL)/\(Constants.AmazonS3Config.BucketName)/public/images/\(fileName)")!
+    }
 }

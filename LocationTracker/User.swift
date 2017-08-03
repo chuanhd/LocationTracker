@@ -57,11 +57,16 @@ extension UserProfile {
                                             }
 
     
-    static func createUpdateMyInfoResource(_ email : String!, _ name : String!, _ phone : String!) -> Resource<UserProfile> {
-        let params : [String : Any] = [ConnectionService.SERVER_REQ_KEY.DEVICE_ID : AppController.sharedInstance.mUniqueToken,
+    static func createUpdateMyInfoResource(_ email : String!, _ name : String!, _ phone : String!, _ avatarURL : String?) -> Resource<UserProfile> {
+        var params : [String : Any] = [ConnectionService.SERVER_REQ_KEY.DEVICE_ID : AppController.sharedInstance.mUniqueToken,
                      ConnectionService.SERVER_REQ_KEY.EMAIL : email,
                      ConnectionService.SERVER_REQ_KEY.USERNAME : name,
                      ConnectionService.SERVER_REQ_KEY.PHONE_NUMBER : phone]
+        
+        if let avatarURL = avatarURL {
+            params[ConnectionService.SERVER_REQ_KEY.AVATAR] = avatarURL
+        }
+        
         return Resource<UserProfile>(withURL : App.Myself.updateMyInfo.url,
                                      withMethod : HTTPMethod.post,
                                      withParams : params) { data in

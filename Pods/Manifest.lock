@@ -1,5 +1,10 @@
 PODS:
   - Alamofire (4.5.0)
+  - AWSCognito (2.5.9):
+    - AWSCore (= 2.5.9)
+  - AWSCore (2.5.9)
+  - AWSS3 (2.5.9):
+    - AWSCore (= 2.5.9)
   - GoogleMaps (2.3.1):
     - GoogleMaps/Maps (= 2.3.1)
   - GoogleMaps/Base (2.3.1)
@@ -14,6 +19,8 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire
+  - AWSCognito
+  - AWSS3
   - GoogleMaps
   - GooglePlaces
   - Locksmith
@@ -33,6 +40,9 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Alamofire: f28cdffd29de33a7bfa022cbd63ae95a27fae140
+  AWSCognito: 5dfe4120e7f77b2e77396b4532e4aacacc4ae08d
+  AWSCore: c71840dd51f271dc0af8de8fd6f352767ebde8b4
+  AWSS3: c36b91edb50ccd676be4a92836bb72f0c2ac312b
   GoogleMaps: c66a71058b9b1294bcdd5463a68e357fa50c079f
   GooglePlaces: 4a7b22debfa1af65017b82943431822607e45201
   Locksmith: 310b4cc5031af5728bf4db5d4de547a5100c6a3b
@@ -40,6 +50,6 @@ SPEC CHECKSUMS:
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
   Validator: 292607746c8d000492cec99f268cc11f13f8f4bc
 
-PODFILE CHECKSUM: 958216ae68e2d0bdd70523605a3eb4154d1fc5cd
+PODFILE CHECKSUM: ddbf343cb1e1c489816e0db0dd74007c8c836296
 
 COCOAPODS: 1.2.1

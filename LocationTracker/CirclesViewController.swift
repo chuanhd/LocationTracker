@@ -28,17 +28,19 @@ class CirclesViewController: UIViewController, SegueHandler {
 
         
         // Do any additional setup after loading the view.
-        ConnectionService.load(UserProfile.login) {(_ response : ServerResponse, _ myProfile : UserProfile?, _ error : Error?) in
-            switch response.code {
-            case .SUCCESS:
-                break
-            case .USER_NOT_EXIST:
-                self.presentCreateNewUserViewController()
-                break
-            default:
-                break
-            }
-        }
+//        ConnectionService.load(UserProfile.login) {(_ response : ServerResponse, _ myProfile : UserProfile?, _ error : Error?) in
+//            switch response.code {
+//            case .SUCCESS:
+//                break
+//            case .USER_NOT_EXIST:
+//                self.presentCreateNewUserViewController()
+//                break
+//            default:
+//                break
+//            }
+//        }
+        
+        self.presentCreateNewUserViewController()
         
         let _camera = GMSCameraPosition.camera(withLatitude: -33.86, longitude: 151.20, zoom: Constants.GoogleMapsConfigs.DEFAULT_ZOOM);
         _gmsMapView.camera = _camera;

@@ -11,6 +11,7 @@
 		7BDBA1318D926CE606372126 /* Pods_LocationTracker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D30F9678E2A8D602BB989CF /* Pods_LocationTracker.framework */; };
 		850A0FFA1F28850F0001DC6E /* SegueHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850A0FF91F28850F0001DC6E /* SegueHandler.swift */; };
 		850A0FFC1F28A89E0001DC6E /* CreateUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850A0FFB1F28A89E0001DC6E /* CreateUserViewController.swift */; };
+		8576A6171F32DE1100D5338C /* Resources.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8576A6161F32DE1100D5338C /* Resources.xcassets */; };
 		AC52DFB21F20FFC60032F853 /* Consts.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC52DFB11F20FFC60032F853 /* Consts.swift */; };
 		AC52DFB71F21024C0032F853 /* CirclesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC52DFB61F21024C0032F853 /* CirclesViewController.swift */; };
 		AC52DFBB1F2105620032F853 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC52DFBA1F2105620032F853 /* CoreLocation.framework */; };
@@ -60,6 +61,7 @@
 		7B975EC5E2D48CBADE5C0706 /* Pods-LocationTrackerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LocationTrackerTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-LocationTrackerTests/Pods-LocationTrackerTests.release.xcconfig"; sourceTree = "<group>"; };
 		850A0FF91F28850F0001DC6E /* SegueHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegueHandler.swift; sourceTree = "<group>"; };
 		850A0FFB1F28A89E0001DC6E /* CreateUserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateUserViewController.swift; sourceTree = "<group>"; };
+		8576A6161F32DE1100D5338C /* Resources.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Resources.xcassets; sourceTree = "<group>"; };
 		AC52DFB11F20FFC60032F853 /* Consts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Consts.swift; sourceTree = "<group>"; };
 		AC52DFB61F21024C0032F853 /* CirclesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CirclesViewController.swift; sourceTree = "<group>"; };
 		AC52DFBA1F2105620032F853 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -239,6 +241,7 @@
 				AC8C805C1F1FA7E300CEC79B /* Assets.xcassets */,
 				AC8C805E1F1FA7E300CEC79B /* LaunchScreen.storyboard */,
 				AC8C80611F1FA7E300CEC79B /* Info.plist */,
+				8576A6161F32DE1100D5338C /* Resources.xcassets */,
 			);
 			path = LocationTracker;
 			sourceTree = "<group>";
@@ -405,6 +408,7 @@
 				AC8C805D1F1FA7E300CEC79B /* Assets.xcassets in Resources */,
 				AC98FE951F24F74600261588 /* GroupMemberCollectionViewCell.xib in Resources */,
 				AC8C805B1F1FA7E300CEC79B /* Main.storyboard in Resources */,
+				8576A6171F32DE1100D5338C /* Resources.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
