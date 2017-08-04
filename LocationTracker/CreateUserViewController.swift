@@ -196,6 +196,8 @@ extension CreateUserViewController : UIImagePickerControllerDelegate {
             self.imgViewAvatar.contentMode = .scaleAspectFill
             self.imgViewAvatar.image = pickedImage
         }
+        
+        self.dismiss(animated: true, completion: nil);
     }
 }
 

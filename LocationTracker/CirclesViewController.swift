@@ -16,6 +16,7 @@ class CirclesViewController: UIViewController, SegueHandler {
     
     enum SegueIdentifier : String {
         case PresentCreateNewUserView  = "PresentCreateNewUserView"
+        case ShowSideMenuView = "ShowSideMenuView"
     }
     
     internal let _myLocationMarker = GMSMarker();
@@ -26,21 +27,17 @@ class CirclesViewController: UIViewController, SegueHandler {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        
-        // Do any additional setup after loading the view.
-//        ConnectionService.load(UserProfile.login) {(_ response : ServerResponse, _ myProfile : UserProfile?, _ error : Error?) in
-//            switch response.code {
-//            case .SUCCESS:
-//                break
-//            case .USER_NOT_EXIST:
-//                self.presentCreateNewUserViewController()
-//                break
-//            default:
-//                break
-//            }
-//        }
-        
-        self.presentCreateNewUserViewController()
+        ConnectionService.load(UserProfile.login, true) {(_ response : ServerResponse, _ myProfile : UserProfile?, _ error : Error?) in
+            switch response.code {
+            case .SUCCESS:
+                break
+            case .USER_NOT_EXIST:
+                self.presentCreateNewUserViewController()
+                break
+            default:
+                break
+            }
+        }
         
         let _camera = GMSCameraPosition.camera(withLatitude: -33.86, longitude: 151.20, zoom: Constants.GoogleMapsConfigs.DEFAULT_ZOOM);
         _gmsMapView.camera = _camera;
@@ -71,11 +68,12 @@ class CirclesViewController: UIViewController, SegueHandler {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         switch (segueIdentifier(for: segue)) {
-            case .PresentCreateNewUserView:
-                guard let _ = segue.destination as? CreateUserViewController else {
-                    fatalError("CreateUserViewController not found");
-                }
-            
+        case .PresentCreateNewUserView:
+            guard let _ = segue.destination as? CreateUserViewController else {
+                fatalError("CreateUserViewController not found");
+            }
+        case .ShowSideMenuView:
+            break
             
         }
     }
@@ -88,8 +86,11 @@ class CirclesViewController: UIViewController, SegueHandler {
 
 extension CirclesViewController : GroupLocationPresenterDelegate {
     func locationDidUpdate(_newLocation : CLLocation) {
+        self.view.setNeedsLayout()
+        print("new location: \(_newLocation.coordinate)")
         _myLocationMarker.position = _newLocation.coordinate
         _gmsMapView.camera = GMSCameraPosition.camera(withTarget: _newLocation.coordinate, zoom: Constants.GoogleMapsConfigs.DEFAULT_ZOOM)
+        self.view.layoutIfNeeded()
     }
 }
 

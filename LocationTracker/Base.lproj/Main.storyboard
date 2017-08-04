@@ -77,7 +77,7 @@
                             </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="SsK-R0-3nu">
                                 <rect key="frame" x="0.0" y="587" width="375" height="80"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="80" id="d6p-lc-TcL"/>
                                 </constraints>
@@ -113,7 +113,7 @@
                     <navigationItem key="navigationItem" title="Circle Name" id="Dl9-v5-YIA">
                         <barButtonItem key="leftBarButtonItem" title="Menu" id="SbV-mD-u8T">
                             <connections>
-                                <segue destination="ecO-fH-Nsx" kind="presentation" id="w4v-AM-Mt4"/>
+                                <segue destination="ecO-fH-Nsx" kind="presentation" identifier="ShowSideMenuView" id="w4v-AM-Mt4"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="RaA-dl-D6z"/>

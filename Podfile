@@ -15,6 +15,8 @@ target 'LocationTracker' do
   pod 'AWSS3'
   pod 'AWSCognito'
   pod 'Whisper'
+  pod 'IQKeyboardManagerSwift', '4.0.10'
+  pod 'RappleProgressHUD'
 
   # Pods for LocationTracker
 

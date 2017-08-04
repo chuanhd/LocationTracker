@@ -12,10 +12,13 @@ PODS:
     - GoogleMaps/Base
   - GooglePlaces (2.3.1):
     - GoogleMaps/Base (= 2.3.1)
+  - IQKeyboardManagerSwift (4.0.10)
   - Locksmith (3.0.0)
+  - RappleProgressHUD (2.3.1)
   - SideMenu (2.3.3)
   - SwiftyJSON (3.1.4)
   - Validator (2.1.1)
+  - Whisper (5.0.0)
 
 DEPENDENCIES:
   - Alamofire
@@ -23,10 +26,13 @@ DEPENDENCIES:
   - AWSS3
   - GoogleMaps
   - GooglePlaces
+  - IQKeyboardManagerSwift (= 4.0.10)
   - Locksmith
+  - RappleProgressHUD
   - SideMenu
   - SwiftyJSON
   - Validator (from `https://github.com/adamwaite/Validator.git`, branch `master`)
+  - Whisper
 
 EXTERNAL SOURCES:
   Validator:
@@ -45,11 +51,14 @@ SPEC CHECKSUMS:
   AWSS3: c36b91edb50ccd676be4a92836bb72f0c2ac312b
   GoogleMaps: c66a71058b9b1294bcdd5463a68e357fa50c079f
   GooglePlaces: 4a7b22debfa1af65017b82943431822607e45201
+  IQKeyboardManagerSwift: 75ba21a23794a1e6b6fe6d9a267ea17f80e06771
   Locksmith: 310b4cc5031af5728bf4db5d4de547a5100c6a3b
+  RappleProgressHUD: 3c776b1ac0a05e7d9b0165d819162581902d23a1
   SideMenu: a447554ae5c982e8077666389e1c8b0c8656e065
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
   Validator: 292607746c8d000492cec99f268cc11f13f8f4bc
+  Whisper: 051f25e704bf8992641ffd28b20d5682ddc5f5d3
 
-PODFILE CHECKSUM: ddbf343cb1e1c489816e0db0dd74007c8c836296
+PODFILE CHECKSUM: 0e67be7e63844525b3c570da35d48ab2a6a216e4
 
 COCOAPODS: 1.2.1

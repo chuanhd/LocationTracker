@@ -10,6 +10,7 @@ import Foundation
 import Alamofire
 import SwiftyJSON
 import AWSS3
+import RappleProgressHUD
 
 private let BASE_URL = URL(string:"https://fierce-headland-90970.herokuapp.com/")
 
@@ -67,6 +68,19 @@ extension App.User : Url {
     }
 }
 
+extension App.Myself : Url {
+    var url : URL {
+        switch self {
+        case .login:
+            return URL(string: "api/user", relativeTo: BASE_URL)!
+        case .updateMyLocation:
+            return URL(string: "api/location", relativeTo: BASE_URL)!
+        case .updateMyInfo:
+            return URL(string: "api/user/update", relativeTo: BASE_URL)!
+        }
+    }
+}
+
 enum SERVER_RESPONSE_CODE : String {
     case SUCCESS = "SUCCESS"
     case FAILURE = "FAILURE"
@@ -92,19 +106,6 @@ extension ServerResponse {
     }
 }
 
-extension App.Myself : Url {
-    var url : URL {
-        switch self {
-        case .login:
-            return URL(string: "api/user", relativeTo: BASE_URL)!
-        case .updateMyLocation:
-            return URL(string: "api/location", relativeTo: BASE_URL)!
-        case .updateMyInfo:
-            return URL(string: "api/user/update", relativeTo: BASE_URL)!
-        }
-    }
-}
-
 struct UserFriendlyError : Error {
     var localizedDescription: String?
     var code : Int
@@ -124,12 +125,15 @@ class ConnectionService {
         static let PHONE_NUMBER = "phonenumber"
         static let LATITUDE = "lat"
         static let LONGTITUDE = "lon"
-        static let AVATAR = "image"
+        static let AVATAR = "userimage"
+        static let IMAGE = "image"
     }
     
-    class func load<T>(_ resource : Resource<T>, completion: @escaping (_ response : ServerResponse, _ result : T?, _ error : Error?) -> ()) {
+    class func load<T>(_ resource : Resource<T>, _ showProgress : Bool = true, completion: @escaping (_ response : ServerResponse, _ result : T?, _ error : Error?) -> ()) {
         
         print("Unique token id: \(AppController.sharedInstance.mUniqueToken)")
+        
+        RappleActivityIndicatorView.startAnimating(attributes: RappleModernAttributes)
         
         Alamofire.request(resource.url, method: resource.method, parameters : resource.params).validate().responseJSON { response in
             print("Request: \(String(describing: response.request))")   // original url request
@@ -148,6 +152,11 @@ class ConnectionService {
             
             switch response.result {
             case .success:
+                
+                DispatchQueue.main.async {
+                    RappleActivityIndicatorView.stopAnimation(completionIndicator: .success, completionLabel: "Completed.", completionTimeout: 1.0)
+                }
+                
                 print("Validation Successful")
                 if let data = response.data {
                     let parsed = resource.parse(data)
@@ -155,6 +164,9 @@ class ConnectionService {
                 }
             case .failure(let error):
                 print(error)
+                DispatchQueue.main.async {
+                    RappleActivityIndicatorView.stopAnimation(completionIndicator: .failed, completionLabel: "Failed.", completionTimeout: 1.0)
+                }
                 completion(ServerResponse(), nil, error)
             }
         }

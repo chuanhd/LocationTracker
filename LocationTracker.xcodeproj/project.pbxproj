@@ -360,6 +360,7 @@
 				TargetAttributes = {
 					AC8C80511F1FA7E300CEC79B = {
 						CreatedOnToolsVersion = 8.3.3;
+						DevelopmentTeam = E655UG7Q3H;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
@@ -739,9 +740,11 @@
 			baseConfigurationReference = 431B2173397EC45D050F4E66 /* Pods-LocationTracker.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = E655UG7Q3H;
 				INFOPLIST_FILE = LocationTracker/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = per.tranght.LocationTracker;
+				PRODUCT_BUNDLE_IDENTIFIER = com.septeni.LocationTracker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -752,9 +755,11 @@
 			baseConfigurationReference = 6C7DABA19BB2631CB234F422 /* Pods-LocationTracker.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = E655UG7Q3H;
 				INFOPLIST_FILE = LocationTracker/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = per.tranght.LocationTracker;
+				PRODUCT_BUNDLE_IDENTIFIER = com.septeni.LocationTracker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};

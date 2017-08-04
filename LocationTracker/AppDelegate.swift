@@ -10,6 +10,8 @@ import UIKit
 import GoogleMaps
 import AWSCore
 import AWSCognito
+import AWSS3
+import IQKeyboardManagerSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -27,6 +29,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let configuration = AWSServiceConfiguration(region: .USEast1, credentialsProvider: credentialProvider)
         AWSServiceManager.default().defaultServiceConfiguration = configuration
 
+        IQKeyboardManager.sharedManager().enable = true
+        
         //
         let locationManager = LocationService.shared
         locationManager.requestWhenInUseAuthorization()

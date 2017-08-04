@@ -9,10 +9,10 @@
 import Foundation
 
 struct Constants {
-    static let Google_Maps_API_Key = "AIzaSyA3OTehusrsLkI38ZLQdeD_JJnTp-glTi8"
+    static let Google_Maps_API_Key = "AIzaSyBT0JQMPPrgs7WOwAJOk_COZNDzAILPeBk"
     
     struct GoogleMapsConfigs {
-        static let DEFAULT_ZOOM : Float = 25.0;
+        static let DEFAULT_ZOOM : Float = 6.0;
     }
     
     struct CellIdentifier {
