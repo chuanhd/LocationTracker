@@ -97,7 +97,7 @@ extension UserProfile {
         let params : [String : Any] = [ConnectionService.SERVER_REQ_KEY.DEVICE_ID : AppController.sharedInstance.mUniqueToken,
                                        ConnectionService.SERVER_REQ_KEY.LATITUDE : lat,
                                        ConnectionService.SERVER_REQ_KEY.LONGTITUDE : lon]
-        return Resource<UserProfile>(withURL : App.Myself.updateMyInfo.url,
+        return Resource<UserProfile>(withURL : App.Myself.updateMyLocation.url,
                                      withMethod : HTTPMethod.post,
                                      withParams : params) { data in
                                         

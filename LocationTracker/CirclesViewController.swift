@@ -86,7 +86,7 @@ class CirclesViewController: UIViewController, SegueHandler {
     }
     
     internal func populateMyCurrentLocation(_ location : CLLocation) {
-        ConnectionService.load(UserProfile.createUpdateMyLocationResource(Float(location.coordinate.latitude), Float(location.coordinate.longitude))) { (_ response : ServerResponse, result : Any?, error : Error?) in
+        ConnectionService.load(UserProfile.createUpdateMyLocationResource(Float(location.coordinate.latitude), Float(location.coordinate.longitude)), false) { (_ response : ServerResponse, result : Any?, error : Error?) in
             switch response.code {
             case .SUCCESS:
                 break

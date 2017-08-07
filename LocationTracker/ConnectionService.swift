@@ -75,7 +75,7 @@ extension App.Myself : Url {
         case .login:
             return URL(string: "api/user", relativeTo: BASE_URL)!
         case .updateMyLocation:
-            return URL(string: "api/location", relativeTo: BASE_URL)!
+            return URL(string: "api/user/location", relativeTo: BASE_URL)!
         case .updateMyInfo:
             return URL(string: "api/user/update", relativeTo: BASE_URL)!
         }

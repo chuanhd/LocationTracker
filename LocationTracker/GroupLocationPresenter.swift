@@ -37,7 +37,7 @@ extension GroupLocationPresenter : CLLocationManagerDelegate {
             
             print("New Location fetched with horizontal accuracy: \(newLocation.horizontalAccuracy)")
             
-            guard newLocation.horizontalAccuracy < 100 && abs(howRecent) < 10 else { continue }
+            guard newLocation.horizontalAccuracy < 200 && abs(howRecent) < 10 else { continue }
             
             delegate?.locationDidUpdate(_newLocation: newLocation)
             
