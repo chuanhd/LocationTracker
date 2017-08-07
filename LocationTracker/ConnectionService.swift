@@ -41,8 +41,9 @@ enum App {
     enum Group {
         case all
         case get(id : Int)
-        case addMember(id : Int)
-        case removeMember(id : Int)
+        case createGroup
+        case addMember()
+        case removeMember()
     }
     
     enum User {
@@ -61,9 +62,9 @@ extension App.User : Url {
     var url : URL {
         switch self {
         case .getInfo(let id):
-            return URL(string: "\(id)", relativeTo: BASE_URL)!
+            return URL(string: "api/memberinfo/\(id)", relativeTo: BASE_URL)!
         case .getLocation(let id):
-            return URL(string: "\(id)", relativeTo: BASE_URL)!
+            return URL(string: "api/memberlocation/\(id)", relativeTo: BASE_URL)!
         }
     }
 }
@@ -77,6 +78,23 @@ extension App.Myself : Url {
             return URL(string: "api/location", relativeTo: BASE_URL)!
         case .updateMyInfo:
             return URL(string: "api/user/update", relativeTo: BASE_URL)!
+        }
+    }
+}
+
+extension App.Group : Url {
+    var url : URL {
+        switch self {
+        case .all:
+            return URL(string : "api/listgroup", relativeTo: BASE_URL)!
+        case .get(let id):
+            return URL(string : "api/getgroup/\(id)", relativeTo: BASE_URL)!
+        case .createGroup:
+            return URL(string : "api/group", relativeTo: BASE_URL)!
+        case .addMember():
+            return URL(string : "api/user/addGroupMember", relativeTo: BASE_URL)!
+        case .removeMember():
+            return URL(string : "api/user/removeGroupMember", relativeTo: BASE_URL)!
         }
     }
 }

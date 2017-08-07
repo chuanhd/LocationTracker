@@ -12,7 +12,7 @@ struct Constants {
     static let Google_Maps_API_Key = "AIzaSyBT0JQMPPrgs7WOwAJOk_COZNDzAILPeBk"
     
     struct GoogleMapsConfigs {
-        static let DEFAULT_ZOOM : Float = 6.0;
+        static let DEFAULT_ZOOM : Float = 12.0;
     }
     
     struct CellIdentifier {

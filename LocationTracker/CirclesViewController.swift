@@ -21,7 +21,7 @@ class CirclesViewController: UIViewController, SegueHandler {
     
     internal let _myLocationMarker = GMSMarker();
     
-    private let mCirclePresenter = GroupLocationPresenter()
+    internal let mCirclePresenter = GroupLocationPresenter()
     private let mCircleInfoPresenter = GroupInfoPresenter()
     
     override func viewDidLoad() {
@@ -30,6 +30,7 @@ class CirclesViewController: UIViewController, SegueHandler {
         ConnectionService.load(UserProfile.login, true) {(_ response : ServerResponse, _ myProfile : UserProfile?, _ error : Error?) in
             switch response.code {
             case .SUCCESS:
+                self.mCirclePresenter.startLocationUpdates()
                 break
             case .USER_NOT_EXIST:
                 self.presentCreateNewUserViewController()
@@ -49,7 +50,6 @@ class CirclesViewController: UIViewController, SegueHandler {
         _myLocationMarker.map = _gmsMapView
         
         mCirclePresenter.delegate = self
-        mCirclePresenter.startLocationUpdates()
         
 //        mMembersCollectionView.delegate = self
 //        mMembersCollectionView.dataSource = self
@@ -69,9 +69,12 @@ class CirclesViewController: UIViewController, SegueHandler {
         // Pass the selected object to the new view controller.
         switch (segueIdentifier(for: segue)) {
         case .PresentCreateNewUserView:
-            guard let _ = segue.destination as? CreateUserViewController else {
+            guard let _dest = segue.destination as? CreateUserViewController else {
                 fatalError("CreateUserViewController not found");
             }
+            
+            _dest.delegate = self
+            
         case .ShowSideMenuView:
             break
             
@@ -80,6 +83,20 @@ class CirclesViewController: UIViewController, SegueHandler {
     
     private func presentCreateNewUserViewController() {
         self.performSegue(withIdentifier: SegueIdentifier.PresentCreateNewUserView.rawValue, sender: nil)
+    }
+    
+    internal func populateMyCurrentLocation(_ location : CLLocation) {
+        ConnectionService.load(UserProfile.createUpdateMyLocationResource(Float(location.coordinate.latitude), Float(location.coordinate.longitude))) { (_ response : ServerResponse, result : Any?, error : Error?) in
+            switch response.code {
+            case .SUCCESS:
+                break
+            case .FAILURE:
+                print("Fail to populate my current position to server")
+                break
+            default:
+                break
+            }
+        }
     }
 
 }
@@ -91,6 +108,14 @@ extension CirclesViewController : GroupLocationPresenterDelegate {
         _myLocationMarker.position = _newLocation.coordinate
         _gmsMapView.camera = GMSCameraPosition.camera(withTarget: _newLocation.coordinate, zoom: Constants.GoogleMapsConfigs.DEFAULT_ZOOM)
         self.view.layoutIfNeeded()
+        
+        populateMyCurrentLocation(_newLocation)
+    }
+}
+
+extension CirclesViewController : CreateUserViewControlerDelegate {
+    func userInfoUpdateSuccessful() {
+        self.mCirclePresenter.startLocationUpdates()
     }
 }
 
