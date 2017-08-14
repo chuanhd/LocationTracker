@@ -58,7 +58,7 @@
             </objects>
             <point key="canvasLocation" x="2274" y="-680"/>
         </scene>
-        <!--Circle Name-->
+        <!--My Circle-->
         <scene sceneID="4bj-4n-44d">
             <objects>
                 <viewController id="O9N-c0-cMH" customClass="CirclesViewController" customModule="LocationTracker" customModuleProvider="target" sceneMemberID="viewController">
@@ -109,7 +109,7 @@
                             <constraint firstItem="IY8-y7-K9E" firstAttribute="top" secondItem="Xab-5d-KHw" secondAttribute="bottom" id="zFh-9f-n2d"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Circle Name" id="Dl9-v5-YIA">
+                    <navigationItem key="navigationItem" title="My Circle" id="Dl9-v5-YIA">
                         <barButtonItem key="leftBarButtonItem" title="Menu" id="SbV-mD-u8T">
                             <connections>
                                 <segue destination="ecO-fH-Nsx" kind="presentation" identifier="ShowSideMenuView" id="w4v-AM-Mt4"/>

@@ -145,6 +145,9 @@ class ConnectionService {
         static let LONGTITUDE = "lon"
         static let AVATAR = "userimage"
         static let IMAGE = "image"
+        static let GROUP_NAME = "groupname"
+        static let GROUP_COLOR = "groupcolor"
+        static let GROUP_ID = "groupid"
     }
     
     class func load<T>(_ resource : Resource<T>, _ showProgress : Bool = true, completion: @escaping (_ response : ServerResponse, _ result : T?, _ error : Error?) -> ()) {

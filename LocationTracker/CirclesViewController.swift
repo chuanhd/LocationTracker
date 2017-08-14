@@ -30,6 +30,7 @@ class CirclesViewController: UIViewController, SegueHandler {
         ConnectionService.load(UserProfile.login, true) {(_ response : ServerResponse, _ myProfile : UserProfile?, _ error : Error?) in
             switch response.code {
             case .SUCCESS:
+                self.getAllGroup()
                 self.mCirclePresenter.startLocationUpdates()
                 break
             case .USER_NOT_EXIST:
@@ -98,6 +99,21 @@ class CirclesViewController: UIViewController, SegueHandler {
             }
         }
     }
+    
+    internal func getAllGroup() {
+        ConnectionService.load(Group.getAllGroups, true) {(_ response : ServerResponse, _ myProfile : Any?, _ error : Error?) in
+            switch response.code {
+            case .SUCCESS:
+                break
+            case .FAILURE:
+                break
+            default:
+                break
+            }
+        }
+    }
+    
+    
 
 }
 
@@ -116,6 +132,7 @@ extension CirclesViewController : GroupLocationPresenterDelegate {
 extension CirclesViewController : CreateUserViewControlerDelegate {
     func userInfoUpdateSuccessful() {
         self.mCirclePresenter.startLocationUpdates()
+        self.getAllGroup()
     }
 }
 
