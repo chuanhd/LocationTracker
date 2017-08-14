@@ -24,9 +24,18 @@ class CirclesViewController: UIViewController, SegueHandler {
     internal let mCirclePresenter = GroupLocationPresenter()
     private let mCircleInfoPresenter = GroupInfoPresenter()
     
+    private var mGroupNameTitleView : GroupNameTitleView?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        mGroupNameTitleView = Bundle.main.loadNibNamed("GroupNameTitleView", owner: self, options: nil)?.first as? GroupNameTitleView
+        self.navigationItem.titleView = mGroupNameTitleView
+        if let _groupNameTitleView = mGroupNameTitleView {
+            let _tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(CirclesViewController.handleTapOnGroupTitleView))
+            _groupNameTitleView.addGestureRecognizer(_tapGestureRecognizer)
+        }
+        
         ConnectionService.load(UserProfile.login, true) {(_ response : ServerResponse, _ myProfile : UserProfile?, _ error : Error?) in
             switch response.code {
             case .SUCCESS:
@@ -101,19 +110,30 @@ class CirclesViewController: UIViewController, SegueHandler {
     }
     
     internal func getAllGroup() {
-        ConnectionService.load(Group.getAllGroups, true) {(_ response : ServerResponse, _ myProfile : Any?, _ error : Error?) in
-            switch response.code {
-            case .SUCCESS:
-                break
-            case .FAILURE:
-                break
-            default:
-                break
-            }
-        }
+//        ConnectionService.load(Group.getAllGroups, true) {(_ response : ServerResponse, _ myProfile : Any?, _ error : Error?) in
+//            switch response.code {
+//            case .SUCCESS:
+//                break
+//            case .FAILURE:
+//                break
+//            default:
+//                break
+//            }
+//        }
     }
     
-    
+    @objc private func handleTapOnGroupTitleView(_ gestureRecognizer : UITapGestureRecognizer) {
+        print("Tap on title view")
+        //TODO: create list group view controller and add its view to circle view controller
+        let _listGroupViewController = self.storyboard!.instantiateViewController(withIdentifier: "ListGroupsViewController")
+        _listGroupViewController.view.frame = CGRect(x: 0, y: 64, width: self.view.frame.size.width, height: self.view.frame.size.height * 0.5)
+        self.addChildViewController(_listGroupViewController)
+        self.view.addSubview(_listGroupViewController.view)
+        _listGroupViewController.didMove(toParentViewController: self)
+        
+        self.view.bringSubview(toFront: _listGroupViewController.view)
+        
+    }
 
 }
 

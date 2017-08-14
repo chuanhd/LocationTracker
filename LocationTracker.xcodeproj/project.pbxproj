@@ -17,6 +17,9 @@
 		85E2EC091F41AD4600CDBF29 /* ListGroupsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E2EC081F41AD4500CDBF29 /* ListGroupsViewController.swift */; };
 		85E2EC0C1F41AF2400CDBF29 /* GroupTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E2EC0A1F41AF2400CDBF29 /* GroupTableViewCell.swift */; };
 		85E2EC0D1F41AF2400CDBF29 /* GroupTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85E2EC0B1F41AF2400CDBF29 /* GroupTableViewCell.xib */; };
+		AC4604791F41F07600A348B5 /* CommonTableDatasource.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4604781F41F07600A348B5 /* CommonTableDatasource.swift */; };
+		AC46047B1F41F6C200A348B5 /* GroupNameTitleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC46047A1F41F6C200A348B5 /* GroupNameTitleView.xib */; };
+		AC46047D1F41F77000A348B5 /* GroupNameTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC46047C1F41F77000A348B5 /* GroupNameTitleView.swift */; };
 		AC52DFB21F20FFC60032F853 /* Consts.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC52DFB11F20FFC60032F853 /* Consts.swift */; };
 		AC52DFB71F21024C0032F853 /* CirclesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC52DFB61F21024C0032F853 /* CirclesViewController.swift */; };
 		AC52DFBB1F2105620032F853 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC52DFBA1F2105620032F853 /* CoreLocation.framework */; };
@@ -72,6 +75,9 @@
 		85E2EC081F41AD4500CDBF29 /* ListGroupsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListGroupsViewController.swift; sourceTree = "<group>"; };
 		85E2EC0A1F41AF2400CDBF29 /* GroupTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupTableViewCell.swift; sourceTree = "<group>"; };
 		85E2EC0B1F41AF2400CDBF29 /* GroupTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GroupTableViewCell.xib; sourceTree = "<group>"; };
+		AC4604781F41F07600A348B5 /* CommonTableDatasource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonTableDatasource.swift; sourceTree = "<group>"; };
+		AC46047A1F41F6C200A348B5 /* GroupNameTitleView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GroupNameTitleView.xib; sourceTree = "<group>"; };
+		AC46047C1F41F77000A348B5 /* GroupNameTitleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupNameTitleView.swift; sourceTree = "<group>"; };
 		AC52DFB11F20FFC60032F853 /* Consts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Consts.swift; sourceTree = "<group>"; };
 		AC52DFB61F21024C0032F853 /* CirclesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CirclesViewController.swift; sourceTree = "<group>"; };
 		AC52DFBA1F2105620032F853 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -143,6 +149,14 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		AC4604771F41F03500A348B5 /* Common Datasource */ = {
+			isa = PBXGroup;
+			children = (
+				AC4604781F41F07600A348B5 /* CommonTableDatasource.swift */,
+			);
+			name = "Common Datasource";
+			sourceTree = "<group>";
+		};
 		AC52DFB01F20FFA30032F853 /* Others */ = {
 			isa = PBXGroup;
 			children = (
@@ -172,6 +186,7 @@
 		AC52DFB51F2101D30032F853 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				AC4604771F41F03500A348B5 /* Common Datasource */,
 				AC52DFB91F2102760032F853 /* Views */,
 				AC52DFB81F21026C0032F853 /* ViewControllers */,
 			);
@@ -196,6 +211,8 @@
 				AC98FE931F24F74600261588 /* GroupMemberCollectionViewCell.xib */,
 				85E2EC0A1F41AF2400CDBF29 /* GroupTableViewCell.swift */,
 				85E2EC0B1F41AF2400CDBF29 /* GroupTableViewCell.xib */,
+				AC46047A1F41F6C200A348B5 /* GroupNameTitleView.xib */,
+				AC46047C1F41F77000A348B5 /* GroupNameTitleView.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -425,6 +442,7 @@
 				AC8C805D1F1FA7E300CEC79B /* Assets.xcassets in Resources */,
 				AC98FE951F24F74600261588 /* GroupMemberCollectionViewCell.xib in Resources */,
 				AC8C805B1F1FA7E300CEC79B /* Main.storyboard in Resources */,
+				AC46047B1F41F6C200A348B5 /* GroupNameTitleView.xib in Resources */,
 				8576A6171F32DE1100D5338C /* Resources.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -602,9 +620,11 @@
 				85E2EC071F41894C00CDBF29 /* CreateGroupViewController.swift in Sources */,
 				850A0FFA1F28850F0001DC6E /* SegueHandler.swift in Sources */,
 				850A0FFC1F28A89E0001DC6E /* CreateUserViewController.swift in Sources */,
+				AC4604791F41F07600A348B5 /* CommonTableDatasource.swift in Sources */,
 				AC52DFC11F24EDDC0032F853 /* GroupLocationPresenter.swift in Sources */,
 				85E2EC091F41AD4600CDBF29 /* ListGroupsViewController.swift in Sources */,
 				AC98FEA21F24FEC200261588 /* GroupInfoPresenter.swift in Sources */,
+				AC46047D1F41F77000A348B5 /* GroupNameTitleView.swift in Sources */,
 				AC98FEA01F24FDF400261588 /* AppController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
