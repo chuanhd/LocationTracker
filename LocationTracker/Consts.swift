@@ -17,6 +17,7 @@ struct Constants {
     
     struct CellIdentifier {
         static let MemberCollectionCellIdentifier = "MemberCollectionCellIdentifier"
+        static let GroupTableViewCellIdentifier = "GroupTableViewCellIdentifier"
     }
     
     struct AmazonS3Config {
@@ -28,4 +29,6 @@ struct Constants {
     struct ErrorCode {
         static let INVALID_DATA = 1412001 // Happens when a data is not correct (incorrect type, nil, ...)
     }
+    
+    
 }

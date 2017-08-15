@@ -11,6 +11,7 @@ import UIKit
 class GroupNameTitleView: UIView {
 
     @IBOutlet var lblGroupName: UILabel!
+    @IBOutlet weak var imgDropdownIndicator: UIImageView!
     
     
     /*

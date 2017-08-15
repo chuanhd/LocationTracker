@@ -10,6 +10,8 @@ import UIKit
 import GoogleMaps
 
 class CirclesViewController: UIViewController, SegueHandler {
+    
+    private let TAG_LIST_GROUP_VIEW  = 1105
 
     @IBOutlet weak var _gmsMapView: GMSMapView!
     @IBOutlet weak var mMembersCollectionView : UICollectionView!
@@ -17,6 +19,7 @@ class CirclesViewController: UIViewController, SegueHandler {
     enum SegueIdentifier : String {
         case PresentCreateNewUserView  = "PresentCreateNewUserView"
         case ShowSideMenuView = "ShowSideMenuView"
+        case PresentCreateNewGroupView = "PresentCreateNewGroupView"
     }
     
     internal let _myLocationMarker = GMSMarker();
@@ -84,10 +87,11 @@ class CirclesViewController: UIViewController, SegueHandler {
             }
             
             _dest.delegate = self
-            
+            break
         case .ShowSideMenuView:
             break
-            
+        case .PresentCreateNewGroupView:
+            break
         }
     }
     
@@ -125,16 +129,41 @@ class CirclesViewController: UIViewController, SegueHandler {
     @objc private func handleTapOnGroupTitleView(_ gestureRecognizer : UITapGestureRecognizer) {
         print("Tap on title view")
         //TODO: create list group view controller and add its view to circle view controller
-        let _listGroupViewController = self.storyboard!.instantiateViewController(withIdentifier: "ListGroupsViewController")
+        
+        if let _listGroupView = self.view.viewWithTag(TAG_LIST_GROUP_VIEW) {
+            _listGroupView.removeFromSuperview()
+        } else {
+            showListGroupView()
+        }
+    }
+
+    internal func showListGroupView() {
+        let _listGroupViewController = self.storyboard!.instantiateViewController(withIdentifier: "ListGroupsViewController") as! ListGroupsViewController
         _listGroupViewController.view.frame = CGRect(x: 0, y: 64, width: self.view.frame.size.width, height: self.view.frame.size.height * 0.5)
+        _listGroupViewController.delegate = self
         self.addChildViewController(_listGroupViewController)
         self.view.addSubview(_listGroupViewController.view)
         _listGroupViewController.didMove(toParentViewController: self)
         
         self.view.bringSubview(toFront: _listGroupViewController.view)
+        _listGroupViewController.view.tag = TAG_LIST_GROUP_VIEW
         
+        mGroupNameTitleView?.imgDropdownIndicator.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
     }
-
+    
+    internal func hideListGroupView() {
+        
+        if let _childViewController = self.childViewControllers[0] as? ListGroupsViewController {
+            _childViewController.delegate = nil
+            _childViewController.removeFromParentViewController()
+        }
+        
+        if let _listGroupView = self.view.viewWithTag(TAG_LIST_GROUP_VIEW) {
+            _listGroupView.removeFromSuperview()
+        }
+        
+        mGroupNameTitleView?.imgDropdownIndicator.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
+    }
 }
 
 extension CirclesViewController : GroupLocationPresenterDelegate {
@@ -153,6 +182,16 @@ extension CirclesViewController : CreateUserViewControlerDelegate {
     func userInfoUpdateSuccessful() {
         self.mCirclePresenter.startLocationUpdates()
         self.getAllGroup()
+    }
+}
+
+extension CirclesViewController : ListGroupViewControllerDelegate {
+    func didTapRequestJoinGroup() {
+        
+    }
+    
+    func didTapCreateGroup() {
+        self.performSegue(withIdentifier: SegueIdentifier.PresentCreateNewGroupView.rawValue, sender: nil)
     }
 }
 

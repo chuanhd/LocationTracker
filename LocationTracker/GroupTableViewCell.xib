@@ -56,6 +56,9 @@
                             <constraint firstAttribute="width" constant="46" id="jTt-uW-jgy"/>
                         </constraints>
                         <state key="normal" title="Edit"/>
+                        <connections>
+                            <action selector="btnConfigurePressed:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Yxp-GJ-HXo"/>
+                        </connections>
                     </button>
                 </subviews>
                 <constraints>
@@ -68,6 +71,11 @@
                     <constraint firstItem="uPK-Pw-YAK" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="xtp-Tx-gWn"/>
                 </constraints>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="imgGroupColor" destination="uPK-Pw-YAK" id="Yld-WX-BCe"/>
+                <outlet property="lblGroupID" destination="NNy-P1-wMV" id="f8L-Di-9Z9"/>
+                <outlet property="lblGroupName" destination="def-bM-L6X" id="7Rf-Fn-Qkk"/>
+            </connections>
         </tableViewCell>
     </objects>
 </document>

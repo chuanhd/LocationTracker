@@ -8,11 +8,24 @@
 
 import UIKit
 
+protocol GroupTableViewCellDelegate : class {
+    
+}
+
 class GroupTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var lblGroupName: UILabel!
+    @IBOutlet weak var lblGroupID: UILabel!
+    @IBOutlet weak var imgGroupColor: UIImageView!
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
+        self.imgGroupColor.layer.masksToBounds = true
+        self.imgGroupColor.layer.cornerRadius = self.imgGroupColor.frame.size.width/2.0
+        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -21,4 +34,12 @@ class GroupTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    @IBAction func btnConfigurePressed(_ sender: Any) {
+        
+    }
+    
+    func bindView(withData _group: Group) {
+        self.lblGroupName.text = _group.mName
+        self.lblGroupID.text = "\(_group.mId)"
+    }
 }

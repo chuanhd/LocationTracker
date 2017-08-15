@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Mg9-j1-dVo">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Mg9-j1-dVo">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -56,7 +56,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PfU-Cz-pj8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2274" y="-680"/>
+            <point key="canvasLocation" x="1844" y="1053"/>
         </scene>
         <!--My Circle-->
         <scene sceneID="4bj-4n-44d">
@@ -121,6 +121,8 @@
                         <outlet property="_gmsMapView" destination="IY8-y7-K9E" id="4oH-Pa-Tik"/>
                         <outlet property="mMembersCollectionView" destination="SsK-R0-3nu" id="kwn-rP-Q7W"/>
                         <segue destination="7AH-q8-0I0" kind="presentation" identifier="PresentCreateNewUserView" id="DG8-Pe-M3x"/>
+                        <segue destination="fbK-Jq-80a" kind="custom" identifier="AddListGroupsOnCircleViewController" id="pLF-ZM-QEL"/>
+                        <segue destination="fto-nv-kY3" kind="show" identifier="PresentCreateNewGroupView" id="SCY-2n-jkw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mkK-Zr-TSS" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -312,6 +314,24 @@
             </objects>
             <point key="canvasLocation" x="-564" y="110.19490254872565"/>
         </scene>
+        <!--Create Group View Controller-->
+        <scene sceneID="5rP-e3-0x3">
+            <objects>
+                <viewController id="fto-nv-kY3" customClass="CreateGroupViewController" customModule="LocationTracker" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="xDc-Wa-5wk"/>
+                        <viewControllerLayoutGuide type="bottom" id="M7p-cc-YHi"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="jSs-z6-6H7">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="CfG-EB-rhS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1844" y="366"/>
+        </scene>
         <!--List Groups View Controller-->
         <scene sceneID="rOZ-6b-AgB">
             <objects>
@@ -345,6 +365,9 @@
                                                 <state key="normal" title="Create">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="btnCreateGroupPressed:" destination="fbK-Jq-80a" eventType="touchUpInside" id="CGA-9k-kLE"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -366,6 +389,9 @@
                                                 <state key="normal" title="Join">
                                                     <color key="titleColor" red="0.32372191550000001" green="0.71051764490000002" blue="0.66279280190000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="btnJoinGroupPressed:" destination="fbK-Jq-80a" eventType="touchUpInside" id="6qa-3n-WLb"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -408,7 +434,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EPN-io-Ffs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="305" y="-681"/>
+            <point key="canvasLocation" x="1844" y="-325"/>
         </scene>
         <!--Side Menu Navigation Controller-->
         <scene sceneID="b6q-Mu-ylD">
@@ -429,7 +455,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ob5-VE-CQL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1218" y="-679"/>
+            <point key="canvasLocation" x="1126" y="1053"/>
         </scene>
     </scenes>
     <resources>
