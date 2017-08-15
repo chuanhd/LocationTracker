@@ -18,14 +18,14 @@ struct Resource<T> {
     let url : URL!
     var params : Dictionary<String, Any>?
     var method : HTTPMethod = HTTPMethod.get
-    let parse:(Data) -> (ServerResponse, T?)
+    let parse:(Data) -> (ServerResponse, [T]?)
 }
 
 extension Resource {
     init(withURL url : URL,
          withMethod httpMethod : HTTPMethod = .get,
          withParams params : Dictionary<String, Any>?,
-         withParseBlock parse : @escaping (Data) -> (ServerResponse, T?)) {
+         withParseBlock parse : @escaping (Data) -> (ServerResponse, [T]?)) {
         self.url = url
         self.method = httpMethod
         self.parse = parse
@@ -103,6 +103,7 @@ enum SERVER_RESPONSE_CODE : String {
     case SUCCESS = "SUCCESS"
     case FAILURE = "FAILURE"
     case USER_NOT_EXIST = "USER_NOT_EXISTS"
+    case GROUP_NOT_EXISTS = "GROUP_NOT_EXISTS"
 }
 
 struct ServerResponse {
@@ -150,7 +151,7 @@ class ConnectionService {
         static let GROUP_ID = "groupid"
     }
     
-    class func load<T>(_ resource : Resource<T>, _ showProgress : Bool = true, completion: @escaping (_ response : ServerResponse, _ result : T?, _ error : Error?) -> ()) {
+    class func load<T>(_ resource : Resource<T>, _ showProgress : Bool = true, completion: @escaping (_ response : ServerResponse, _ result : [T]?, _ error : Error?) -> ()) {
         
         print("Unique token id: \(AppController.sharedInstance.mUniqueToken)")
         

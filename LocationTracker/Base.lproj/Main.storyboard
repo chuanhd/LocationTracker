@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Mg9-j1-dVo">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Mg9-j1-dVo">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -56,7 +56,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PfU-Cz-pj8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1844" y="1053"/>
+            <point key="canvasLocation" x="1876" y="1467"/>
         </scene>
         <!--My Circle-->
         <scene sceneID="4bj-4n-44d">
@@ -294,14 +294,14 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="354" y="1053"/>
+            <point key="canvasLocation" x="353" y="1467"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="HMc-EE-ipQ">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Mg9-j1-dVo" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="oBI-Lb-N0y">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="oBI-Lb-N0y">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -314,7 +314,7 @@
             </objects>
             <point key="canvasLocation" x="-564" y="110.19490254872565"/>
         </scene>
-        <!--Create Group View Controller-->
+        <!--New Group-->
         <scene sceneID="5rP-e3-0x3">
             <objects>
                 <viewController id="fto-nv-kY3" customClass="CreateGroupViewController" customModule="LocationTracker" customModuleProvider="target" sceneMemberID="viewController">
@@ -325,12 +325,63 @@
                     <view key="view" contentMode="scaleToFill" id="jSs-z6-6H7">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Group name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W5u-ps-B7m">
+                                <rect key="frame" x="16" y="96" width="94" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="C7N-jf-cub">
+                                <rect key="frame" x="126" y="91.5" width="233" height="30"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G0v-t3-M3O">
+                                <rect key="frame" x="16" y="140" width="88" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="9O7-GY-ExT">
+                                <rect key="frame" x="16" y="169" width="343" height="100"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="wXx-5p-RSy"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="G0v-t3-M3O" firstAttribute="leading" secondItem="W5u-ps-B7m" secondAttribute="leading" id="8Lh-Pb-lLE"/>
+                            <constraint firstItem="C7N-jf-cub" firstAttribute="leading" secondItem="W5u-ps-B7m" secondAttribute="trailing" constant="16" id="INc-vQ-5tB"/>
+                            <constraint firstItem="W5u-ps-B7m" firstAttribute="leading" secondItem="jSs-z6-6H7" secondAttribute="leadingMargin" id="THU-0y-xmm"/>
+                            <constraint firstItem="C7N-jf-cub" firstAttribute="centerY" secondItem="W5u-ps-B7m" secondAttribute="centerY" id="VWE-mT-geO"/>
+                            <constraint firstItem="W5u-ps-B7m" firstAttribute="top" secondItem="xDc-Wa-5wk" secondAttribute="bottom" constant="32" id="Yzt-iF-3Ry"/>
+                            <constraint firstItem="G0v-t3-M3O" firstAttribute="top" secondItem="W5u-ps-B7m" secondAttribute="bottom" constant="23" id="eW2-w6-0nV"/>
+                            <constraint firstItem="9O7-GY-ExT" firstAttribute="leading" secondItem="G0v-t3-M3O" secondAttribute="leading" id="ek8-Oi-Msx"/>
+                            <constraint firstItem="9O7-GY-ExT" firstAttribute="top" secondItem="G0v-t3-M3O" secondAttribute="bottom" constant="8" id="fgy-aJ-jmg"/>
+                            <constraint firstAttribute="trailing" secondItem="9O7-GY-ExT" secondAttribute="trailing" constant="16" id="mU8-xU-bWw"/>
+                            <constraint firstItem="C7N-jf-cub" firstAttribute="trailing" secondItem="jSs-z6-6H7" secondAttribute="trailingMargin" id="w59-vZ-FPz"/>
+                        </constraints>
                     </view>
+                    <navigationItem key="navigationItem" title="New Group" id="Gu0-3Z-2gv">
+                        <barButtonItem key="rightBarButtonItem" title="Create" id="VJ9-8X-pYN">
+                            <connections>
+                                <action selector="btnCreateNewGroupPressed:" destination="fto-nv-kY3" id="3Fn-Sq-MQt"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="txtGroupName" destination="C7N-jf-cub" id="7sY-Cz-WbK"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CfG-EB-rhS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1844" y="366"/>
+            <point key="canvasLocation" x="1605.5999999999999" y="104.7976011994003"/>
         </scene>
         <!--List Groups View Controller-->
         <scene sceneID="rOZ-6b-AgB">
@@ -434,14 +485,14 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EPN-io-Ffs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1844" y="-325"/>
+            <point key="canvasLocation" x="1265" y="-756"/>
         </scene>
         <!--Side Menu Navigation Controller-->
         <scene sceneID="b6q-Mu-ylD">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ecO-fH-Nsx" customClass="UISideMenuNavigationController" customModule="SideMenu" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="cVy-1u-ILi">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="cVy-1u-ILi">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -455,7 +506,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ob5-VE-CQL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1126" y="1053"/>
+            <point key="canvasLocation" x="1030" y="1467"/>
         </scene>
     </scenes>
     <resources>

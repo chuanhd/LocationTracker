@@ -30,7 +30,7 @@ class ListGroupsViewController: UIViewController {
         
         self.btnJoinGroup.layer.masksToBounds = true
         self.btnJoinGroup.layer.borderWidth = 2.0
-        self.btnJoinGroup.layer.borderColor = UIColor(red: 83, green: 181, blue: 169, alpha: 1.0).cgColor
+        self.btnJoinGroup.layer.borderColor = UIColor(red: 83/255.0, green: 181/255.0, blue: 169/255.0, alpha: 1).cgColor
         self.btnJoinGroup.layer.cornerRadius = 10.0
         
         self.btnCreateGroup.layer.masksToBounds = true
@@ -75,6 +75,51 @@ class ListGroupsViewController: UIViewController {
         
         delegateMethod()
     }
+    
+    func getAllGroups() {
+        ConnectionService.load(Group.getAllGroups, true) {(_ response : ServerResponse, _ _groups : [Group]?, _ error : Error?) in
+            switch response.code {
+            case .SUCCESS:
+                self.mGroups = _groups!
+                self.reflectDataOnView()
+                break
+            case .GROUP_NOT_EXISTS:
+                break
+            case .FAILURE:
+                break
+            default:
+                break
+            }
+        }
+    }
+    
+    internal func reflectDataOnView() {
+        self.tblListGroups.reloadData()
+    }
+    
+    internal func promptRequestCreateNewGroupAlert() {
+        let _newGroupRequestAlert = UIAlertController(title: "New Group", message: "You are not in any group. You could join or create a new group", preferredStyle: UIAlertControllerStyle.alert)
+        
+        let _joinAGroupAction = UIAlertAction(title: "Join", style: UIAlertActionStyle.default) { ( action ) in
+            guard let delegateMethod = self.delegate?.didTapRequestJoinGroup else {
+                return
+            }
+            
+            delegateMethod()
+        }
+        _newGroupRequestAlert.addAction(_joinAGroupAction)
+        
+        let _createNewGroupAction = UIAlertAction(title: "Create", style: UIAlertActionStyle.default) { ( action ) in
+            guard let delegateMethod = self.delegate?.didTapCreateGroup else {
+                return
+            }
+            
+            delegateMethod()
+        }
+        _newGroupRequestAlert.addAction(_createNewGroupAction)
+        
+        self.present(_newGroupRequestAlert, animated: true, completion: nil)
+    }
 }
 
 extension ListGroupsViewController : UITableViewDelegate {
@@ -100,3 +145,4 @@ extension ListGroupsViewController : UITableViewDataSource {
         return cell
     }
 }
+

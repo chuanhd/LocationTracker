@@ -8,8 +8,14 @@
 
 import UIKit
 
+protocol CreateGroupViewControllerDelegate : class {
+    func createNewGroupSuccessful()
+}
+
 class CreateGroupViewController: UIViewController {
 
+    @IBOutlet weak var txtGroupName: UITextField!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -32,4 +38,23 @@ class CreateGroupViewController: UIViewController {
     }
     */
 
+    @IBAction func btnCreateNewGroupPressed(_ sender: Any) {
+        print("btnCreateNewGroupPressed")
+        
+        createNewGroup()
+        
+    }
+    
+    internal func createNewGroup() {
+        ConnectionService.load(Group.createNewGroupResource(txtGroupName.text, "FFFFFF"), true) {(_ response : ServerResponse, _ _groups : [Group]?, _ error : Error?) in
+            switch response.code {
+            case .SUCCESS:
+                break
+            case .FAILURE:
+                break
+            default:
+                break
+            }
+        }
+    }
 }

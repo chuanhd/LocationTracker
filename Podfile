@@ -17,6 +17,7 @@ target 'LocationTracker' do
   pod 'Whisper'
   pod 'IQKeyboardManagerSwift', '4.0.10'
   pod 'RappleProgressHUD'
+  pod 'ChromaColorPicker'
 
   # Pods for LocationTracker
 

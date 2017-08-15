@@ -28,21 +28,24 @@ class CirclesViewController: UIViewController, SegueHandler {
     private let mCircleInfoPresenter = GroupInfoPresenter()
     
     private var mGroupNameTitleView : GroupNameTitleView?
+    internal var mListGroupViewController : ListGroupsViewController!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         mGroupNameTitleView = Bundle.main.loadNibNamed("GroupNameTitleView", owner: self, options: nil)?.first as? GroupNameTitleView
         self.navigationItem.titleView = mGroupNameTitleView
         if let _groupNameTitleView = mGroupNameTitleView {
             let _tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(CirclesViewController.handleTapOnGroupTitleView))
             _groupNameTitleView.addGestureRecognizer(_tapGestureRecognizer)
         }
+
+        self.mListGroupViewController = self.storyboard!.instantiateViewController(withIdentifier: "ListGroupsViewController") as! ListGroupsViewController
         
-        ConnectionService.load(UserProfile.login, true) {(_ response : ServerResponse, _ myProfile : UserProfile?, _ error : Error?) in
+        ConnectionService.load(UserProfile.login, true) {(_ response : ServerResponse, _ myProfile : [UserProfile]?, _ error : Error?) in
             switch response.code {
             case .SUCCESS:
-                self.getAllGroup()
+                self.mListGroupViewController.getAllGroups()
                 self.mCirclePresenter.startLocationUpdates()
                 break
             case .USER_NOT_EXIST:
@@ -113,19 +116,6 @@ class CirclesViewController: UIViewController, SegueHandler {
         }
     }
     
-    internal func getAllGroup() {
-//        ConnectionService.load(Group.getAllGroups, true) {(_ response : ServerResponse, _ myProfile : Any?, _ error : Error?) in
-//            switch response.code {
-//            case .SUCCESS:
-//                break
-//            case .FAILURE:
-//                break
-//            default:
-//                break
-//            }
-//        }
-    }
-    
     @objc private func handleTapOnGroupTitleView(_ gestureRecognizer : UITapGestureRecognizer) {
         print("Tap on title view")
         //TODO: create list group view controller and add its view to circle view controller
@@ -138,15 +128,15 @@ class CirclesViewController: UIViewController, SegueHandler {
     }
 
     internal func showListGroupView() {
-        let _listGroupViewController = self.storyboard!.instantiateViewController(withIdentifier: "ListGroupsViewController") as! ListGroupsViewController
-        _listGroupViewController.view.frame = CGRect(x: 0, y: 64, width: self.view.frame.size.width, height: self.view.frame.size.height * 0.5)
-        _listGroupViewController.delegate = self
-        self.addChildViewController(_listGroupViewController)
-        self.view.addSubview(_listGroupViewController.view)
-        _listGroupViewController.didMove(toParentViewController: self)
+//        let _listGroupViewController = self.storyboard!.instantiateViewController(withIdentifier: "ListGroupsViewController") as! ListGroupsViewController
+        mListGroupViewController.view.frame = CGRect(x: 0, y: 64, width: self.view.frame.size.width, height: self.view.frame.size.height * 0.5)
+        mListGroupViewController.delegate = self
+        self.addChildViewController(mListGroupViewController)
+        self.view.addSubview(mListGroupViewController.view)
+        mListGroupViewController.didMove(toParentViewController: self)
         
-        self.view.bringSubview(toFront: _listGroupViewController.view)
-        _listGroupViewController.view.tag = TAG_LIST_GROUP_VIEW
+        self.view.bringSubview(toFront: mListGroupViewController.view)
+        mListGroupViewController.view.tag = TAG_LIST_GROUP_VIEW
         
         mGroupNameTitleView?.imgDropdownIndicator.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
     }
@@ -181,16 +171,17 @@ extension CirclesViewController : GroupLocationPresenterDelegate {
 extension CirclesViewController : CreateUserViewControlerDelegate {
     func userInfoUpdateSuccessful() {
         self.mCirclePresenter.startLocationUpdates()
-        self.getAllGroup()
+        self.mListGroupViewController.getAllGroups()
     }
 }
 
 extension CirclesViewController : ListGroupViewControllerDelegate {
     func didTapRequestJoinGroup() {
-        
+        hideListGroupView()
     }
     
     func didTapCreateGroup() {
+        self.hideListGroupView()
         self.performSegue(withIdentifier: SegueIdentifier.PresentCreateNewGroupView.rawValue, sender: nil)
     }
 }

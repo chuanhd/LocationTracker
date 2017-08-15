@@ -85,7 +85,7 @@ class CreateUserViewController: UIViewController {
                     return
                 }
                 
-                ConnectionService.load(UserProfile.createUpdateMyInfoResource(self.txtEmail.text, self.txtName.text, self.txtPhoneNumber.text, url?.absoluteString)) { (_ response : ServerResponse, _ myProfile : UserProfile?, _ error : Error?) in
+                ConnectionService.load(UserProfile.createUpdateMyInfoResource(self.txtEmail.text, self.txtName.text, self.txtPhoneNumber.text, url?.absoluteString)) { (_ response : ServerResponse, _ myProfile : [UserProfile]?, _ error : Error?) in
                     
                     DispatchQueue.main.async {
                         switch response.code {

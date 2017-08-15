@@ -31,8 +31,8 @@ extension Group {
                                                     switch _code {
                                                     case .SUCCESS:
                                                         return (ServerResponse(withCode : .SUCCESS, withStatus : _status), nil)
-                                                    case .USER_NOT_EXIST:
-                                                        return (ServerResponse(withCode : .USER_NOT_EXIST, withStatus : _status), nil)
+                                                    case .GROUP_NOT_EXISTS:
+                                                        return (ServerResponse(withCode : .GROUP_NOT_EXISTS, withStatus : _status), nil)
                                                     default:
                                                         break
                                                     }
