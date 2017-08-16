@@ -102,6 +102,7 @@ extension App.Group : Url {
 enum SERVER_RESPONSE_CODE : String {
     case SUCCESS = "SUCCESS"
     case FAILURE = "FAILURE"
+    case WRONG_DATA_PARSING = "WRONG_DATA_PARSING" // There are something wrong with data structure
     case USER_NOT_EXIST = "USER_NOT_EXISTS"
     case GROUP_NOT_EXISTS = "GROUP_NOT_EXISTS"
 }
@@ -149,13 +150,16 @@ class ConnectionService {
         static let GROUP_NAME = "groupname"
         static let GROUP_COLOR = "groupcolor"
         static let GROUP_ID = "groupid"
+        static let DESCRIPTION = "description"
     }
     
     class func load<T>(_ resource : Resource<T>, _ showProgress : Bool = true, completion: @escaping (_ response : ServerResponse, _ result : [T]?, _ error : Error?) -> ()) {
         
         print("Unique token id: \(AppController.sharedInstance.mUniqueToken)")
         
-        RappleActivityIndicatorView.startAnimating(attributes: RappleModernAttributes)
+        if showProgress {
+            RappleActivityIndicatorView.startAnimating(attributes: RappleModernAttributes)
+        }
         
         Alamofire.request(resource.url, method: resource.method, parameters : resource.params).validate().responseJSON { response in
             print("Request: \(String(describing: response.request))")   // original url request
@@ -175,9 +179,12 @@ class ConnectionService {
             switch response.result {
             case .success:
                 
-                DispatchQueue.main.async {
-                    RappleActivityIndicatorView.stopAnimation(completionIndicator: .success, completionLabel: "Completed.", completionTimeout: 1.0)
+                if showProgress {
+                    DispatchQueue.main.async {
+                        RappleActivityIndicatorView.stopAnimation(completionIndicator: .success, completionLabel: "Completed.", completionTimeout: 1.0)
+                    }
                 }
+                
                 
                 print("Validation Successful")
                 if let data = response.data {
@@ -186,9 +193,12 @@ class ConnectionService {
                 }
             case .failure(let error):
                 print(error)
-                DispatchQueue.main.async {
-                    RappleActivityIndicatorView.stopAnimation(completionIndicator: .failed, completionLabel: "Failed.", completionTimeout: 1.0)
+                if showProgress {
+                    DispatchQueue.main.async {
+                        RappleActivityIndicatorView.stopAnimation(completionIndicator: .failed, completionLabel: "Failed.", completionTimeout: 1.0)
+                    }
                 }
+                
                 completion(ServerResponse(), nil, error)
             }
         }

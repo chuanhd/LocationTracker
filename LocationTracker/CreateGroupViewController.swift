@@ -9,12 +9,15 @@
 import UIKit
 
 protocol CreateGroupViewControllerDelegate : class {
-    func createNewGroupSuccessful()
+    func createNewGroupSuccessful(withGroupId _groupId : Int)
 }
 
 class CreateGroupViewController: UIViewController {
 
     @IBOutlet weak var txtGroupName: UITextField!
+    @IBOutlet weak var txtDesc: UITextView!
+    
+    weak var delegate : CreateGroupViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,9 +49,16 @@ class CreateGroupViewController: UIViewController {
     }
     
     internal func createNewGroup() {
-        ConnectionService.load(Group.createNewGroupResource(txtGroupName.text, "FFFFFF"), true) {(_ response : ServerResponse, _ _groups : [Group]?, _ error : Error?) in
+        ConnectionService.load(Group.createNewGroupResource(txtGroupName.text, txtDesc.text, "FFFFFF"), true) {(_ response : ServerResponse, _ _groupIds : [Int]?, _ error : Error?) in
             switch response.code {
             case .SUCCESS:
+                
+                if let createSuccessful = self.delegate?.createNewGroupSuccessful(withGroupId:), let _groupId = _groupIds?[0] {
+                    createSuccessful(_groupId)
+                }
+                
+                self.dismiss(animated: true, completion: nil)
+                
                 break
             case .FAILURE:
                 break

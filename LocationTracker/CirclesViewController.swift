@@ -94,6 +94,11 @@ class CirclesViewController: UIViewController, SegueHandler {
         case .ShowSideMenuView:
             break
         case .PresentCreateNewGroupView:
+            guard let _dest = segue.destination as? CreateGroupViewController else {
+                fatalError("CreateUserViewController not found");
+            }
+            
+            _dest.delegate = self
             break
         }
     }
@@ -183,6 +188,26 @@ extension CirclesViewController : ListGroupViewControllerDelegate {
     func didTapCreateGroup() {
         self.hideListGroupView()
         self.performSegue(withIdentifier: SegueIdentifier.PresentCreateNewGroupView.rawValue, sender: nil)
+    }
+}
+
+extension CirclesViewController : CreateGroupViewControllerDelegate {
+    func createNewGroupSuccessful(withGroupId _groupId: Int) {
+        self.getGroupDetails(withGroupId: _groupId)
+    }
+    
+    func getGroupDetails(withGroupId _groupId : Int) {
+        ConnectionService.load(Group.createGetGroupDetailResource(_groupId)) { (_ response : ServerResponse, _ groups : [Group]?, _ error : Error?) in
+            switch response.code {
+            case .SUCCESS:
+                break
+            case .FAILURE:
+                print("Fail to get group details")
+                break
+            default:
+                break
+            }
+        }
     }
 }
 
