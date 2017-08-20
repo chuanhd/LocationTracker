@@ -87,8 +87,8 @@ extension App.Group : Url {
         switch self {
         case .all:
             return URL(string : "api/listgroup", relativeTo: BASE_URL)!
-        case .get(let id):
-            return URL(string : "api/getgroup/\(id)", relativeTo: BASE_URL)!
+        case .get(let _):
+            return URL(string : "api/getgroup", relativeTo: BASE_URL)!
         case .createGroup:
             return URL(string : "api/group", relativeTo: BASE_URL)!
         case .addMember():
@@ -139,7 +139,7 @@ struct UserFriendlyError : Error {
 class ConnectionService {
     
     struct SERVER_REQ_KEY {
-        static let DEVICE_ID = "deviceid"
+        static let DEVICE_ID = "userid"
         static let USERNAME = "username"
         static let EMAIL = "email"
         static let PHONE_NUMBER = "phonenumber"

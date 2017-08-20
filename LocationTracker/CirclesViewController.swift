@@ -41,6 +41,9 @@ class CirclesViewController: UIViewController, SegueHandler {
         }
 
         self.mListGroupViewController = self.storyboard!.instantiateViewController(withIdentifier: "ListGroupsViewController") as! ListGroupsViewController
+        self.mListGroupViewController.loadView()
+        self.mListGroupViewController.viewDidLoad()
+        self.mListGroupViewController.delegate = self
         
         ConnectionService.load(UserProfile.login, true) {(_ response : ServerResponse, _ myProfile : [UserProfile]?, _ error : Error?) in
             switch response.code {

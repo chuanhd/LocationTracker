@@ -11,8 +11,14 @@ import SwiftyJSON
 import Alamofire
 
 class Group {
-    public var mId : Int = -1
+    public var mId : String = ""
     public var mName : String = ""
+    
+    init(withID _id : String, withName _name : String) {
+        self.mId = _id;
+        self.mName = _name;
+    }
+    
 }
 
 extension Group {
@@ -30,7 +36,23 @@ extension Group {
                                                     let _status = _json["status"].string{
                                                     switch _code {
                                                     case .SUCCESS:
-                                                        return (ServerResponse(withCode : .SUCCESS, withStatus : _status), nil)
+                                                        
+                                                        var groups = [Group]()
+                                                        
+                                                        if let _groupJSONs = _json["data"].array {
+                                                            for _groupJSON in _groupJSONs {
+                                                                let _groupId = _groupJSON["groupid"].stringValue
+                                                                let _groupName = _groupJSON["groupname"].stringValue
+                                                                
+                                                                let _group = Group(withID: _groupId, withName: _groupName)
+                                                                
+                                                                groups.append(_group)
+                                                                
+                                                            }
+                                                        }
+                                            
+                                                        
+                                                        return (ServerResponse(withCode : .SUCCESS, withStatus : _status), groups)
                                                     case .GROUP_NOT_EXISTS:
                                                         return (ServerResponse(withCode : .GROUP_NOT_EXISTS, withStatus : _status), nil)
                                                     default:
@@ -79,7 +101,7 @@ extension Group {
         
         return Resource<Group>(withURL : App.Group.get(id: groupId).url,
                                withMethod : HTTPMethod.get,
-                               withParams : nil) { data in
+                               withParams : [ConnectionService.SERVER_REQ_KEY.GROUP_ID : groupId]) { data in
                                 
                                 let _json = JSON(data : data)
                                 

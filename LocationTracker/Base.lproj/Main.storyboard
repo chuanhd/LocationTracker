@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Mg9-j1-dVo">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Mg9-j1-dVo">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -121,7 +121,7 @@
                         <outlet property="_gmsMapView" destination="IY8-y7-K9E" id="4oH-Pa-Tik"/>
                         <outlet property="mMembersCollectionView" destination="SsK-R0-3nu" id="kwn-rP-Q7W"/>
                         <segue destination="7AH-q8-0I0" kind="presentation" identifier="PresentCreateNewUserView" id="DG8-Pe-M3x"/>
-                        <segue destination="fbK-Jq-80a" kind="custom" identifier="AddListGroupsOnCircleViewController" id="pLF-ZM-QEL"/>
+                        <segue destination="fbK-Jq-80a" kind="presentation" identifier="AddListGroupsOnCircleViewController" id="pLF-ZM-QEL"/>
                         <segue destination="fto-nv-kY3" kind="show" identifier="PresentCreateNewGroupView" id="SCY-2n-jkw"/>
                     </connections>
                 </viewController>
@@ -479,14 +479,14 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="btnCreateGroup" destination="gE7-DW-zMN" id="eRO-G7-RoP"/>
-                        <outlet property="btnJoinGroup" destination="Tys-o1-DoI" id="dNf-9s-J4Y"/>
-                        <outlet property="tblListGroups" destination="mdi-Jk-wEL" id="ywN-ka-LYB"/>
+                        <outlet property="btnCreateGroup" destination="gE7-DW-zMN" id="6Wh-mA-M4E"/>
+                        <outlet property="btnJoinGroup" destination="Tys-o1-DoI" id="NYZ-RK-Kt3"/>
+                        <outlet property="tblListGroups" destination="mdi-Jk-wEL" id="kKi-YN-InN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EPN-io-Ffs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1265" y="-756"/>
+            <point key="canvasLocation" x="1273" y="-756"/>
         </scene>
         <!--Side Menu Navigation Controller-->
         <scene sceneID="b6q-Mu-ylD">

@@ -23,6 +23,12 @@ class ListGroupsViewController: UIViewController {
     
     var mGroups = [Group]()
     
+    override func loadView() {
+        super.loadView()
+        
+        
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -41,6 +47,12 @@ class ListGroupsViewController: UIViewController {
         self.tblListGroups.register(GroupTableViewCell.self, forCellReuseIdentifier: Constants.CellIdentifier.GroupTableViewCellIdentifier)
         self.tblListGroups.delegate = self
         self.tblListGroups.dataSource = self
+//        self.tblListGroups.reloadData()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated);
+        
         self.tblListGroups.reloadData()
     }
 
