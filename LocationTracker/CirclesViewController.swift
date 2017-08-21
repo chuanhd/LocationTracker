@@ -20,6 +20,7 @@ class CirclesViewController: UIViewController, SegueHandler {
         case PresentCreateNewUserView  = "PresentCreateNewUserView"
         case ShowSideMenuView = "ShowSideMenuView"
         case PresentCreateNewGroupView = "PresentCreateNewGroupView"
+        case PresentJoinGroupView = "PresentJoinGroupView"
     }
     
     internal let _myLocationMarker = GMSMarker();
@@ -98,10 +99,18 @@ class CirclesViewController: UIViewController, SegueHandler {
             break
         case .PresentCreateNewGroupView:
             guard let _dest = segue.destination as? CreateGroupViewController else {
-                fatalError("CreateUserViewController not found");
+                fatalError("CreateGroupViewController not found");
             }
             
             _dest.delegate = self
+            break
+        case .PresentJoinGroupView:
+            guard let _dest = segue.destination as? JoinGroupViewController else {
+                fatalError("JoinGroupViewController not found");
+            }
+            
+            _dest.modalPresentationStyle = .overCurrentContext
+            
             break
         }
     }
@@ -185,12 +194,19 @@ extension CirclesViewController : CreateUserViewControlerDelegate {
 
 extension CirclesViewController : ListGroupViewControllerDelegate {
     func didTapRequestJoinGroup() {
-        hideListGroupView()
+        self.hideListGroupView()
+        self.performSegue(withIdentifier: SegueIdentifier.PresentJoinGroupView.rawValue, sender: nil)
+        
     }
     
     func didTapCreateGroup() {
         self.hideListGroupView()
         self.performSegue(withIdentifier: SegueIdentifier.PresentCreateNewGroupView.rawValue, sender: nil)
+    }
+    
+    func didSelectGroup(_ _group : Group) {
+        self.hideListGroupView()
+        self.getGroupDetails(withGroupId: _group.mId)
     }
 }
 
@@ -199,7 +215,7 @@ extension CirclesViewController : CreateGroupViewControllerDelegate {
         self.getGroupDetails(withGroupId: _groupId)
     }
     
-    func getGroupDetails(withGroupId _groupId : Int) {
+    func getGroupDetails(withGroupId _groupId : String) {
         ConnectionService.load(Group.createGetGroupDetailResource(_groupId)) { (_ response : ServerResponse, _ groups : [Group]?, _ error : Error?) in
             switch response.code {
             case .SUCCESS:

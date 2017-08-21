@@ -11,6 +11,7 @@ import UIKit
 protocol ListGroupViewControllerDelegate : class {
     func didTapRequestJoinGroup();
     func didTapCreateGroup();
+    func didSelectGroup(_ _group : Group);
 }
 
 class ListGroupsViewController: UIViewController {
@@ -157,7 +158,13 @@ class ListGroupsViewController: UIViewController {
 
 extension ListGroupsViewController : UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let delegateMethod = self.delegate?.didSelectGroup else {
+            return
+        }
         
+        let _group = mGroups[indexPath.row]
+        
+        delegateMethod(_group)
     }
 }
 

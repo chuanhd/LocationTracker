@@ -20,6 +20,7 @@
 		AC4604791F41F07600A348B5 /* CommonTableDatasource.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4604781F41F07600A348B5 /* CommonTableDatasource.swift */; };
 		AC46047B1F41F6C200A348B5 /* GroupNameTitleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC46047A1F41F6C200A348B5 /* GroupNameTitleView.xib */; };
 		AC46047D1F41F77000A348B5 /* GroupNameTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC46047C1F41F77000A348B5 /* GroupNameTitleView.swift */; };
+		AC46047F1F4B396800A348B5 /* JoinGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC46047E1F4B396800A348B5 /* JoinGroupViewController.swift */; };
 		AC52DFB21F20FFC60032F853 /* Consts.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC52DFB11F20FFC60032F853 /* Consts.swift */; };
 		AC52DFB71F21024C0032F853 /* CirclesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC52DFB61F21024C0032F853 /* CirclesViewController.swift */; };
 		AC52DFBB1F2105620032F853 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC52DFBA1F2105620032F853 /* CoreLocation.framework */; };
@@ -78,6 +79,7 @@
 		AC4604781F41F07600A348B5 /* CommonTableDatasource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonTableDatasource.swift; sourceTree = "<group>"; };
 		AC46047A1F41F6C200A348B5 /* GroupNameTitleView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GroupNameTitleView.xib; sourceTree = "<group>"; };
 		AC46047C1F41F77000A348B5 /* GroupNameTitleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupNameTitleView.swift; sourceTree = "<group>"; };
+		AC46047E1F4B396800A348B5 /* JoinGroupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JoinGroupViewController.swift; sourceTree = "<group>"; };
 		AC52DFB11F20FFC60032F853 /* Consts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Consts.swift; sourceTree = "<group>"; };
 		AC52DFB61F21024C0032F853 /* CirclesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CirclesViewController.swift; sourceTree = "<group>"; };
 		AC52DFBA1F2105620032F853 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -200,6 +202,7 @@
 				850A0FFB1F28A89E0001DC6E /* CreateUserViewController.swift */,
 				85E2EC061F41894C00CDBF29 /* CreateGroupViewController.swift */,
 				85E2EC081F41AD4500CDBF29 /* ListGroupsViewController.swift */,
+				AC46047E1F4B396800A348B5 /* JoinGroupViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -625,6 +628,7 @@
 				85E2EC091F41AD4600CDBF29 /* ListGroupsViewController.swift in Sources */,
 				AC98FEA21F24FEC200261588 /* GroupInfoPresenter.swift in Sources */,
 				AC46047D1F41F77000A348B5 /* GroupNameTitleView.swift in Sources */,
+				AC46047F1F4B396800A348B5 /* JoinGroupViewController.swift in Sources */,
 				AC98FEA01F24FDF400261588 /* AppController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

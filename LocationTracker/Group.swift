@@ -97,7 +97,7 @@ extension Group {
         }
     }
     
-    static func createGetGroupDetailResource(_ groupId : Int!) -> Resource<Group> {
+    static func createGetGroupDetailResource(_ groupId : String!) -> Resource<Group> {
         
         return Resource<Group>(withURL : App.Group.get(id: groupId).url,
                                withMethod : HTTPMethod.get,
