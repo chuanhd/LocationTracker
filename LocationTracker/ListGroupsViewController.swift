@@ -18,10 +18,29 @@ class ListGroupsViewController: UIViewController {
     @IBOutlet weak var tblListGroups: UITableView!
     @IBOutlet weak var btnJoinGroup: UIButton!
     @IBOutlet weak var btnCreateGroup: UIButton!
+    @IBOutlet weak var constraintTableHeight : NSLayoutConstraint!
     
     weak var delegate : ListGroupViewControllerDelegate? = nil
     
-    var mGroups = [Group]()
+    var mGroups = [Group]() {
+        didSet {
+            let _numOfItems = mGroups.count
+            var _tableHeight : CGFloat = CGFloat(_numOfItems) * CGFloat(60.0)
+            if _tableHeight == 0 {
+                _tableHeight = 60
+            } else if (_tableHeight > self.view.frame.size.height * 0.5) {
+                _tableHeight = self.view.frame.size.height * 0.5
+            }
+            
+            self.constraintTableHeight.constant = _tableHeight
+            
+            DispatchQueue.main.async {
+                self.view.setNeedsLayout()
+                self.view.layoutIfNeeded()
+            }
+            
+        }
+    }
     
     override func loadView() {
         super.loadView()
@@ -44,7 +63,8 @@ class ListGroupsViewController: UIViewController {
         self.btnCreateGroup.layer.borderColor = UIColor.white.cgColor
         self.btnCreateGroup.layer.cornerRadius = 10.0
         
-        self.tblListGroups.register(GroupTableViewCell.self, forCellReuseIdentifier: Constants.CellIdentifier.GroupTableViewCellIdentifier)
+//        self.tblListGroups.register(GroupTableViewCell.self, forCellReuseIdentifier: Constants.CellIdentifier.GroupTableViewCellIdentifier)
+        self.tblListGroups.register(UINib(nibName: "GroupTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: Constants.CellIdentifier.GroupTableViewCellIdentifier)
         self.tblListGroups.delegate = self
         self.tblListGroups.dataSource = self
 //        self.tblListGroups.reloadData()
@@ -53,7 +73,7 @@ class ListGroupsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated);
         
-        self.tblListGroups.reloadData()
+//        self.tblListGroups.reloadData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -96,6 +116,7 @@ class ListGroupsViewController: UIViewController {
                 self.reflectDataOnView()
                 break
             case .GROUP_NOT_EXISTS:
+                self.promptRequestCreateNewGroupAlert()
                 break
             case .FAILURE:
                 break
@@ -141,6 +162,10 @@ extension ListGroupsViewController : UITableViewDelegate {
 }
 
 extension ListGroupsViewController : UITableViewDataSource {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 60
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.mGroups.count
     }
