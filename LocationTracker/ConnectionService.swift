@@ -40,10 +40,10 @@ protocol Url {
 enum App {
     enum Group {
         case all
-        case get(id : Int)
+        case get
         case createGroup
-        case addMember()
-        case removeMember()
+        case addMember
+        case removeMember
     }
     
     enum User {
@@ -87,7 +87,7 @@ extension App.Group : Url {
         switch self {
         case .all:
             return URL(string : "api/listgroup", relativeTo: BASE_URL)!
-        case .get(let _):
+        case .get:
             return URL(string : "api/getgroup", relativeTo: BASE_URL)!
         case .createGroup:
             return URL(string : "api/group", relativeTo: BASE_URL)!

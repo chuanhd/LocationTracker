@@ -211,12 +211,12 @@ extension CirclesViewController : ListGroupViewControllerDelegate {
 }
 
 extension CirclesViewController : CreateGroupViewControllerDelegate {
-    func createNewGroupSuccessful(withGroupId _groupId: Int) {
+    func createNewGroupSuccessful(withGroupId _groupId: String!) {
         self.getGroupDetails(withGroupId: _groupId)
     }
     
     func getGroupDetails(withGroupId _groupId : String) {
-        ConnectionService.load(Group.createGetGroupDetailResource(_groupId)) { (_ response : ServerResponse, _ groups : [Group]?, _ error : Error?) in
+        ConnectionService.load(Group.createGetGroupDetailResource(_groupId)) { (_ response : ServerResponse, _ groups : [UserProfile]?, _ error : Error?) in
             switch response.code {
             case .SUCCESS:
                 break

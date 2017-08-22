@@ -11,13 +11,15 @@ import SwiftyJSON
 import Alamofire
 
 class UserProfile {
-    public var mId : Int = -1
+    public var mId : String = ""
+    public var mUsername : String = ""
     public var mAvatarURLStr : String = ""
     public var mLatitude : Float = -1
     public var mLongtitude : Float = -1
         
-    init(withId _id : Int, withAvatar _avatarURLStr : String, withLat _lat : Float, withLong _long : Float) {
+    init(withId _id : String, withAvatar _avatarURLStr : String, withName _name : String, withLat _lat : Float, withLong _long : Float) {
         mId = _id
+        mUsername = _name
         mAvatarURLStr = _avatarURLStr
         mLatitude = _lat
         mLongtitude = _long

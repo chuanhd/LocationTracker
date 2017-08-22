@@ -13,6 +13,7 @@ import Alamofire
 class Group {
     public var mId : String = ""
     public var mName : String = ""
+    public var mUsers = [UserProfile]()
     
     init(withID _id : String, withName _name : String) {
         self.mId = _id;
@@ -63,12 +64,12 @@ extension Group {
                                                 return (ServerResponse(), nil)
     }
     
-    static func createNewGroupResource(_ name : String!, _ desc : String!, _ colorHex : String!) -> Resource<Int> {
+    static func createNewGroupResource(_ name : String!, _ desc : String!, _ colorHex : String!) -> Resource<String> {
         let params : [String : Any] = [ConnectionService.SERVER_REQ_KEY.DEVICE_ID : AppController.sharedInstance.mUniqueToken,
                                        ConnectionService.SERVER_REQ_KEY.GROUP_NAME : name,
                                        ConnectionService.SERVER_REQ_KEY.DESCRIPTION : desc]
         
-        return Resource<Int>(withURL : App.Group.createGroup.url,
+        return Resource<String>(withURL : App.Group.createGroup.url,
                                      withMethod : HTTPMethod.post,
                                      withParams : params) { data in
                                         
@@ -83,7 +84,7 @@ extension Group {
                                             switch _code {
                                             case .SUCCESS:
                                                 
-                                                let groupId = _json["data"][0]["groupid"].intValue
+                                                let groupId = _json["data"][0]["groupid"].stringValue
                                                 
                                                 return (ServerResponse(withCode : .SUCCESS, withStatus : _status), [groupId])
                                             case .FAILURE:
@@ -97,9 +98,9 @@ extension Group {
         }
     }
     
-    static func createGetGroupDetailResource(_ groupId : String!) -> Resource<Group> {
+    static func createGetGroupDetailResource(_ groupId : String!) -> Resource<UserProfile> {
         
-        return Resource<Group>(withURL : App.Group.get(id: groupId).url,
+        return Resource<UserProfile>(withURL : App.Group.get.url,
                                withMethod : HTTPMethod.get,
                                withParams : [ConnectionService.SERVER_REQ_KEY.GROUP_ID : groupId]) { data in
                                 
@@ -107,13 +108,31 @@ extension Group {
                                 
                                 print("JSON: \(_json)") // serialized json response
                                 
-                                
                                 if let _codeStr = _json["code"].string,
                                     let _code = SERVER_RESPONSE_CODE(rawValue: _codeStr),
                                     let _status = _json["status"].string{
                                     switch _code {
                                     case .SUCCESS:
-                                        return (ServerResponse(withCode : .SUCCESS, withStatus : _status), nil)
+                                        
+                                        var users = [UserProfile]()
+                                        
+                                        if let _userJSONs = _json["data"].array {
+                                            for _userJSON in _userJSONs {
+                                                let _userId = _userJSON["userid"].stringValue
+                                                let _userName = _userJSON["username"].stringValue
+                                                let _userLat = _userJSON["lat"].floatValue
+                                                let _userLong = _userJSON["lon"].floatValue
+                                                let _userImage = _userJSON["userimage"].stringValue
+                                                
+                                                let _user = UserProfile(withId: _userId, withAvatar: _userImage, withName: _userName, withLat: _userLat, withLong: _userLong)
+                                                
+                                                users.append(_user)
+                                                
+                                                
+                                            }
+                                        }
+                                        
+                                        return (ServerResponse(withCode : .SUCCESS, withStatus : _status), users)
                                     case .FAILURE:
                                         return (ServerResponse(withCode : .FAILURE, withStatus : _status), nil)
                                     default:
