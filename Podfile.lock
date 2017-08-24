@@ -5,6 +5,7 @@ PODS:
   - AWSCore (2.5.9)
   - AWSS3 (2.5.9):
     - AWSCore (= 2.5.9)
+  - ChromaColorPicker (1.5.1)
   - GoogleMaps (2.3.1):
     - GoogleMaps/Maps (= 2.3.1)
   - GoogleMaps/Base (2.3.1)
@@ -15,6 +16,9 @@ PODS:
   - IQKeyboardManagerSwift (4.0.10)
   - Locksmith (3.0.0)
   - RappleProgressHUD (2.3.1)
+  - SDWebImage (4.1.0):
+    - SDWebImage/Core (= 4.1.0)
+  - SDWebImage/Core (4.1.0)
   - SideMenu (2.3.3)
   - SwiftyJSON (3.1.4)
   - Validator (2.1.1)
@@ -24,11 +28,13 @@ DEPENDENCIES:
   - Alamofire
   - AWSCognito
   - AWSS3
+  - ChromaColorPicker
   - GoogleMaps
   - GooglePlaces
   - IQKeyboardManagerSwift (= 4.0.10)
   - Locksmith
   - RappleProgressHUD
+  - SDWebImage (~> 4.0)
   - SideMenu
   - SwiftyJSON
   - Validator (from `https://github.com/adamwaite/Validator.git`, branch `master`)
@@ -49,16 +55,18 @@ SPEC CHECKSUMS:
   AWSCognito: 5dfe4120e7f77b2e77396b4532e4aacacc4ae08d
   AWSCore: c71840dd51f271dc0af8de8fd6f352767ebde8b4
   AWSS3: c36b91edb50ccd676be4a92836bb72f0c2ac312b
+  ChromaColorPicker: cc7fc1d92569a8a9198fe89d9a420147e508462c
   GoogleMaps: c66a71058b9b1294bcdd5463a68e357fa50c079f
   GooglePlaces: 4a7b22debfa1af65017b82943431822607e45201
   IQKeyboardManagerSwift: 75ba21a23794a1e6b6fe6d9a267ea17f80e06771
   Locksmith: 310b4cc5031af5728bf4db5d4de547a5100c6a3b
   RappleProgressHUD: 3c776b1ac0a05e7d9b0165d819162581902d23a1
+  SDWebImage: 0e435c14e402a6730315a0fb79f95e68654d55a4
   SideMenu: a447554ae5c982e8077666389e1c8b0c8656e065
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
   Validator: 292607746c8d000492cec99f268cc11f13f8f4bc
   Whisper: 051f25e704bf8992641ffd28b20d5682ddc5f5d3
 
-PODFILE CHECKSUM: 0e67be7e63844525b3c570da35d48ab2a6a216e4
+PODFILE CHECKSUM: 8787a705a36a77e796d1ec0bc6c754d923c1cdc3
 
 COCOAPODS: 1.2.1

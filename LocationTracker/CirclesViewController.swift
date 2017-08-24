@@ -21,6 +21,7 @@ class CirclesViewController: UIViewController, SegueHandler {
         case ShowSideMenuView = "ShowSideMenuView"
         case PresentCreateNewGroupView = "PresentCreateNewGroupView"
         case PresentJoinGroupView = "PresentJoinGroupView"
+        case PresentGroupMembersView = "PresentGroupMembersView"
     }
     
     internal let _myLocationMarker = GMSMarker();
@@ -30,6 +31,8 @@ class CirclesViewController: UIViewController, SegueHandler {
     
     private var mGroupNameTitleView : GroupNameTitleView?
     internal var mListGroupViewController : ListGroupsViewController!
+    
+    internal var mSelectedGroup : Group?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,8 +74,16 @@ class CirclesViewController: UIViewController, SegueHandler {
         
         mCirclePresenter.delegate = self
         
-//        mMembersCollectionView.delegate = self
-//        mMembersCollectionView.dataSource = self
+        mMembersCollectionView.register(UINib(nibName: "GroupMemberCollectionViewCell", bundle: Bundle.main), forCellWithReuseIdentifier: Constants.CellIdentifier.MemberCollectionCellIdentifier)
+        mMembersCollectionView.delegate = self
+        mMembersCollectionView.dataSource = self
+        
+        let _flowLayout = UICollectionViewFlowLayout()
+        _flowLayout.itemSize = CGSize(width: 60, height: 80)
+        _flowLayout.sectionInset = UIEdgeInsetsMake(0, 5, 0, 5)
+        _flowLayout.scrollDirection = UICollectionViewScrollDirection.horizontal
+        _flowLayout.minimumInteritemSpacing = 10
+        mMembersCollectionView.collectionViewLayout = _flowLayout
     }
 
     override func didReceiveMemoryWarning() {
@@ -111,6 +122,14 @@ class CirclesViewController: UIViewController, SegueHandler {
             
             _dest.modalPresentationStyle = .overCurrentContext
             
+            break
+        case .PresentGroupMembersView:
+            guard let _dest = segue.destination as? GroupMembersViewController else {
+                fatalError("GroupMembersViewController not found");
+            }
+            
+            break
+        default:
             break
         }
     }
@@ -206,6 +225,7 @@ extension CirclesViewController : ListGroupViewControllerDelegate {
     
     func didSelectGroup(_ _group : Group) {
         self.hideListGroupView()
+        self.mSelectedGroup = _group
         self.getGroupDetails(withGroupId: _group.mId)
     }
 }
@@ -216,9 +236,13 @@ extension CirclesViewController : CreateGroupViewControllerDelegate {
     }
     
     func getGroupDetails(withGroupId _groupId : String) {
-        ConnectionService.load(Group.createGetGroupDetailResource(_groupId)) { (_ response : ServerResponse, _ groups : [UserProfile]?, _ error : Error?) in
+        ConnectionService.load(Group.createGetGroupDetailResource(_groupId)) { (_ response : ServerResponse, _ users : [UserProfile]?, _ error : Error?) in
             switch response.code {
             case .SUCCESS:
+                if let _selectedGroup = self.mSelectedGroup {
+                    _selectedGroup.mUsers = users!
+                    self.mMembersCollectionView.reloadData()
+                }
                 break
             case .FAILURE:
                 print("Fail to get group details")
@@ -238,11 +262,23 @@ extension CirclesViewController : UICollectionViewDelegate {
 
 extension CirclesViewController : UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        if let _selectedGroup = self.mSelectedGroup {
+            return _selectedGroup.mUsers.count
+        }
+        return 1
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let _cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.CellIdentifier.MemberCollectionCellIdentifier, for: indexPath)
+        guard let _cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.CellIdentifier.MemberCollectionCellIdentifier, for: indexPath) as? GroupMemberCollectionViewCell else {
+            return UICollectionViewCell()
+        }
+        
+        if let _selectedGroup = self.mSelectedGroup {
+            let _userProfile = _selectedGroup.mUsers[indexPath.row] 
+            _cell.bindDataToView(_userProfile)
+        } else {
+            
+        }
         
         return _cell
     }

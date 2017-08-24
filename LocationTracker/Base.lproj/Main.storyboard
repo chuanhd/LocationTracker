@@ -75,10 +75,10 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="SsK-R0-3nu">
-                                <rect key="frame" x="0.0" y="587" width="375" height="80"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <rect key="frame" x="0.0" y="567" width="375" height="100"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="0.5" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="80" id="d6p-lc-TcL"/>
+                                    <constraint firstAttribute="height" constant="100" id="d6p-lc-TcL"/>
                                 </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="fQH-aP-VkI">
                                     <size key="itemSize" width="50" height="50"/>
@@ -88,7 +88,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MemberCollectionCellIdentifier" id="sN8-Ju-iaE" customClass="GroupMemberCollectionViewCell" customModule="LocationTracker" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="15" width="50" height="50"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
@@ -121,9 +121,9 @@
                         <outlet property="_gmsMapView" destination="IY8-y7-K9E" id="4oH-Pa-Tik"/>
                         <outlet property="mMembersCollectionView" destination="SsK-R0-3nu" id="kwn-rP-Q7W"/>
                         <segue destination="7AH-q8-0I0" kind="presentation" identifier="PresentCreateNewUserView" id="DG8-Pe-M3x"/>
-                        <segue destination="fbK-Jq-80a" kind="presentation" identifier="AddListGroupsOnCircleViewController" id="pLF-ZM-QEL"/>
                         <segue destination="fto-nv-kY3" kind="show" identifier="PresentCreateNewGroupView" id="SCY-2n-jkw"/>
                         <segue destination="ckb-9q-iJH" kind="presentation" identifier="PresentJoinGroupView" modalPresentationStyle="currentContext" id="B1z-0Y-WBo"/>
+                        <segue destination="pEs-gy-gpA" kind="show" identifier="PresentGroupMembersView" id="joM-8p-OwW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mkK-Zr-TSS" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -491,7 +491,40 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EPN-io-Ffs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1273" y="-756"/>
+            <point key="canvasLocation" x="353" y="-645"/>
+        </scene>
+        <!--Title-->
+        <scene sceneID="3mA-W2-AOZ">
+            <objects>
+                <viewController id="pEs-gy-gpA" customClass="GroupMembersViewController" customModule="LocationTracker" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="KYr-bg-YYZ"/>
+                        <viewControllerLayoutGuide type="bottom" id="Q6I-jd-E28"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="7GN-Oy-uZU">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="W6A-Vl-1ij">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Q6I-jd-E28" firstAttribute="top" secondItem="W6A-Vl-1ij" secondAttribute="bottom" id="6vZ-eE-CB8"/>
+                            <constraint firstItem="W6A-Vl-1ij" firstAttribute="leading" secondItem="7GN-Oy-uZU" secondAttribute="leading" id="UPL-47-WJH"/>
+                            <constraint firstAttribute="trailing" secondItem="W6A-Vl-1ij" secondAttribute="trailing" id="dYS-aW-R5z"/>
+                            <constraint firstItem="W6A-Vl-1ij" firstAttribute="top" secondItem="KYr-bg-YYZ" secondAttribute="bottom" id="lIe-eQ-rob"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Title" id="cDx-oJ-YI9">
+                        <barButtonItem key="rightBarButtonItem" title="Manage" id="kmV-uR-jPU"/>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mfr-nU-rrh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1272.8" y="-759.67016491754134"/>
         </scene>
         <!--Join Group View Controller-->
         <scene sceneID="3Hu-jC-lyZ">

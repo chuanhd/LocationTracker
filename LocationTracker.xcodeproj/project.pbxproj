@@ -40,6 +40,7 @@
 		AC98FE9D1F24FD7A00261588 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC98FE9C1F24FD7A00261588 /* Utils.swift */; };
 		AC98FEA01F24FDF400261588 /* AppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC98FE9F1F24FDF400261588 /* AppController.swift */; };
 		AC98FEA21F24FEC200261588 /* GroupInfoPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC98FEA11F24FEC200261588 /* GroupInfoPresenter.swift */; };
+		ACF01A5F1F4F2A0F00D76922 /* GroupMembersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF01A5E1F4F2A0F00D76922 /* GroupMembersViewController.swift */; };
 		BE2F632BDF9174FC69473AAE /* Pods_LocationTrackerUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC62319A622A368D81E9CF95 /* Pods_LocationTrackerUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -105,6 +106,7 @@
 		AC98FE9C1F24FD7A00261588 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		AC98FE9F1F24FDF400261588 /* AppController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppController.swift; sourceTree = "<group>"; };
 		AC98FEA11F24FEC200261588 /* GroupInfoPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupInfoPresenter.swift; sourceTree = "<group>"; };
+		ACF01A5E1F4F2A0F00D76922 /* GroupMembersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupMembersViewController.swift; sourceTree = "<group>"; };
 		C53AEF41DADC135F0F5B5F32 /* Pods-LocationTrackerUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LocationTrackerUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-LocationTrackerUITests/Pods-LocationTrackerUITests.release.xcconfig"; sourceTree = "<group>"; };
 		DC62319A622A368D81E9CF95 /* Pods_LocationTrackerUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LocationTrackerUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -203,6 +205,7 @@
 				85E2EC061F41894C00CDBF29 /* CreateGroupViewController.swift */,
 				85E2EC081F41AD4500CDBF29 /* ListGroupsViewController.swift */,
 				AC46047E1F4B396800A348B5 /* JoinGroupViewController.swift */,
+				ACF01A5E1F4F2A0F00D76922 /* GroupMembersViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -621,6 +624,7 @@
 				85E2EC0C1F41AF2400CDBF29 /* GroupTableViewCell.swift in Sources */,
 				AC98FE9B1F24FBE300261588 /* User.swift in Sources */,
 				85E2EC071F41894C00CDBF29 /* CreateGroupViewController.swift in Sources */,
+				ACF01A5F1F4F2A0F00D76922 /* GroupMembersViewController.swift in Sources */,
 				850A0FFA1F28850F0001DC6E /* SegueHandler.swift in Sources */,
 				850A0FFC1F28A89E0001DC6E /* CreateUserViewController.swift in Sources */,
 				AC4604791F41F07600A348B5 /* CommonTableDatasource.swift in Sources */,

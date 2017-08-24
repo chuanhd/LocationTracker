@@ -18,6 +18,7 @@ target 'LocationTracker' do
   pod 'IQKeyboardManagerSwift', '4.0.10'
   pod 'RappleProgressHUD'
   pod 'ChromaColorPicker'
+  pod 'SDWebImage', '~> 4.0'
 
   # Pods for LocationTracker
 

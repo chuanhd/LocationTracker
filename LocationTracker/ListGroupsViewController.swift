@@ -64,7 +64,6 @@ class ListGroupsViewController: UIViewController {
         self.btnCreateGroup.layer.borderColor = UIColor.white.cgColor
         self.btnCreateGroup.layer.cornerRadius = 10.0
         
-//        self.tblListGroups.register(GroupTableViewCell.self, forCellReuseIdentifier: Constants.CellIdentifier.GroupTableViewCellIdentifier)
         self.tblListGroups.register(UINib(nibName: "GroupTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: Constants.CellIdentifier.GroupTableViewCellIdentifier)
         self.tblListGroups.delegate = self
         self.tblListGroups.dataSource = self

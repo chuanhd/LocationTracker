@@ -11,7 +11,7 @@ import Alamofire
 
 class AppController {
     
-//    var mOwnProfile : UserProfile
+    var mOwnProfile : UserProfile?
     var mUniqueToken = Utils.getDeviceId()
     
     class var sharedInstance: AppController {
