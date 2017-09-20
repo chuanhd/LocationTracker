@@ -18,14 +18,14 @@ struct Resource<T> {
     let url : URL!
     var params : Dictionary<String, Any>?
     var method : HTTPMethod = HTTPMethod.get
-    let parse:(Data) -> (ServerResponse, [T]?)
+    let parse:(Data) -> (ServerResponse, [Any]?)
 }
 
 extension Resource {
     init(withURL url : URL,
          withMethod httpMethod : HTTPMethod = .get,
          withParams params : Dictionary<String, Any>?,
-         withParseBlock parse : @escaping (Data) -> (ServerResponse, [T]?)) {
+         withParseBlock parse : @escaping (Data) -> (ServerResponse, [Any]?)) {
         self.url = url
         self.method = httpMethod
         self.parse = parse
@@ -47,8 +47,8 @@ enum App {
     }
     
     enum User {
-        case getInfo (id : Int)
-        case getLocation(id : Int)
+        case getInfo
+        case getLocation
     }
     
     enum Myself {
@@ -61,10 +61,10 @@ enum App {
 extension App.User : Url {
     var url : URL {
         switch self {
-        case .getInfo(let id):
-            return URL(string: "api/memberinfo/\(id)", relativeTo: BASE_URL)!
-        case .getLocation(let id):
-            return URL(string: "api/memberlocation/\(id)", relativeTo: BASE_URL)!
+        case .getInfo:
+            return URL(string: "api/memberinfo", relativeTo: BASE_URL)!
+        case .getLocation:
+            return URL(string: "api/memberlocation", relativeTo: BASE_URL)!
         }
     }
 }
@@ -139,7 +139,7 @@ struct UserFriendlyError : Error {
 class ConnectionService {
     
     struct SERVER_REQ_KEY {
-        static let DEVICE_ID = "userid"
+        static let USER_ID = "userid"
         static let USERNAME = "username"
         static let EMAIL = "email"
         static let PHONE_NUMBER = "phonenumber"
@@ -153,7 +153,7 @@ class ConnectionService {
         static let DESCRIPTION = "description"
     }
     
-    class func load<T>(_ resource : Resource<T>, _ showProgress : Bool = true, completion: @escaping (_ response : ServerResponse, _ result : [T]?, _ error : Error?) -> ()) {
+    class func load<T>(_ resource : Resource<T>, _ showProgress : Bool = true, completion: @escaping (_ response : ServerResponse, _ result : [Any]?, _ error : Error?) -> ()) {
         
         print("Unique token id: \(AppController.sharedInstance.mUniqueToken)")
         

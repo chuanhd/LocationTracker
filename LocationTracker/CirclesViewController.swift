@@ -34,6 +34,9 @@ class CirclesViewController: UIViewController, SegueHandler {
     
     internal var mSelectedGroup : Group?
     
+    private var m_RequestUserLocationTimer : Timer?
+    private var m_MarkerDict = Dictionary<String, GMSMarker>()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -49,7 +52,7 @@ class CirclesViewController: UIViewController, SegueHandler {
         self.mListGroupViewController.viewDidLoad()
         self.mListGroupViewController.delegate = self
         
-        ConnectionService.load(UserProfile.login, true) {(_ response : ServerResponse, _ myProfile : [UserProfile]?, _ error : Error?) in
+        ConnectionService.load(UserProfile.login, true) {(_ response : ServerResponse, _ myProfile : [Any]?, _ error : Error?) in
             switch response.code {
             case .SUCCESS:
                 self.mListGroupViewController.getAllGroups()
@@ -65,6 +68,8 @@ class CirclesViewController: UIViewController, SegueHandler {
         
         let _camera = GMSCameraPosition.camera(withLatitude: -33.86, longitude: 151.20, zoom: Constants.GoogleMapsConfigs.DEFAULT_ZOOM);
         _gmsMapView.camera = _camera;
+        _gmsMapView.settings.scrollGestures = false
+        _gmsMapView.settings.zoomGestures = false
         
         // Creates a marker in the center of the map.
         _myLocationMarker.position = CLLocationCoordinate2D(latitude: -33.86, longitude: 151.20)
@@ -190,6 +195,71 @@ class CirclesViewController: UIViewController, SegueHandler {
         
         mGroupNameTitleView?.imgDropdownIndicator.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
     }
+    
+    internal func startRequestUserLocationTimer() {
+        if m_RequestUserLocationTimer != nil {
+            m_RequestUserLocationTimer!.invalidate();
+            m_RequestUserLocationTimer = nil;
+        }
+        
+        m_RequestUserLocationTimer = Timer.scheduledTimer(timeInterval: 30, target: self, selector: #selector(CirclesViewController.requestUsersLocation), userInfo: nil, repeats: true);
+        
+        m_RequestUserLocationTimer!.fire()
+    }
+    
+    internal func requestUsersLocation() {
+        guard let _selectedGroup = self.mSelectedGroup else {
+            return
+        }
+        for _userInfo in _selectedGroup.mUsers {
+            if _userInfo.mId == AppController.sharedInstance.mUniqueToken {
+                continue
+            } else {
+                self.requestUserLocation(_selectedGroup.mId, _userInfo.mId)
+            }
+        }
+    }
+    
+    internal func requestUserLocation(_ _groupId : Int, _ _userId : String) {
+        ConnectionService.load(UserProfile.getUserLocation(_groupId, _userId), false) { (_ response : ServerResponse, _ _positions : [Any]?, _ error : Error?) in
+            switch response.code {
+            case .SUCCESS:
+                
+                guard let _positions = _positions as? [Dictionary<String, Float>] else {
+                    return
+                }
+                
+                let _lat = _positions[0]["lat"]
+                let _lon = _positions[0]["lon"]
+                
+                DispatchQueue.main.async {
+                    self.syncUserLocationMarker(_userId, _lat!, _lon!)
+                }
+                
+                break
+            case .FAILURE:
+                print("Fail to get group details")
+                break
+            default:
+                break
+            }
+        }
+    }
+    
+    internal func syncUserLocationMarker(_ userId : String, _ lat : Float, _ lon : Float) {
+        if let _marker = m_MarkerDict[userId] {
+            let _newLocation = CLLocation(latitude: Double(lat), longitude: Double(lon))
+            _marker.position = _newLocation.coordinate
+        } else {
+            
+            let position = CLLocationCoordinate2D(latitude: Double(lat), longitude: Double(lon))
+            let _marker = GMSMarker(position: position)
+            _marker.map = _gmsMapView
+            
+            m_MarkerDict[userId] = _marker
+            
+        }
+    }
 }
 
 extension CirclesViewController : GroupLocationPresenterDelegate {
@@ -231,17 +301,23 @@ extension CirclesViewController : ListGroupViewControllerDelegate {
 }
 
 extension CirclesViewController : CreateGroupViewControllerDelegate {
-    func createNewGroupSuccessful(withGroupId _groupId: String!) {
+    func createNewGroupSuccessful(withGroupId _groupId: Int!) {
         self.getGroupDetails(withGroupId: _groupId)
     }
     
-    func getGroupDetails(withGroupId _groupId : String) {
-        ConnectionService.load(Group.createGetGroupDetailResource(_groupId)) { (_ response : ServerResponse, _ users : [UserProfile]?, _ error : Error?) in
+    func getGroupDetails(withGroupId _groupId : Int) {
+        ConnectionService.load(Group.createGetGroupDetailResource(_groupId)) { (_ response : ServerResponse, _ users : [Any]?, _ error : Error?) in
             switch response.code {
             case .SUCCESS:
+                
+                guard let users = users as? [UserProfile] else {
+                    return
+                }
+                
                 if let _selectedGroup = self.mSelectedGroup {
-                    _selectedGroup.mUsers = users!
+                    _selectedGroup.mUsers = users
                     self.mMembersCollectionView.reloadData()
+                    self.startRequestUserLocationTimer()
                 }
                 break
             case .FAILURE:

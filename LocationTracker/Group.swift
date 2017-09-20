@@ -11,11 +11,11 @@ import SwiftyJSON
 import Alamofire
 
 class Group {
-    public var mId : String = ""
+    public var mId : Int = -1
     public var mName : String = ""
     public var mUsers = [UserProfile]()
     
-    init(withID _id : String, withName _name : String) {
+    init(withID _id : Int, withName _name : String) {
         self.mId = _id;
         self.mName = _name;
     }
@@ -25,7 +25,7 @@ class Group {
 extension Group {
     static let getAllGroups = Resource<Group>(withURL : App.Group.all.url,
                                              withMethod : HTTPMethod.get,
-                                             withParams : [ConnectionService.SERVER_REQ_KEY.DEVICE_ID : AppController.sharedInstance.mUniqueToken]) { data in
+                                             withParams : [ConnectionService.SERVER_REQ_KEY.USER_ID : AppController.sharedInstance.mUniqueToken]) { data in
                                                 
                                                 let _json = JSON(data : data)
                                                 
@@ -42,7 +42,7 @@ extension Group {
                                                         
                                                         if let _groupJSONs = _json["data"].array {
                                                             for _groupJSON in _groupJSONs {
-                                                                let _groupId = _groupJSON["groupid"].stringValue
+                                                                let _groupId = _groupJSON["groupid"].intValue
                                                                 let _groupName = _groupJSON["groupname"].stringValue
                                                                 
                                                                 let _group = Group(withID: _groupId, withName: _groupName)
@@ -65,7 +65,7 @@ extension Group {
     }
     
     static func createNewGroupResource(_ name : String!, _ desc : String!, _ colorHex : String!) -> Resource<String> {
-        let params : [String : Any] = [ConnectionService.SERVER_REQ_KEY.DEVICE_ID : AppController.sharedInstance.mUniqueToken,
+        let params : [String : Any] = [ConnectionService.SERVER_REQ_KEY.USER_ID : AppController.sharedInstance.mUniqueToken,
                                        ConnectionService.SERVER_REQ_KEY.GROUP_NAME : name,
                                        ConnectionService.SERVER_REQ_KEY.DESCRIPTION : desc]
         
@@ -98,7 +98,7 @@ extension Group {
         }
     }
     
-    static func createGetGroupDetailResource(_ groupId : String!) -> Resource<UserProfile> {
+    static func createGetGroupDetailResource(_ groupId : Int!) -> Resource<UserProfile> {
         
         return Resource<UserProfile>(withURL : App.Group.get.url,
                                withMethod : HTTPMethod.get,

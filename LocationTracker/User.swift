@@ -35,7 +35,7 @@ class UserProfile {
 extension UserProfile {
     static let login = Resource<UserProfile>(withURL : App.Myself.login.url,
                                              withMethod : HTTPMethod.post,
-                                             withParams : [ConnectionService.SERVER_REQ_KEY.DEVICE_ID : AppController.sharedInstance.mUniqueToken]) { data in
+                                             withParams : [ConnectionService.SERVER_REQ_KEY.USER_ID : AppController.sharedInstance.mUniqueToken]) { data in
                                                 
                                                 let _json = JSON(data : data)
                                                 
@@ -60,7 +60,7 @@ extension UserProfile {
 
     
     static func createUpdateMyInfoResource(_ email : String!, _ name : String!, _ phone : String!, _ avatarURL : String?) -> Resource<UserProfile> {
-        var params : [String : Any] = [ConnectionService.SERVER_REQ_KEY.DEVICE_ID : AppController.sharedInstance.mUniqueToken,
+        var params : [String : Any] = [ConnectionService.SERVER_REQ_KEY.USER_ID : AppController.sharedInstance.mUniqueToken,
                      ConnectionService.SERVER_REQ_KEY.EMAIL : email,
                      ConnectionService.SERVER_REQ_KEY.USERNAME : name,
                      ConnectionService.SERVER_REQ_KEY.PHONE_NUMBER : phone]
@@ -96,7 +96,7 @@ extension UserProfile {
     }
     
     static func createUpdateMyLocationResource(_ lat : Float, _ lon : Float) -> Resource<UserProfile> {
-        let params : [String : Any] = [ConnectionService.SERVER_REQ_KEY.DEVICE_ID : AppController.sharedInstance.mUniqueToken,
+        let params : [String : Any] = [ConnectionService.SERVER_REQ_KEY.USER_ID : AppController.sharedInstance.mUniqueToken,
                                        ConnectionService.SERVER_REQ_KEY.LATITUDE : lat,
                                        ConnectionService.SERVER_REQ_KEY.LONGTITUDE : lon]
         return Resource<UserProfile>(withURL : App.Myself.updateMyLocation.url,
@@ -114,6 +114,40 @@ extension UserProfile {
                                             switch _code {
                                             case .SUCCESS:
                                                 break
+                                            case .FAILURE:
+                                                return (ServerResponse(withCode : .FAILURE, withStatus : _status), nil)
+                                            default:
+                                                break
+                                            }
+                                        }
+                                        
+                                        return (ServerResponse(), nil)
+        }
+    }
+    
+    static func getUserLocation(_ _groupId : Int, _ _userId: String) -> Resource<UserProfile> {
+        let params : [String : Any] = [ConnectionService.SERVER_REQ_KEY.USER_ID : _userId,
+                                       ConnectionService.SERVER_REQ_KEY.GROUP_ID : _groupId]
+        
+        return Resource<UserProfile>(withURL : App.User.getLocation.url,
+                                     withMethod : HTTPMethod.get,
+                                     withParams : params) { data in
+                                        
+                                        let _json = JSON(data : data)
+                                        
+                                        print("JSON: \(_json)") // serialized json response
+                                        
+                                        if let _codeStr = _json["code"].string,
+                                            let _code = SERVER_RESPONSE_CODE(rawValue: _codeStr),
+                                            let _status = _json["status"].string{
+                                            switch _code {
+                                            case .SUCCESS:
+                                                let _locationJSON = _json["data"]
+                                                let _userLat = _locationJSON["lat"].floatValue
+                                                let _userLong = _locationJSON["lon"].floatValue
+                                                    
+                                                return (ServerResponse(withCode : .SUCCESS, withStatus : _status), [["lat" : _userLat, "lon" : _userLong]])
+                                                    
                                             case .FAILURE:
                                                 return (ServerResponse(withCode : .FAILURE, withStatus : _status), nil)
                                             default:

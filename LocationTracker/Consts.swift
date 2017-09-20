@@ -18,6 +18,7 @@ struct Constants {
     struct CellIdentifier {
         static let MemberCollectionCellIdentifier = "MemberCollectionCellIdentifier"
         static let GroupTableViewCellIdentifier = "GroupTableViewCellIdentifier"
+        static let GroupMemberTableViewCellIdentifier = "GroupMemberTableViewCellIdentifier"
     }
     
     struct AmazonS3Config {

@@ -41,6 +41,7 @@
 		AC98FEA01F24FDF400261588 /* AppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC98FE9F1F24FDF400261588 /* AppController.swift */; };
 		AC98FEA21F24FEC200261588 /* GroupInfoPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC98FEA11F24FEC200261588 /* GroupInfoPresenter.swift */; };
 		ACF01A5F1F4F2A0F00D76922 /* GroupMembersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF01A5E1F4F2A0F00D76922 /* GroupMembersViewController.swift */; };
+		ACF01A641F53274B00D76922 /* GroupMemberTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF01A621F53274B00D76922 /* GroupMemberTableViewCell.swift */; };
 		BE2F632BDF9174FC69473AAE /* Pods_LocationTrackerUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC62319A622A368D81E9CF95 /* Pods_LocationTrackerUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -107,6 +108,7 @@
 		AC98FE9F1F24FDF400261588 /* AppController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppController.swift; sourceTree = "<group>"; };
 		AC98FEA11F24FEC200261588 /* GroupInfoPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupInfoPresenter.swift; sourceTree = "<group>"; };
 		ACF01A5E1F4F2A0F00D76922 /* GroupMembersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupMembersViewController.swift; sourceTree = "<group>"; };
+		ACF01A621F53274B00D76922 /* GroupMemberTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupMemberTableViewCell.swift; sourceTree = "<group>"; };
 		C53AEF41DADC135F0F5B5F32 /* Pods-LocationTrackerUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LocationTrackerUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-LocationTrackerUITests/Pods-LocationTrackerUITests.release.xcconfig"; sourceTree = "<group>"; };
 		DC62319A622A368D81E9CF95 /* Pods_LocationTrackerUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LocationTrackerUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -219,6 +221,7 @@
 				85E2EC0B1F41AF2400CDBF29 /* GroupTableViewCell.xib */,
 				AC46047A1F41F6C200A348B5 /* GroupNameTitleView.xib */,
 				AC46047C1F41F77000A348B5 /* GroupNameTitleView.swift */,
+				ACF01A621F53274B00D76922 /* GroupMemberTableViewCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -618,6 +621,7 @@
 				857C92661F385E2B00E15C70 /* Group.swift in Sources */,
 				AC98FE971F24FA5100261588 /* ConnectionService.swift in Sources */,
 				AC52DFBE1F21061C0032F853 /* LocationService.swift in Sources */,
+				ACF01A641F53274B00D76922 /* GroupMemberTableViewCell.swift in Sources */,
 				AC52DFB71F21024C0032F853 /* CirclesViewController.swift in Sources */,
 				AC98FE9D1F24FD7A00261588 /* Utils.swift in Sources */,
 				AC8C80561F1FA7E300CEC79B /* AppDelegate.swift in Sources */,

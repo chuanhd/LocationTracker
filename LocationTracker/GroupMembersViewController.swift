@@ -10,6 +10,9 @@ import UIKit
 
 class GroupMembersViewController: UIViewController {
 
+    @IBOutlet weak var tblGroupMembers: UITableView!
+    var m_Group : Group?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -33,3 +36,30 @@ class GroupMembersViewController: UIViewController {
     */
 
 }
+
+extension GroupMembersViewController : UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        guard let _group = self.m_Group else {
+            return 0
+        }
+        
+        return _group.mUsers.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let _group = self.m_Group else {
+            return UITableViewCell()
+        }
+        
+        guard let _cell = tableView.dequeueReusableCell(withIdentifier: Constants.CellIdentifier.GroupMemberTableViewCellIdentifier, for: indexPath) as? GroupMemberTableViewCell else {
+            return UITableViewCell()
+        }
+        
+        _cell.bindDataToView(_group.mUsers[indexPath.row])
+        
+        return _cell
+        
+    }
+}
+
+

@@ -9,7 +9,7 @@
 import UIKit
 
 protocol CreateGroupViewControllerDelegate : class {
-    func createNewGroupSuccessful(withGroupId _groupId : String!)
+    func createNewGroupSuccessful(withGroupId _groupId : Int!)
 }
 
 class CreateGroupViewController: UIViewController {
@@ -49,11 +49,16 @@ class CreateGroupViewController: UIViewController {
     }
     
     internal func createNewGroup() {
-        ConnectionService.load(Group.createNewGroupResource(txtGroupName.text, txtDesc.text, "FFFFFF"), true) {(_ response : ServerResponse, _ _groupIds : [String]?, _ error : Error?) in
+        ConnectionService.load(Group.createNewGroupResource(txtGroupName.text, txtDesc.text, "FFFFFF"), true) {(_ response : ServerResponse, _ _groupIds : [Any]?, _ error : Error?) in
             switch response.code {
             case .SUCCESS:
                 
-                if let createSuccessful = self.delegate?.createNewGroupSuccessful(withGroupId:), let _groupId = _groupIds?[0] {
+                guard let _groupIds = _groupIds as? [Int] else {
+                    return
+                }
+                
+                if let createSuccessful = self.delegate?.createNewGroupSuccessful(withGroupId:) {
+                    let _groupId = _groupIds[0]
                     createSuccessful(_groupId)
                 }
                 

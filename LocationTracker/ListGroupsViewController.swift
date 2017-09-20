@@ -109,10 +109,13 @@ class ListGroupsViewController: UIViewController {
     }
     
     func getAllGroups() {
-        ConnectionService.load(Group.getAllGroups, true) {(_ response : ServerResponse, _ _groups : [Group]?, _ error : Error?) in
+        ConnectionService.load(Group.getAllGroups, true) {(_ response : ServerResponse, _ _groups : [Any]?, _ error : Error?) in
             switch response.code {
             case .SUCCESS:
-                self.mGroups = _groups!
+                guard let _groups = _groups as? [Group] else {
+                    return
+                }
+                self.mGroups = _groups
                 self.reflectDataOnView()
                 break
             case .GROUP_NOT_EXISTS:
