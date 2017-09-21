@@ -17,6 +17,8 @@ class GroupMembersViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        tblGroupMembers.dataSource = self
+        fetchGroupDetails()
     }
 
     override func didReceiveMemoryWarning() {
@@ -34,7 +36,42 @@ class GroupMembersViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    
+    internal func fetchGroupDetails() {
+        
+        guard let _group = m_Group else {
+            return
+        }
+        
+        ConnectionService.load(Group.createGetGroupDetailResource(_group.mId), true) { (_ response : ServerResponse, _ users : [Any]?, _ error : Error?) in
+            switch response.code {
+            case .SUCCESS:
+                
+                guard let users = users as? [UserProfile] else {
+                    return
+                }
+                
+                _group.mUsers = users
+                self.tblGroupMembers.reloadData()
 
+                break
+            case .FAILURE:
+                print("Fail to get group details")
+                break
+            default:
+                break
+            }
+        }
+    }
+
+    @IBAction func inviteMemberBtnPressed(_ sender: Any) {
+        
+    }
+    
+    @IBAction func manageGroupBtnPressed(_ sender: Any) {
+        
+    }
+    
 }
 
 extension GroupMembersViewController : UITableViewDataSource {

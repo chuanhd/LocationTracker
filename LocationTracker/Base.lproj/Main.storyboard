@@ -24,7 +24,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="kOc-1R-ykZ" id="SCy-au-wuK">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -32,7 +32,7 @@
                                         <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fM0-CI-hUl" id="QXw-IB-ocY">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -40,7 +40,7 @@
                                         <rect key="frame" x="0.0" y="88" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fed-po-xj4" id="9RX-K5-7eV">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -515,6 +515,9 @@
                                         <state key="normal" title="Invite new member">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="inviteMemberBtnPressed:" destination="pEs-gy-gpA" eventType="touchUpInside" id="d1g-S1-kcm"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -534,7 +537,7 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="QGe-KL-u4l" id="rYs-rh-ceL">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="79.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yC4-HQ-8yb">
@@ -558,6 +561,10 @@
                                                 <constraint firstItem="TTd-6W-Pd6" firstAttribute="leading" secondItem="yC4-HQ-8yb" secondAttribute="trailing" constant="8" id="v5n-Fv-Tg0"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="imgAvatar" destination="yC4-HQ-8yb" id="Yb0-oV-vNq"/>
+                                            <outlet property="lblUsername" destination="TTd-6W-Pd6" id="H2P-8J-cf2"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -574,9 +581,14 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Title" id="cDx-oJ-YI9">
-                        <barButtonItem key="rightBarButtonItem" title="Manage" id="kmV-uR-jPU"/>
+                        <barButtonItem key="rightBarButtonItem" title="Manage" id="kmV-uR-jPU">
+                            <connections>
+                                <action selector="manageGroupBtnPressed:" destination="pEs-gy-gpA" id="R73-az-u4B"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="navigationItem" destination="cDx-oJ-YI9" id="Xad-Y9-amy"/>
                         <outlet property="tblGroupMembers" destination="W6A-Vl-1ij" id="daL-tG-dNb"/>
                     </connections>
                 </viewController>

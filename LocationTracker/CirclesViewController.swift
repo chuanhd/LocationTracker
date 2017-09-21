@@ -29,7 +29,7 @@ class CirclesViewController: UIViewController, SegueHandler {
     internal let mCirclePresenter = GroupLocationPresenter()
     private let mCircleInfoPresenter = GroupInfoPresenter()
     
-    private var mGroupNameTitleView : GroupNameTitleView?
+    internal var mGroupNameTitleView : GroupNameTitleView?
     internal var mListGroupViewController : ListGroupsViewController!
     
     internal var mSelectedGroup : Group?
@@ -132,6 +132,13 @@ class CirclesViewController: UIViewController, SegueHandler {
             guard let _dest = segue.destination as? GroupMembersViewController else {
                 fatalError("GroupMembersViewController not found");
             }
+            
+            guard let _group = sender as? Group else {
+                fatalError("We expected that sender is Group object")
+            }
+
+            _dest.m_Group = _group
+            _dest.navigationItem.title = _group.mName
             
             break
         default:
@@ -297,6 +304,12 @@ extension CirclesViewController : ListGroupViewControllerDelegate {
         self.hideListGroupView()
         self.mSelectedGroup = _group
         self.getGroupDetails(withGroupId: _group.mId)
+        self.mGroupNameTitleView?.lblGroupName.text = _group.mName
+    }
+    
+    func didConfigureGroup(_ _group: Group) {
+        self.hideListGroupView()
+        self.performSegue(withIdentifier: SegueIdentifier.PresentGroupMembersView.rawValue, sender: _group)
     }
 }
 

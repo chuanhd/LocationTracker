@@ -9,9 +9,10 @@
 import UIKit
 
 protocol ListGroupViewControllerDelegate : class {
-    func didTapRequestJoinGroup();
-    func didTapCreateGroup();
-    func didSelectGroup(_ _group : Group);
+    func didTapRequestJoinGroup()
+    func didTapCreateGroup()
+    func didSelectGroup(_ _group : Group)
+    func didConfigureGroup(_ _group : Group)
 }
 
 class ListGroupsViewController: UIViewController {
@@ -156,10 +157,15 @@ class ListGroupsViewController: UIViewController {
         
         self.present(_newGroupRequestAlert, animated: true, completion: nil)
     }
+    
+    
 }
 
 extension ListGroupsViewController : UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        tableView.deselectRow(at: indexPath, animated: true)
+        
         guard let delegateMethod = self.delegate?.didSelectGroup else {
             return
         }
@@ -185,10 +191,22 @@ extension ListGroupsViewController : UITableViewDataSource {
         }
         
         let _group = mGroups[indexPath.row]
-        
-        cell.bindView(withData: _group)
+        cell.bindView(withData: _group, withIndex:  indexPath.row)
+        cell.m_Delegate = self
         
         return cell
+    }
+}
+
+extension ListGroupsViewController : GroupTableViewCellDelegate {
+    func didTapConfigureGroup(atIndex _index: Int) {
+        guard let delegateMethod = self.delegate?.didConfigureGroup else {
+            return
+        }
+        
+        let _group = mGroups[_index]
+        
+        delegateMethod(_group)
     }
 }
 
