@@ -24,7 +24,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="kOc-1R-ykZ" id="SCy-au-wuK">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -32,7 +32,7 @@
                                         <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fM0-CI-hUl" id="QXw-IB-ocY">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -40,7 +40,7 @@
                                         <rect key="frame" x="0.0" y="88" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fed-po-xj4" id="9RX-K5-7eV">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -537,7 +537,7 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="QGe-KL-u4l" id="rYs-rh-ceL">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="79.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yC4-HQ-8yb">
@@ -590,11 +590,56 @@
                     <connections>
                         <outlet property="navigationItem" destination="cDx-oJ-YI9" id="Xad-Y9-amy"/>
                         <outlet property="tblGroupMembers" destination="W6A-Vl-1ij" id="daL-tG-dNb"/>
+                        <segue destination="P4M-g4-2kp" kind="show" identifier="PresentInviteMembersView" id="zpY-VC-8BX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mfr-nU-rrh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1272.8" y="-759.67016491754134"/>
+        </scene>
+        <!--Awesome Group-->
+        <scene sceneID="bM5-TO-8nF">
+            <objects>
+                <viewController id="P4M-g4-2kp" customClass="InviteMembersViewController" customModule="LocationTracker" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="GXW-kM-cmG"/>
+                        <viewControllerLayoutGuide type="bottom" id="YaV-ss-mFg"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Ajh-Sw-Ekr">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <searchBar contentMode="redraw" placeholder="Enter phone number or email" translatesAutoresizingMaskIntoConstraints="NO" id="SGB-Nx-KwS">
+                                <rect key="frame" x="0.0" y="64" width="375" height="44"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <scopeButtonTitles>
+                                    <string>Title</string>
+                                    <string>Title</string>
+                                </scopeButtonTitles>
+                            </searchBar>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Jyk-v4-hSr">
+                                <rect key="frame" x="0.0" y="108" width="375" height="559"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="Jyk-v4-hSr" secondAttribute="trailing" id="68P-j0-8dU"/>
+                            <constraint firstItem="SGB-Nx-KwS" firstAttribute="leading" secondItem="Ajh-Sw-Ekr" secondAttribute="leading" id="8Od-W6-IaT"/>
+                            <constraint firstAttribute="trailing" secondItem="SGB-Nx-KwS" secondAttribute="trailing" id="DZv-A3-L1e"/>
+                            <constraint firstItem="YaV-ss-mFg" firstAttribute="top" secondItem="Jyk-v4-hSr" secondAttribute="bottom" id="J1d-oS-kPh"/>
+                            <constraint firstItem="SGB-Nx-KwS" firstAttribute="top" secondItem="GXW-kM-cmG" secondAttribute="bottom" id="n0b-Q7-71d"/>
+                            <constraint firstItem="Jyk-v4-hSr" firstAttribute="leading" secondItem="Ajh-Sw-Ekr" secondAttribute="leading" id="rt7-Wf-faL"/>
+                            <constraint firstItem="Jyk-v4-hSr" firstAttribute="top" secondItem="SGB-Nx-KwS" secondAttribute="bottom" id="wZk-67-5lz"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Awesome Group" id="Pu7-T7-kKD">
+                        <barButtonItem key="rightBarButtonItem" title="Invite" id="rdp-na-bm8"/>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Dnq-Ei-Ngn" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2148" y="-760.56971514242889"/>
         </scene>
         <!--Join Group View Controller-->
         <scene sceneID="3Hu-jC-lyZ">

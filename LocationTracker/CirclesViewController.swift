@@ -141,8 +141,6 @@ class CirclesViewController: UIViewController, SegueHandler {
             _dest.navigationItem.title = _group.mName
             
             break
-        default:
-            break
         }
     }
     

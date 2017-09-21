@@ -8,7 +8,11 @@
 
 import UIKit
 
-class GroupMembersViewController: UIViewController {
+class GroupMembersViewController: UIViewController, SegueHandler {
+    
+    enum SegueIdentifier : String {
+        case PresentInviteMembersView  = "PresentInviteMembersView"
+    }
 
     @IBOutlet weak var tblGroupMembers: UITableView!
     var m_Group : Group?
@@ -27,15 +31,24 @@ class GroupMembersViewController: UIViewController {
     }
     
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        switch (segueIdentifier(for: segue)) {
+        case .PresentInviteMembersView:
+            guard let _dest = segue.destination as? InviteMembersViewController else {
+                fatalError("InviteMembersViewController not found");
+            }
+            
+            break
+        
+        }
     }
-    */
+    
     
     internal func fetchGroupDetails() {
         
