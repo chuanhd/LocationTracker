@@ -19,6 +19,7 @@ target 'LocationTracker' do
   pod 'RappleProgressHUD'
   pod 'ChromaColorPicker'
   pod 'SDWebImage', '~> 4.0'
+  pod 'SnapKit', '3.0.2'
 
   # Pods for LocationTracker
 

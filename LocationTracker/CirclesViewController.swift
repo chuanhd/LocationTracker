@@ -11,10 +11,11 @@ import GoogleMaps
 
 class CirclesViewController: UIViewController, SegueHandler {
     
-    private let TAG_LIST_GROUP_VIEW  = 1105
+    internal let TAG_LIST_GROUP_VIEW  = 1105
 
     @IBOutlet weak var _gmsMapView: GMSMapView!
     @IBOutlet weak var mMembersCollectionView : UICollectionView!
+    @IBOutlet weak var m_ListGroupsView : ListGroupsView!
     
     enum SegueIdentifier : String {
         case PresentCreateNewUserView  = "PresentCreateNewUserView"
@@ -30,32 +31,41 @@ class CirclesViewController: UIViewController, SegueHandler {
     private let mCircleInfoPresenter = GroupInfoPresenter()
     
     internal var mGroupNameTitleView : GroupNameTitleView?
-    internal var mListGroupViewController : ListGroupsViewController!
     
     internal var mSelectedGroup : Group?
     
     private var m_RequestUserLocationTimer : Timer?
     private var m_MarkerDict = Dictionary<String, GMSMarker>()
     
+    // Hack for iOS 11
+    private lazy var m_NavBarActionButton_iOS11 = UIButton()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         mGroupNameTitleView = Bundle.main.loadNibNamed("GroupNameTitleView", owner: self, options: nil)?.first as? GroupNameTitleView
         self.navigationItem.titleView = mGroupNameTitleView
-        if let _groupNameTitleView = mGroupNameTitleView {
-            let _tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(CirclesViewController.handleTapOnGroupTitleView))
-            _groupNameTitleView.addGestureRecognizer(_tapGestureRecognizer)
-        }
+        mGroupNameTitleView?.m_Delegate = self
+//        if #available(iOS 11.0, *), let _navBar = self.navigationController?.navigationBar, let _groupNameTitleView = mGroupNameTitleView {
+//            m_NavBarActionButton_iOS11.addTarget(self, action: #selector(CirclesViewController.handleTapOnGroupTitleView), for: .touchUpInside)
+//            _navBar.addSubview(m_NavBarActionButton_iOS11)
+//            m_NavBarActionButton_iOS11.frame = CGRect(x: 0, y: 0, width: _groupNameTitleView.frame.size.width, height: _groupNameTitleView.frame.size.height)
+//            m_NavBarActionButton_iOS11.center = _navBar.center
+////            m_NavBarActionButton_iOS11.frame = _groupNameTitleView.frame
+//        }
+//        if let _groupNameTitleView = mGroupNameTitleView, let _navBar = self.navigationController?.navigationBar {
+//            _groupNameTitleView.isUserInteractionEnabled = true
+//            let _tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(CirclesViewController.handleTapOnGroupTitleView))
+//            _groupNameTitleView.addGestureRecognizer(_tapGestureRecognizer)
+//            _navBar.bringSubview(toFront: _groupNameTitleView)
+//        }
 
-        self.mListGroupViewController = self.storyboard!.instantiateViewController(withIdentifier: "ListGroupsViewController") as! ListGroupsViewController
-        self.mListGroupViewController.loadView()
-        self.mListGroupViewController.viewDidLoad()
-        self.mListGroupViewController.delegate = self
+        self.m_ListGroupsView.delegate = self
         
         ConnectionService.load(UserProfile.login, true) {(_ response : ServerResponse, _ myProfile : [Any]?, _ error : Error?) in
             switch response.code {
             case .SUCCESS:
-                self.mListGroupViewController.getAllGroups()
+                self.m_ListGroupsView.getAllGroups()
                 self.mCirclePresenter.startLocationUpdates()
                 break
             case .USER_NOT_EXIST:
@@ -175,30 +185,35 @@ class CirclesViewController: UIViewController, SegueHandler {
 
     internal func showListGroupView() {
 //        let _listGroupViewController = self.storyboard!.instantiateViewController(withIdentifier: "ListGroupsViewController") as! ListGroupsViewController
-        mListGroupViewController.view.frame = CGRect(x: 0, y: 64, width: self.view.frame.size.width, height: self.view.frame.size.height * 0.5)
-        mListGroupViewController.delegate = self
-        self.addChildViewController(mListGroupViewController)
-        self.view.addSubview(mListGroupViewController.view)
-        mListGroupViewController.didMove(toParentViewController: self)
+//        mListGroupViewController.view.frame = CGRect(x: 0, y: 64, width: self.view.frame.size.width, height: self.view.frame.size.height * 0.5)
+//        mListGroupViewController.delegate = self
+//        self.addChildViewController(mListGroupViewController)
+//        self.view.addSubview(mListGroupViewController.view)
+//        mListGroupViewController.didMove(toParentViewController: self)
+//
+//        self.view.bringSubview(toFront: mListGroupViewController.view)
+//        mListGroupViewController.view.tag = TAG_LIST_GROUP_VIEW
+//
+//        mGroupNameTitleView?.imgDropdownIndicator.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
         
-        self.view.bringSubview(toFront: mListGroupViewController.view)
-        mListGroupViewController.view.tag = TAG_LIST_GROUP_VIEW
+        m_ListGroupsView.tag = TAG_LIST_GROUP_VIEW
+        m_ListGroupsView.isHidden = false
         
-        mGroupNameTitleView?.imgDropdownIndicator.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
     }
     
     internal func hideListGroupView() {
         
-        if let _childViewController = self.childViewControllers[0] as? ListGroupsViewController {
-            _childViewController.delegate = nil
-            _childViewController.removeFromParentViewController()
-        }
+//        if let _childViewController = self.childViewControllers[0] as? ListGroupsViewController {
+//            _childViewController.delegate = nil
+//            _childViewController.removeFromParentViewController()
+//        }
+//        
+//        if let _listGroupView = self.view.viewWithTag(TAG_LIST_GROUP_VIEW) {
+//            _listGroupView.removeFromSuperview()
+//        }
         
-        if let _listGroupView = self.view.viewWithTag(TAG_LIST_GROUP_VIEW) {
-            _listGroupView.removeFromSuperview()
-        }
-        
-        mGroupNameTitleView?.imgDropdownIndicator.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
+        m_ListGroupsView.isHidden = true
+        mGroupNameTitleView?.imgDropdownIndicator.transform = CGAffineTransform(rotationAngle: 0)
     }
     
     internal func startRequestUserLocationTimer() {
@@ -282,11 +297,11 @@ extension CirclesViewController : GroupLocationPresenterDelegate {
 extension CirclesViewController : CreateUserViewControlerDelegate {
     func userInfoUpdateSuccessful() {
         self.mCirclePresenter.startLocationUpdates()
-        self.mListGroupViewController.getAllGroups()
+        self.m_ListGroupsView.getAllGroups()
     }
 }
 
-extension CirclesViewController : ListGroupViewControllerDelegate {
+extension CirclesViewController : ListGroupViewDelegate {
     func didTapRequestJoinGroup() {
         self.hideListGroupView()
         self.performSegue(withIdentifier: SegueIdentifier.PresentJoinGroupView.rawValue, sender: nil)
@@ -302,7 +317,8 @@ extension CirclesViewController : ListGroupViewControllerDelegate {
         self.hideListGroupView()
         self.mSelectedGroup = _group
         self.getGroupDetails(withGroupId: _group.mId)
-        self.mGroupNameTitleView?.lblGroupName.text = _group.mName
+        self.mGroupNameTitleView?.setGroupName(_group.mName)
+//        self.mGroupNameTitleView?.lblGroupName.text = _group.mName
     }
     
     func didConfigureGroup(_ _group: Group) {
@@ -368,5 +384,15 @@ extension CirclesViewController : UICollectionViewDataSource {
         }
         
         return _cell
+    }
+}
+
+extension CirclesViewController : GroupNameTitleViewDelegate {
+    func didTapOnGroupName() {
+        if m_ListGroupsView.isHidden {
+            showListGroupView()
+        } else {
+            hideListGroupView()
+        }
     }
 }

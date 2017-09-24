@@ -8,11 +8,15 @@
 
 import UIKit
 
+protocol GroupNameTitleViewDelegate : class {
+    func didTapOnGroupName()
+}
+
 class GroupNameTitleView: UIView {
 
-    @IBOutlet var lblGroupName: UILabel!
+    @IBOutlet weak var btnGroupName: UIButton!
     @IBOutlet weak var imgDropdownIndicator: UIImageView!
-    
+    weak var m_Delegate : GroupNameTitleViewDelegate?
     
     /*
     // Only override draw() if you perform custom drawing.
@@ -22,4 +26,15 @@ class GroupNameTitleView: UIView {
     }
     */
 
+    func setGroupName(_ _groupName : String) {
+        btnGroupName.setTitle(_groupName, for: .normal)
+    }
+    
+    @IBAction func btnGroupnamePressed(_ sender: Any) {
+        guard let _delegateMethod = m_Delegate?.didTapOnGroupName else {
+            return
+        }
+        
+        _delegateMethod()
+    }
 }

@@ -158,4 +158,51 @@ extension UserProfile {
                                         return (ServerResponse(), nil)
         }
     }
+    
+    static func searchUsers(_ searchParam : String) -> Resource<UserProfile> {
+        
+        let params : [String : Any] = [ConnectionService.SERVER_REQ_KEY.SEARCH_STRING : searchParam]
+        
+        return Resource<UserProfile>(withURL : App.User.getLocation.url,
+                                     withMethod : HTTPMethod.get,
+                                     withParams : params) { data in
+                                        
+                                        let _json = JSON(data : data)
+                                        
+                                        print("JSON: \(_json)") // serialized json response
+                                        
+                                        if let _codeStr = _json["code"].string,
+                                            let _code = SERVER_RESPONSE_CODE(rawValue: _codeStr),
+                                            let _status = _json["status"].string{
+                                            switch _code {
+                                            case .SUCCESS:
+                                                
+                                                var users = [UserProfile]()
+                                                
+                                                if let _userJSONs = _json["data"].array {
+                                                    for _userJSON in _userJSONs {
+                                                        let _userId = _userJSON["userid"].stringValue
+                                                        let _userName = _userJSON["username"].stringValue
+//                                                        let _userLat = _userJSON["lat"].floatValue
+//                                                        let _userLong = _userJSON["lon"].floatValue
+                                                        let _userImage = _userJSON["userimage"].stringValue
+                                                        
+                                                        let _user = UserProfile(withId: _userId, withAvatar: _userImage, withName: _userName, withLat: 0, withLong: 0)
+                                                        
+                                                        users.append(_user)
+                                                        
+                                                    }
+                                                }
+                                                
+                                                return (ServerResponse(withCode : .SUCCESS, withStatus : _status), users)
+                                            case .FAILURE:
+                                                return (ServerResponse(withCode : .FAILURE, withStatus : _status), nil)
+                                            default:
+                                                break
+                                            }
+                                        }
+                                        
+                                        return (ServerResponse(), nil)
+        }
+    }
 }

@@ -41,6 +41,9 @@
 		AC98FE9D1F24FD7A00261588 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC98FE9C1F24FD7A00261588 /* Utils.swift */; };
 		AC98FEA01F24FDF400261588 /* AppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC98FE9F1F24FDF400261588 /* AppController.swift */; };
 		AC98FEA21F24FEC200261588 /* GroupInfoPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC98FEA11F24FEC200261588 /* GroupInfoPresenter.swift */; };
+		ACAAA1FC1F754C300059AE46 /* UserProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAAA1FB1F754C300059AE46 /* UserProfileTableViewCell.swift */; };
+		ACAAA1FE1F7772950059AE46 /* ListGroupsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = ACAAA1FD1F7772950059AE46 /* ListGroupsView.xib */; };
+		ACAAA2001F7773A60059AE46 /* ListGroupsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAAA1FF1F7773A60059AE46 /* ListGroupsView.swift */; };
 		ACF01A5F1F4F2A0F00D76922 /* GroupMembersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF01A5E1F4F2A0F00D76922 /* GroupMembersViewController.swift */; };
 		ACF01A641F53274B00D76922 /* GroupMemberTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF01A621F53274B00D76922 /* GroupMemberTableViewCell.swift */; };
 		BE2F632BDF9174FC69473AAE /* Pods_LocationTrackerUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC62319A622A368D81E9CF95 /* Pods_LocationTrackerUITests.framework */; };
@@ -109,6 +112,9 @@
 		AC98FE9C1F24FD7A00261588 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		AC98FE9F1F24FDF400261588 /* AppController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppController.swift; sourceTree = "<group>"; };
 		AC98FEA11F24FEC200261588 /* GroupInfoPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupInfoPresenter.swift; sourceTree = "<group>"; };
+		ACAAA1FB1F754C300059AE46 /* UserProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileTableViewCell.swift; sourceTree = "<group>"; };
+		ACAAA1FD1F7772950059AE46 /* ListGroupsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ListGroupsView.xib; sourceTree = "<group>"; };
+		ACAAA1FF1F7773A60059AE46 /* ListGroupsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListGroupsView.swift; sourceTree = "<group>"; };
 		ACF01A5E1F4F2A0F00D76922 /* GroupMembersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupMembersViewController.swift; sourceTree = "<group>"; };
 		ACF01A621F53274B00D76922 /* GroupMemberTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupMemberTableViewCell.swift; sourceTree = "<group>"; };
 		C53AEF41DADC135F0F5B5F32 /* Pods-LocationTrackerUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LocationTrackerUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-LocationTrackerUITests/Pods-LocationTrackerUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -225,6 +231,9 @@
 				AC46047A1F41F6C200A348B5 /* GroupNameTitleView.xib */,
 				AC46047C1F41F77000A348B5 /* GroupNameTitleView.swift */,
 				ACF01A621F53274B00D76922 /* GroupMemberTableViewCell.swift */,
+				ACAAA1FB1F754C300059AE46 /* UserProfileTableViewCell.swift */,
+				ACAAA1FD1F7772950059AE46 /* ListGroupsView.xib */,
+				ACAAA1FF1F7773A60059AE46 /* ListGroupsView.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -451,6 +460,7 @@
 			files = (
 				AC8C80601F1FA7E300CEC79B /* LaunchScreen.storyboard in Resources */,
 				85E2EC0D1F41AF2400CDBF29 /* GroupTableViewCell.xib in Resources */,
+				ACAAA1FE1F7772950059AE46 /* ListGroupsView.xib in Resources */,
 				AC8C805D1F1FA7E300CEC79B /* Assets.xcassets in Resources */,
 				AC98FE951F24F74600261588 /* GroupMemberCollectionViewCell.xib in Resources */,
 				AC8C805B1F1FA7E300CEC79B /* Main.storyboard in Resources */,
@@ -497,13 +507,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-LocationTrackerTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		1BA702A004F8FD1D08373DEE /* [CP] Copy Pods Resources */ = {
@@ -527,13 +540,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-LocationTrackerUITests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		B807F402675BEFFEE7850E6D /* [CP] Embed Pods Frameworks */ = {
@@ -542,9 +558,38 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-LocationTracker/Pods-LocationTracker-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/AWSCognito/AWSCognito.framework",
+				"${BUILT_PRODUCTS_DIR}/AWSCore/AWSCore.framework",
+				"${BUILT_PRODUCTS_DIR}/AWSS3/AWSS3.framework",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/ChromaColorPicker/ChromaColorPicker.framework",
+				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/Locksmith/Locksmith.framework",
+				"${BUILT_PRODUCTS_DIR}/RappleProgressHUD/RappleProgressHUD.framework",
+				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
+				"${BUILT_PRODUCTS_DIR}/SideMenu/SideMenu.framework",
+				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+				"${BUILT_PRODUCTS_DIR}/Validator/Validator.framework",
+				"${BUILT_PRODUCTS_DIR}/Whisper/Whisper.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSCognito.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSCore.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSS3.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChromaColorPicker.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Locksmith.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RappleProgressHUD.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SideMenu.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Validator.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Whisper.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -557,9 +602,13 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-LocationTracker/Pods-LocationTracker-resources.sh",
+				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
+				"${PODS_ROOT}/GooglePlaces/Frameworks/GooglePlaces.framework/Resources/GooglePlaces.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -572,13 +621,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-LocationTracker-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		F49A68FDEFA241E088BBFAF6 /* [CP] Copy Pods Resources */ = {
@@ -620,6 +672,7 @@
 			files = (
 				AC52DFB21F20FFC60032F853 /* Consts.swift in Sources */,
 				AC98FE991F24FB6200261588 /* UserService.swift in Sources */,
+				ACAAA2001F7773A60059AE46 /* ListGroupsView.swift in Sources */,
 				AC98FE941F24F74600261588 /* GroupMemberCollectionViewCell.swift in Sources */,
 				857C92661F385E2B00E15C70 /* Group.swift in Sources */,
 				AC98FE971F24FA5100261588 /* ConnectionService.swift in Sources */,
@@ -637,6 +690,7 @@
 				850A0FFC1F28A89E0001DC6E /* CreateUserViewController.swift in Sources */,
 				AC4604791F41F07600A348B5 /* CommonTableDatasource.swift in Sources */,
 				AC52DFC11F24EDDC0032F853 /* GroupLocationPresenter.swift in Sources */,
+				ACAAA1FC1F754C300059AE46 /* UserProfileTableViewCell.swift in Sources */,
 				85E2EC091F41AD4600CDBF29 /* ListGroupsViewController.swift in Sources */,
 				AC98FEA21F24FEC200261588 /* GroupInfoPresenter.swift in Sources */,
 				AC46047D1F41F77000A348B5 /* GroupNameTitleView.swift in Sources */,

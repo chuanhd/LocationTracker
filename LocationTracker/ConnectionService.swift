@@ -151,6 +151,7 @@ class ConnectionService {
         static let GROUP_COLOR = "groupcolor"
         static let GROUP_ID = "groupid"
         static let DESCRIPTION = "description"
+        static let SEARCH_STRING = "search_string"
     }
     
     class func load<T>(_ resource : Resource<T>, _ showProgress : Bool = true, completion: @escaping (_ response : ServerResponse, _ result : [Any]?, _ error : Error?) -> ()) {

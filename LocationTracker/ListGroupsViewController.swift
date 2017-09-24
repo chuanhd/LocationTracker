@@ -69,6 +69,11 @@ class ListGroupsViewController: UIViewController {
         self.tblListGroups.delegate = self
         self.tblListGroups.dataSource = self
 //        self.tblListGroups.reloadData()
+        
+        if #available(iOS 11.0, *) {
+            btnJoinGroup.addTarget(self, action: #selector(ListGroupsViewController.btnJoinGroupPressed), for: .touchUpInside)
+            btnCreateGroup.addTarget(self, action: #selector(ListGroupsViewController.btnCreateGroupPressed), for: .touchUpInside)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -158,6 +163,20 @@ class ListGroupsViewController: UIViewController {
         self.present(_newGroupRequestAlert, animated: true, completion: nil)
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        
+        for _touch in touches {
+            let p = _touch.location(in: self.view)
+            let view = self.view.hitTest(p, with: event)
+            print("touched view: %@", view)
+        }
+//        for (UITouch *t in touches) {
+//            CGPoint p = [t locationInView:self.view];
+//            UIView *v = [self.view hitTest:p withEvent:event];
+//            NSLog(@"touched view %@", v);
+//        }
+    }
     
 }
 

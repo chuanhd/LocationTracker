@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -14,12 +15,6 @@
             <rect key="frame" x="0.0" y="0.0" width="121" height="32"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="My Circle" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LQJ-3F-esd">
-                    <rect key="frame" x="8" y="5.5" width="77" height="21"/>
-                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
-                    <nil key="textColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_dropdown" translatesAutoresizingMaskIntoConstraints="NO" id="fft-s5-JYw">
                     <rect key="frame" x="93" y="6" width="20" height="20"/>
                     <constraints>
@@ -27,21 +22,32 @@
                         <constraint firstAttribute="height" constant="20" id="wpj-sq-UxO"/>
                     </constraints>
                 </imageView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MCJ-zw-kuD">
+                    <rect key="frame" x="0.0" y="0.0" width="93" height="32"/>
+                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                    <state key="normal" title="My Circle">
+                        <color key="titleColor" red="0.32372191550000001" green="0.71051764490000002" blue="0.66279280190000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                    </state>
+                    <connections>
+                        <action selector="btnGroupnamePressed:" destination="iN0-l3-epB" eventType="touchUpInside" id="IHj-Hr-NJq"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="LQJ-3F-esd" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="37Y-UF-GVR"/>
                 <constraint firstAttribute="trailing" secondItem="fft-s5-JYw" secondAttribute="trailing" constant="8" id="BHq-es-P6i"/>
-                <constraint firstItem="fft-s5-JYw" firstAttribute="leading" secondItem="LQJ-3F-esd" secondAttribute="trailing" constant="8" id="daR-nw-1te"/>
-                <constraint firstItem="LQJ-3F-esd" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="okc-nB-do7"/>
+                <constraint firstItem="MCJ-zw-kuD" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="YeA-7r-e9M"/>
+                <constraint firstAttribute="bottom" secondItem="MCJ-zw-kuD" secondAttribute="bottom" id="dcM-XE-lYx"/>
+                <constraint firstItem="MCJ-zw-kuD" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="gWC-gl-q53"/>
+                <constraint firstItem="fft-s5-JYw" firstAttribute="leading" secondItem="MCJ-zw-kuD" secondAttribute="trailing" id="tgW-TI-eKl"/>
                 <constraint firstItem="fft-s5-JYw" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="xxb-OV-2xk"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <nil key="simulatedTopBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
+                <outlet property="btnGroupName" destination="MCJ-zw-kuD" id="7gR-ls-n3z"/>
                 <outlet property="imgDropdownIndicator" destination="fft-s5-JYw" id="Cuq-QY-REo"/>
-                <outlet property="lblGroupName" destination="LQJ-3F-esd" id="QuV-HC-oC4"/>
             </connections>
             <point key="canvasLocation" x="-166.5" y="-272"/>
         </view>

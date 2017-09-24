@@ -10,10 +10,17 @@ import UIKit
 
 class InviteMembersViewController: UIViewController {
 
+    @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var tblSearchResults: UITableView!
+    
+    var m_UserResults : [UserProfile]?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        self.searchBar.delegate = self
+        self.tblSearchResults.dataSource = self
     }
 
     override func didReceiveMemoryWarning() {
@@ -31,5 +38,66 @@ class InviteMembersViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    
+    func requestSearchResult(_ searchString : String) {
+        ConnectionService.load(UserProfile.searchUsers(searchString), true) { (_serverResponse, _users, error) in
+            switch _serverResponse.code {
+            case .SUCCESS:
+                
+                guard let users = _users as? [UserProfile] else {
+                    return
+                }
+                
+                self.m_UserResults = users
+                self.tblSearchResults.reloadData()
+                
+                break
+            case .FAILURE:
+                print("Fail to get group details")
+                break
+            default:
+                break
+            }
+        }
+    }
+}
 
+extension InviteMembersViewController : UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        guard let _userProfiles = self.m_UserResults else {
+            return 0
+        }
+        
+        return _userProfiles.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let _userProfiles = self.m_UserResults else {
+            return UITableViewCell()
+        }
+        
+        guard let _cell = tableView.dequeueReusableCell(withIdentifier: Constants.CellIdentifier.UserProfileTableViewCell, for: indexPath) as? UserProfileTableViewCell else {
+            return UITableViewCell()
+        }
+        
+        _cell.m_Delegate = self
+        _cell.bindDataToView(_userProfiles[indexPath.row], atIndex: indexPath.row)
+        
+        return _cell
+    }
+}
+
+extension InviteMembersViewController : UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let _searchString = searchBar.text else {
+            return
+        }
+        requestSearchResult(_searchString)
+    }
+}
+
+extension InviteMembersViewController : UserProfileTableViewCellDelegate {
+    func didTapInviteUser(atIndex _index: Int) {
+        
+    }
 }
