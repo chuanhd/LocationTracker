@@ -8,6 +8,7 @@ target 'LocationTracker' do
   pod 'SideMenu'
   pod 'GoogleMaps'
   pod 'GooglePlaces'
+  pod 'GooglePlacePicker'
   pod 'Alamofire'
   pod 'SwiftyJSON'
   pod 'Locksmith'

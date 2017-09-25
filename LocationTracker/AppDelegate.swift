@@ -8,6 +8,7 @@
 
 import UIKit
 import GoogleMaps
+import GooglePlaces
 import AWSCore
 import AWSCognito
 import AWSS3
@@ -24,6 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Initialize Google Maps SDK
         GMSServices.provideAPIKey(Constants.Google_Maps_API_Key);
+        GMSPlacesClient.provideAPIKey(Constants.Google_Maps_API_Key);
         
         let credentialProvider = AWSCognitoCredentialsProvider(regionType: .USEast1, identityPoolId: Constants.AmazonS3Config.CognitoIdentityPoolId)
         let configuration = AWSServiceConfiguration(region: .USEast1, credentialsProvider: credentialProvider)

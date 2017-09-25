@@ -46,20 +46,8 @@ class CirclesViewController: UIViewController, SegueHandler {
         mGroupNameTitleView = Bundle.main.loadNibNamed("GroupNameTitleView", owner: self, options: nil)?.first as? GroupNameTitleView
         self.navigationItem.titleView = mGroupNameTitleView
         mGroupNameTitleView?.m_Delegate = self
-//        if #available(iOS 11.0, *), let _navBar = self.navigationController?.navigationBar, let _groupNameTitleView = mGroupNameTitleView {
-//            m_NavBarActionButton_iOS11.addTarget(self, action: #selector(CirclesViewController.handleTapOnGroupTitleView), for: .touchUpInside)
-//            _navBar.addSubview(m_NavBarActionButton_iOS11)
-//            m_NavBarActionButton_iOS11.frame = CGRect(x: 0, y: 0, width: _groupNameTitleView.frame.size.width, height: _groupNameTitleView.frame.size.height)
-//            m_NavBarActionButton_iOS11.center = _navBar.center
-////            m_NavBarActionButton_iOS11.frame = _groupNameTitleView.frame
-//        }
-//        if let _groupNameTitleView = mGroupNameTitleView, let _navBar = self.navigationController?.navigationBar {
-//            _groupNameTitleView.isUserInteractionEnabled = true
-//            let _tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(CirclesViewController.handleTapOnGroupTitleView))
-//            _groupNameTitleView.addGestureRecognizer(_tapGestureRecognizer)
-//            _navBar.bringSubview(toFront: _groupNameTitleView)
-//        }
 
+        self.m_ListGroupsView.translatesAutoresizingMaskIntoConstraints = false
         self.m_ListGroupsView.delegate = self
         
         ConnectionService.load(UserProfile.login, true) {(_ response : ServerResponse, _ myProfile : [Any]?, _ error : Error?) in
@@ -78,8 +66,8 @@ class CirclesViewController: UIViewController, SegueHandler {
         
         let _camera = GMSCameraPosition.camera(withLatitude: -33.86, longitude: 151.20, zoom: Constants.GoogleMapsConfigs.DEFAULT_ZOOM);
         _gmsMapView.camera = _camera;
-        _gmsMapView.settings.scrollGestures = false
-        _gmsMapView.settings.zoomGestures = false
+        _gmsMapView.settings.scrollGestures = true
+        _gmsMapView.settings.zoomGestures = true
         
         // Creates a marker in the center of the map.
         _myLocationMarker.position = CLLocationCoordinate2D(latitude: -33.86, longitude: 151.20)
@@ -275,7 +263,14 @@ class CirclesViewController: UIViewController, SegueHandler {
             let position = CLLocationCoordinate2D(latitude: Double(lat), longitude: Double(lon))
             let _marker = GMSMarker(position: position)
             _marker.map = _gmsMapView
+            let _customMarkerIconView = CustomMarkerIconView(frame: CGRect(x: 0, y: 0, width: 60, height: 60))
+            if let _selectedGroup = self.mSelectedGroup {
+                if let _userProfile = (_selectedGroup.mUsers.filter { $0.mId == userId}).first {
+                    _customMarkerIconView.loadImage(fromURL: URL(string: _userProfile.mAvatarURLStr)!)
+                }
+            }
             
+            _marker.iconView = _customMarkerIconView
             m_MarkerDict[userId] = _marker
             
         }
@@ -394,5 +389,19 @@ extension CirclesViewController : GroupNameTitleViewDelegate {
         } else {
             hideListGroupView()
         }
+    }
+}
+
+extension CirclesViewController : GMSMapViewDelegate {
+    func mapView(_ mapView: GMSMapView, didTapAt coordinate: CLLocationCoordinate2D) {
+        
+    }
+    
+    func mapView(_ mapView: GMSMapView, didLongPressAt coordinate: CLLocationCoordinate2D) {
+        
+    }
+    
+    func showSetDestinationView(at _coordicate : CLLocationCoordinate2D) {
+        
     }
 }

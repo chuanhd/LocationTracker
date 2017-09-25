@@ -27,6 +27,9 @@
 		AC52DFBE1F21061C0032F853 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC52DFBD1F21061C0032F853 /* LocationService.swift */; };
 		AC52DFC11F24EDDC0032F853 /* GroupLocationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC52DFC01F24EDDC0032F853 /* GroupLocationPresenter.swift */; };
 		AC6EF2671F7425E100ADC2D3 /* InviteMembersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6EF2661F7425E100ADC2D3 /* InviteMembersViewController.swift */; };
+		AC84F5531F7950AD00BB8328 /* CustomMarkerIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC84F5521F7950AD00BB8328 /* CustomMarkerIconView.swift */; };
+		AC84F5551F795CE000BB8328 /* SetDestinationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC84F5541F795CE000BB8328 /* SetDestinationView.swift */; };
+		AC84F5571F795CEB00BB8328 /* SetDestinationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC84F5561F795CEB00BB8328 /* SetDestinationView.xib */; };
 		AC8C80561F1FA7E300CEC79B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8C80551F1FA7E300CEC79B /* AppDelegate.swift */; };
 		AC8C805B1F1FA7E300CEC79B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AC8C80591F1FA7E300CEC79B /* Main.storyboard */; };
 		AC8C805D1F1FA7E300CEC79B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AC8C805C1F1FA7E300CEC79B /* Assets.xcassets */; };
@@ -92,6 +95,9 @@
 		AC52DFBD1F21061C0032F853 /* LocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		AC52DFC01F24EDDC0032F853 /* GroupLocationPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupLocationPresenter.swift; sourceTree = "<group>"; };
 		AC6EF2661F7425E100ADC2D3 /* InviteMembersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteMembersViewController.swift; sourceTree = "<group>"; };
+		AC84F5521F7950AD00BB8328 /* CustomMarkerIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomMarkerIconView.swift; sourceTree = "<group>"; };
+		AC84F5541F795CE000BB8328 /* SetDestinationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetDestinationView.swift; sourceTree = "<group>"; };
+		AC84F5561F795CEB00BB8328 /* SetDestinationView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SetDestinationView.xib; sourceTree = "<group>"; };
 		AC8C80521F1FA7E300CEC79B /* LocationTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LocationTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC8C80551F1FA7E300CEC79B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AC8C805A1F1FA7E300CEC79B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -234,6 +240,9 @@
 				ACAAA1FB1F754C300059AE46 /* UserProfileTableViewCell.swift */,
 				ACAAA1FD1F7772950059AE46 /* ListGroupsView.xib */,
 				ACAAA1FF1F7773A60059AE46 /* ListGroupsView.swift */,
+				AC84F5521F7950AD00BB8328 /* CustomMarkerIconView.swift */,
+				AC84F5541F795CE000BB8328 /* SetDestinationView.swift */,
+				AC84F5561F795CEB00BB8328 /* SetDestinationView.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -460,6 +469,7 @@
 			files = (
 				AC8C80601F1FA7E300CEC79B /* LaunchScreen.storyboard in Resources */,
 				85E2EC0D1F41AF2400CDBF29 /* GroupTableViewCell.xib in Resources */,
+				AC84F5571F795CEB00BB8328 /* SetDestinationView.xib in Resources */,
 				ACAAA1FE1F7772950059AE46 /* ListGroupsView.xib in Resources */,
 				AC8C805D1F1FA7E300CEC79B /* Assets.xcassets in Resources */,
 				AC98FE951F24F74600261588 /* GroupMemberCollectionViewCell.xib in Resources */,
@@ -604,6 +614,7 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-LocationTracker/Pods-LocationTracker-resources.sh",
 				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
+				"${PODS_ROOT}/GooglePlacePicker/Frameworks/GooglePlacePicker.framework/Resources/GooglePlacePicker.bundle",
 				"${PODS_ROOT}/GooglePlaces/Frameworks/GooglePlaces.framework/Resources/GooglePlaces.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
@@ -670,6 +681,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AC84F5551F795CE000BB8328 /* SetDestinationView.swift in Sources */,
 				AC52DFB21F20FFC60032F853 /* Consts.swift in Sources */,
 				AC98FE991F24FB6200261588 /* UserService.swift in Sources */,
 				ACAAA2001F7773A60059AE46 /* ListGroupsView.swift in Sources */,
@@ -679,6 +691,7 @@
 				AC52DFBE1F21061C0032F853 /* LocationService.swift in Sources */,
 				ACF01A641F53274B00D76922 /* GroupMemberTableViewCell.swift in Sources */,
 				AC6EF2671F7425E100ADC2D3 /* InviteMembersViewController.swift in Sources */,
+				AC84F5531F7950AD00BB8328 /* CustomMarkerIconView.swift in Sources */,
 				AC52DFB71F21024C0032F853 /* CirclesViewController.swift in Sources */,
 				AC98FE9D1F24FD7A00261588 /* Utils.swift in Sources */,
 				AC8C80561F1FA7E300CEC79B /* AppDelegate.swift in Sources */,
