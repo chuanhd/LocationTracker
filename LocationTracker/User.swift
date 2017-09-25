@@ -163,7 +163,7 @@ extension UserProfile {
         
         let params : [String : Any] = [ConnectionService.SERVER_REQ_KEY.SEARCH_STRING : searchParam]
         
-        return Resource<UserProfile>(withURL : App.User.getLocation.url,
+        return Resource<UserProfile>(withURL : App.User.searchUser.url,
                                      withMethod : HTTPMethod.get,
                                      withParams : params) { data in
                                         

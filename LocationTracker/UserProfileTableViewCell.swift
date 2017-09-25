@@ -19,6 +19,7 @@ class UserProfileTableViewCell: UITableViewCell {
     
     @IBOutlet weak var imgAvatar: UIImageView!
     @IBOutlet weak var lblUsername: UILabel!
+    @IBOutlet weak var btnInvite : UIButton!
     weak var m_Delegate : UserProfileTableViewCellDelegate?
     
     override func awakeFromNib() {

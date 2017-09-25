@@ -49,6 +49,7 @@ enum App {
     enum User {
         case getInfo
         case getLocation
+        case searchUser
     }
     
     enum Myself {
@@ -65,6 +66,8 @@ extension App.User : Url {
             return URL(string: "api/memberinfo", relativeTo: BASE_URL)!
         case .getLocation:
             return URL(string: "api/memberlocation", relativeTo: BASE_URL)!
+        case .searchUser:
+            return URL(string: "api/searchuser", relativeTo: BASE_URL)!
         }
     }
 }

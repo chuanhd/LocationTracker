@@ -14,6 +14,7 @@ class InviteMembersViewController: UIViewController {
     @IBOutlet weak var tblSearchResults: UITableView!
     
     var m_UserResults : [UserProfile]?
+    var m_GroupId : Int = -1
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -97,7 +98,33 @@ extension InviteMembersViewController : UISearchBarDelegate {
 }
 
 extension InviteMembersViewController : UserProfileTableViewCellDelegate {
+    
     func didTapInviteUser(atIndex _index: Int) {
         
+        guard let _userProfiles = self.m_UserResults else {
+            return
+        }
+        
+        guard _index >= 0 && _index < _userProfiles.count else {
+            return
+        }
+        
+        let _userProfile = _userProfiles[_index]
+        
+        ConnectionService.load(Group.inviteUser(m_GroupId, _userProfile.mId), true) { (_serverResponse, _data, _error) in
+            switch _serverResponse.code {
+            case .SUCCESS:
+                
+                let _cell = self.tblSearchResults.cellForRow(at: IndexPath(item: _index, section: 0)) as! UserProfileTableViewCell
+                _cell.btnInvite.isHidden = true
+                
+                break
+            case .FAILURE:
+                print("Fail to add member to group")
+                break
+            default:
+                break
+            }
+        }
     }
 }

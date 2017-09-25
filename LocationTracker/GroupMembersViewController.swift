@@ -22,6 +22,7 @@ class GroupMembersViewController: UIViewController, SegueHandler {
 
         // Do any additional setup after loading the view.
         tblGroupMembers.dataSource = self
+        tblGroupMembers.delegate = self
         fetchGroupDetails()
     }
 
@@ -43,6 +44,8 @@ class GroupMembersViewController: UIViewController, SegueHandler {
             guard let _dest = segue.destination as? InviteMembersViewController else {
                 fatalError("InviteMembersViewController not found");
             }
+            
+            _dest.m_GroupId = m_Group!.mId
             
             break
         
@@ -78,7 +81,7 @@ class GroupMembersViewController: UIViewController, SegueHandler {
     }
 
     @IBAction func inviteMemberBtnPressed(_ sender: Any) {
-        
+        self.performSegue(withIdentifier: SegueIdentifier.PresentInviteMembersView.rawValue, sender: nil)
     }
     
     @IBAction func manageGroupBtnPressed(_ sender: Any) {
@@ -109,6 +112,13 @@ extension GroupMembersViewController : UITableViewDataSource {
         
         return _cell
         
+    }
+    
+}
+
+extension GroupMembersViewController : UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 80.0
     }
 }
 
