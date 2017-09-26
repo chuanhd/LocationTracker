@@ -95,7 +95,7 @@ extension App.Group : Url {
         case .createGroup:
             return URL(string : "api/group", relativeTo: BASE_URL)!
         case .addMember():
-            return URL(string : "api/user/addGroupMember", relativeTo: BASE_URL)!
+            return URL(string : "api/addGroupMember", relativeTo: BASE_URL)!
         case .removeMember():
             return URL(string : "api/user/removeGroupMember", relativeTo: BASE_URL)!
         }
@@ -108,6 +108,7 @@ enum SERVER_RESPONSE_CODE : String {
     case WRONG_DATA_PARSING = "WRONG_DATA_PARSING" // There are something wrong with data structure
     case USER_NOT_EXIST = "USER_NOT_EXISTS"
     case GROUP_NOT_EXISTS = "GROUP_NOT_EXISTS"
+    case USER_IN_GROUP = "USER_IN_GROUP"
 }
 
 struct ServerResponse {

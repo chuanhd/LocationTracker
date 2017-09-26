@@ -44,27 +44,40 @@
                         <action selector="btnSetPressed:" destination="iN0-l3-epB" eventType="touchUpInside" id="k4J-DO-aaa"/>
                     </connections>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Would you like to set this place as your group's destination?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ywy-LU-4wS">
-                    <rect key="frame" x="8" y="8" width="243" height="67"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Would you like to set this place as your group's destination?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ywy-LU-4wS">
+                    <rect key="frame" x="8" y="4" width="243" height="33.5"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <color key="textColor" red="0.32372191550000001" green="0.71051764490000002" blue="0.66279280190000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading..." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z5b-Jq-Z7J">
+                    <rect key="frame" x="8" y="41.5" width="243" height="37.5"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <color key="textColor" red="0.32372191550000001" green="0.71051764490000002" blue="0.66279280190000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
+            <color key="backgroundColor" white="0.66666666666666663" alpha="0.5" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="GJP-Ie-Ofp" firstAttribute="leading" secondItem="Wna-Jp-sbB" secondAttribute="trailing" constant="4" id="0yH-Mm-3ID"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="GJP-Ie-Ofp" secondAttribute="bottom" id="6Kn-qX-FHZ"/>
-                <constraint firstItem="ywy-LU-4wS" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="8" id="Dnh-2f-Mmb"/>
+                <constraint firstItem="ywy-LU-4wS" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="4" id="Dnh-2f-Mmb"/>
+                <constraint firstItem="z5b-Jq-Z7J" firstAttribute="top" secondItem="ywy-LU-4wS" secondAttribute="bottom" constant="4" id="Jzb-46-lX0"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="Wna-Jp-sbB" secondAttribute="bottom" id="NBi-1I-2cg"/>
                 <constraint firstItem="Wna-Jp-sbB" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="4" id="NGa-j7-e1t"/>
+                <constraint firstItem="z5b-Jq-Z7J" firstAttribute="trailing" secondItem="ywy-LU-4wS" secondAttribute="trailing" id="W8K-Tp-lpe"/>
                 <constraint firstItem="GJP-Ie-Ofp" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" constant="-4" id="fc1-s9-snG"/>
-                <constraint firstItem="Wna-Jp-sbB" firstAttribute="top" secondItem="ywy-LU-4wS" secondAttribute="bottom" constant="8" id="hph-Cm-9i7"/>
+                <constraint firstItem="z5b-Jq-Z7J" firstAttribute="leading" secondItem="ywy-LU-4wS" secondAttribute="leading" id="hHS-12-gb5"/>
                 <constraint firstItem="ywy-LU-4wS" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="8" id="l0w-Lh-oSY"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="ywy-LU-4wS" secondAttribute="trailing" constant="8" id="qY8-oj-Eqc"/>
+                <constraint firstItem="Wna-Jp-sbB" firstAttribute="top" secondItem="z5b-Jq-Z7J" secondAttribute="bottom" constant="4" id="vJX-Nr-Sdp"/>
                 <constraint firstItem="Wna-Jp-sbB" firstAttribute="width" secondItem="GJP-Ie-Ofp" secondAttribute="width" id="y2R-Fu-T7G"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <connections>
+                <outlet property="lblAddress" destination="z5b-Jq-Z7J" id="gc9-AG-Ajm"/>
+            </connections>
             <point key="canvasLocation" x="-60.5" y="-60.5"/>
         </view>
     </objects>

@@ -11,7 +11,8 @@ import GoogleMaps
 
 class CirclesViewController: UIViewController, SegueHandler {
     
-    internal let TAG_LIST_GROUP_VIEW  = 1105
+    internal let TAG_LIST_GROUP_VIEW                        = 1105
+    internal let TAG_SET_DESTINATION_VIEW                   = 1106
 
     @IBOutlet weak var _gmsMapView: GMSMapView!
     @IBOutlet weak var mMembersCollectionView : UICollectionView!
@@ -68,6 +69,7 @@ class CirclesViewController: UIViewController, SegueHandler {
         _gmsMapView.camera = _camera;
         _gmsMapView.settings.scrollGestures = true
         _gmsMapView.settings.zoomGestures = true
+        _gmsMapView.delegate = self
         
         // Creates a marker in the center of the map.
         _myLocationMarker.position = CLLocationCoordinate2D(latitude: -33.86, longitude: 151.20)
@@ -394,7 +396,7 @@ extension CirclesViewController : GroupNameTitleViewDelegate {
 
 extension CirclesViewController : GMSMapViewDelegate {
     func mapView(_ mapView: GMSMapView, didTapAt coordinate: CLLocationCoordinate2D) {
-        
+        showSetDestinationView(at: coordinate)
     }
     
     func mapView(_ mapView: GMSMapView, didLongPressAt coordinate: CLLocationCoordinate2D) {
@@ -402,6 +404,36 @@ extension CirclesViewController : GMSMapViewDelegate {
     }
     
     func showSetDestinationView(at _coordicate : CLLocationCoordinate2D) {
-        
+        if let _setDestinationView = self.view.viewWithTag(TAG_SET_DESTINATION_VIEW) as? SetDestinationView {
+            let _viewModel = AddressViewModel(withCoordinate: _coordicate)
+            _setDestinationView.m_AddressViewModel = _viewModel
+        } else {
+            guard let _view = Bundle.main.loadNibNamed("SetDestinationView", owner: self, options: nil)?.first as? SetDestinationView else {
+                return
+            }
+            
+            let _viewModel = AddressViewModel(withCoordinate: _coordicate)
+            _view.tag = TAG_SET_DESTINATION_VIEW
+            _view.delegate = self
+            _view.m_AddressViewModel = _viewModel
+            self._gmsMapView.addSubview(_view)
+            
+            _view.snp.makeConstraints({ (make) in
+                make.centerX.equalTo(self._gmsMapView.snp.centerX)
+                make.bottom.equalTo(self._gmsMapView.snp.bottom).offset(-108)
+                make.width.equalTo(260)
+                make.height.equalTo(125)
+            })
+            
+        }
+    }
+}
+
+extension CirclesViewController : SetDestinationViewDelegate {
+    func didSetDestination(at _coordinate: CLLocationCoordinate2D) {
+        if let _setDestinationView = self.view.viewWithTag(TAG_SET_DESTINATION_VIEW) as? SetDestinationView {
+            _setDestinationView.removeFromSuperview()
+            // TODO: Sent destination coordinate to server
+        }
     }
 }

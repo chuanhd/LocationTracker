@@ -14,9 +14,17 @@ protocol SetDestinationViewDelegate : class {
 }
 
 class SetDestinationView: UIView {
+    
+    @IBOutlet weak var lblAddress : UILabel!
 
     weak var delegate : SetDestinationViewDelegate?
-    var m_Coordinate : CLLocationCoordinate2D!
+    var m_AddressViewModel : AddressViewModel! {
+        didSet {
+            m_AddressViewModel.reverseCoordinate(completion: { [unowned self] in
+                self.lblAddress.text = self.m_AddressViewModel.m_FormattedAddress
+            })
+        }
+    }
     
     /*
     // Only override draw() if you perform custom drawing.
@@ -31,7 +39,7 @@ class SetDestinationView: UIView {
             return
         }
         
-        _delegateMethod(m_Coordinate)
+        _delegateMethod(m_AddressViewModel.m_Coordinate)
     }
     
     @IBAction func btnCancelPressed(_ sender: Any) {

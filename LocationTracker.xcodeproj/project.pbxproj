@@ -30,6 +30,7 @@
 		AC84F5531F7950AD00BB8328 /* CustomMarkerIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC84F5521F7950AD00BB8328 /* CustomMarkerIconView.swift */; };
 		AC84F5551F795CE000BB8328 /* SetDestinationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC84F5541F795CE000BB8328 /* SetDestinationView.swift */; };
 		AC84F5571F795CEB00BB8328 /* SetDestinationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC84F5561F795CEB00BB8328 /* SetDestinationView.xib */; };
+		AC84F5591F7A9A9D00BB8328 /* AddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC84F5581F7A9A9D00BB8328 /* AddressViewModel.swift */; };
 		AC8C80561F1FA7E300CEC79B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8C80551F1FA7E300CEC79B /* AppDelegate.swift */; };
 		AC8C805B1F1FA7E300CEC79B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AC8C80591F1FA7E300CEC79B /* Main.storyboard */; };
 		AC8C805D1F1FA7E300CEC79B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AC8C805C1F1FA7E300CEC79B /* Assets.xcassets */; };
@@ -98,6 +99,7 @@
 		AC84F5521F7950AD00BB8328 /* CustomMarkerIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomMarkerIconView.swift; sourceTree = "<group>"; };
 		AC84F5541F795CE000BB8328 /* SetDestinationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetDestinationView.swift; sourceTree = "<group>"; };
 		AC84F5561F795CEB00BB8328 /* SetDestinationView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SetDestinationView.xib; sourceTree = "<group>"; };
+		AC84F5581F7A9A9D00BB8328 /* AddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressViewModel.swift; sourceTree = "<group>"; };
 		AC8C80521F1FA7E300CEC79B /* LocationTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LocationTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC8C80551F1FA7E300CEC79B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AC8C805A1F1FA7E300CEC79B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -199,6 +201,7 @@
 		AC52DFB41F2101CC0032F853 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				AC84F5581F7A9A9D00BB8328 /* AddressViewModel.swift */,
 			);
 			name = ViewModels;
 			sourceTree = "<group>";
@@ -688,6 +691,7 @@
 				AC98FE941F24F74600261588 /* GroupMemberCollectionViewCell.swift in Sources */,
 				857C92661F385E2B00E15C70 /* Group.swift in Sources */,
 				AC98FE971F24FA5100261588 /* ConnectionService.swift in Sources */,
+				AC84F5591F7A9A9D00BB8328 /* AddressViewModel.swift in Sources */,
 				AC52DFBE1F21061C0032F853 /* LocationService.swift in Sources */,
 				ACF01A641F53274B00D76922 /* GroupMemberTableViewCell.swift in Sources */,
 				AC6EF2671F7425E100ADC2D3 /* InviteMembersViewController.swift in Sources */,

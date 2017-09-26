@@ -119,6 +119,12 @@ extension InviteMembersViewController : UserProfileTableViewCellDelegate {
                 _cell.btnInvite.isHidden = true
                 
                 break
+            case .USER_IN_GROUP:
+                
+                let _cell = self.tblSearchResults.cellForRow(at: IndexPath(item: _index, section: 0)) as! UserProfileTableViewCell
+                _cell.btnInvite.isHidden = true
+                
+                break
             case .FAILURE:
                 print("Fail to add member to group")
                 break
