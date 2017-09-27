@@ -163,20 +163,20 @@ class ListGroupsViewController: UIViewController {
         self.present(_newGroupRequestAlert, animated: true, completion: nil)
     }
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesBegan(touches, with: event)
-        
-        for _touch in touches {
-            let p = _touch.location(in: self.view)
-            let view = self.view.hitTest(p, with: event)
-            print("touched view: %@", view)
-        }
-//        for (UITouch *t in touches) {
-//            CGPoint p = [t locationInView:self.view];
-//            UIView *v = [self.view hitTest:p withEvent:event];
-//            NSLog(@"touched view %@", v);
+//    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+//        super.touchesBegan(touches, with: event)
+//        
+//        for _touch in touches {
+//            let p = _touch.location(in: self.view)
+//            let view = self.view.hitTest(p, with: event)
+//            print("touched view: %@", view)
 //        }
-    }
+////        for (UITouch *t in touches) {
+////            CGPoint p = [t locationInView:self.view];
+////            UIView *v = [self.view hitTest:p withEvent:event];
+////            NSLog(@"touched view %@", v);
+////        }
+//    }
     
 }
 

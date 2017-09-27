@@ -44,6 +44,7 @@ enum App {
         case createGroup
         case addMember
         case removeMember
+        case setDestination
     }
     
     enum User {
@@ -98,6 +99,8 @@ extension App.Group : Url {
             return URL(string : "api/addGroupMember", relativeTo: BASE_URL)!
         case .removeMember():
             return URL(string : "api/user/removeGroupMember", relativeTo: BASE_URL)!
+        case .setDestination():
+            return URL(string : "/api/locationPick", relativeTo: BASE_URL)!
         }
     }
 }

@@ -174,17 +174,6 @@ class CirclesViewController: UIViewController, SegueHandler {
     }
 
     internal func showListGroupView() {
-//        let _listGroupViewController = self.storyboard!.instantiateViewController(withIdentifier: "ListGroupsViewController") as! ListGroupsViewController
-//        mListGroupViewController.view.frame = CGRect(x: 0, y: 64, width: self.view.frame.size.width, height: self.view.frame.size.height * 0.5)
-//        mListGroupViewController.delegate = self
-//        self.addChildViewController(mListGroupViewController)
-//        self.view.addSubview(mListGroupViewController.view)
-//        mListGroupViewController.didMove(toParentViewController: self)
-//
-//        self.view.bringSubview(toFront: mListGroupViewController.view)
-//        mListGroupViewController.view.tag = TAG_LIST_GROUP_VIEW
-//
-//        mGroupNameTitleView?.imgDropdownIndicator.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
         
         m_ListGroupsView.tag = TAG_LIST_GROUP_VIEW
         m_ListGroupsView.isHidden = false
@@ -192,15 +181,6 @@ class CirclesViewController: UIViewController, SegueHandler {
     }
     
     internal func hideListGroupView() {
-        
-//        if let _childViewController = self.childViewControllers[0] as? ListGroupsViewController {
-//            _childViewController.delegate = nil
-//            _childViewController.removeFromParentViewController()
-//        }
-//        
-//        if let _listGroupView = self.view.viewWithTag(TAG_LIST_GROUP_VIEW) {
-//            _listGroupView.removeFromSuperview()
-//        }
         
         m_ListGroupsView.isHidden = true
         mGroupNameTitleView?.imgDropdownIndicator.transform = CGAffineTransform(rotationAngle: 0)
@@ -396,11 +376,11 @@ extension CirclesViewController : GroupNameTitleViewDelegate {
 
 extension CirclesViewController : GMSMapViewDelegate {
     func mapView(_ mapView: GMSMapView, didTapAt coordinate: CLLocationCoordinate2D) {
-        showSetDestinationView(at: coordinate)
+        
     }
     
     func mapView(_ mapView: GMSMapView, didLongPressAt coordinate: CLLocationCoordinate2D) {
-        
+        showSetDestinationView(at: coordinate)
     }
     
     func showSetDestinationView(at _coordicate : CLLocationCoordinate2D) {
@@ -433,7 +413,29 @@ extension CirclesViewController : SetDestinationViewDelegate {
     func didSetDestination(at _coordinate: CLLocationCoordinate2D) {
         if let _setDestinationView = self.view.viewWithTag(TAG_SET_DESTINATION_VIEW) as? SetDestinationView {
             _setDestinationView.removeFromSuperview()
-            // TODO: Sent destination coordinate to server
+            
+            guard let _selectedGroup = self.mSelectedGroup else {
+                return
+            }
+            
+            guard let _isMaster = (_selectedGroup.mUsers.filter({ ( _userProfile ) -> Bool in
+                return _userProfile.m_IsMaster == true
+            })).first?.m_IsMaster, _isMaster == true else {
+                return
+            }
+        
+            
+            ConnectionService.load(Group.setDestination(_selectedGroup.mId, AppController.sharedInstance.mUniqueToken, Float(_coordinate.latitude), Float(_coordinate.longitude)), true, completion: { ( _response, _result, _error) in
+                switch _response.code {
+                case .SUCCESS:
+                    break
+                case .FAILURE:
+                    print("Fail to set destination of group")
+                    break
+                default:
+                    break
+                }
+            })
         }
     }
 }

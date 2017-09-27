@@ -16,6 +16,7 @@ class UserProfile {
     public var mAvatarURLStr : String = ""
     public var mLatitude : Float = -1
     public var mLongtitude : Float = -1
+    public var m_IsMaster = false
         
     init(withId _id : String, withAvatar _avatarURLStr : String, withName _name : String, withLat _lat : Float, withLong _long : Float) {
         mId = _id
