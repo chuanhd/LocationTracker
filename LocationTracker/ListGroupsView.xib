@@ -39,6 +39,9 @@
                                     <state key="normal" title="Join">
                                         <color key="titleColor" red="0.32372191550000001" green="0.71051764490000002" blue="0.66279280190000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                     </state>
+                                    <connections>
+                                        <action selector="btnJoinGroupPressed:" destination="-1" eventType="touchUpInside" id="xuN-de-HKs"/>
+                                    </connections>
                                 </button>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -61,6 +64,9 @@
                                     <state key="normal" title="Create">
                                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
+                                    <connections>
+                                        <action selector="btnCreateGroupPressed:" destination="-1" eventType="touchUpInside" id="h67-d0-xhQ"/>
+                                    </connections>
                                 </button>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

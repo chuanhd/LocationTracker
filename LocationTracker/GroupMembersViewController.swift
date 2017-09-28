@@ -45,6 +45,7 @@ class GroupMembersViewController: UIViewController, SegueHandler {
                 fatalError("InviteMembersViewController not found");
             }
             
+            _dest.m_Delegate = self
             _dest.m_GroupId = m_Group!.mId
             
             break
@@ -119,6 +120,17 @@ extension GroupMembersViewController : UITableViewDataSource {
 extension GroupMembersViewController : UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 80.0
+    }
+}
+
+extension GroupMembersViewController : InviteMemberViewControllerDelegate {
+    func didInviteUserSuccessful(_ _userProfile: UserProfile) {
+        guard let _group = self.m_Group else {
+            return
+        }
+        
+        _group.mUsers.append(_userProfile)
+        self.tblGroupMembers.reloadData()
     }
 }
 

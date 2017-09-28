@@ -75,7 +75,7 @@ class ListGroupsView: UIView {
             
         }
     }
-    
+        
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -126,6 +126,24 @@ class ListGroupsView: UIView {
     internal func reflectDataOnView() {
         self.tblListGroups.reloadData()
     }
+    
+    @IBAction func btnJoinGroupPressed(_ sender: Any) {
+        guard let delegateMethod = self.delegate?.didTapRequestJoinGroup else {
+            return
+        }
+        
+        delegateMethod()
+    }
+    
+    @IBAction func btnCreateGroupPressed(_ sender: Any) {
+        guard let delegateMethod = self.delegate?.didTapCreateGroup else {
+            return
+        }
+        
+        delegateMethod()
+    }
+    
+    
     
     internal func promptRequestCreateNewGroupAlert() {
 //        let _newGroupRequestAlert = UIAlertController(title: "New Group", message: "You are not in any group. You could join or create a new group", preferredStyle: UIAlertControllerStyle.alert)

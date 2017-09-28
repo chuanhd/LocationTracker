@@ -31,7 +31,19 @@ class CirclesViewController: UIViewController, SegueHandler {
     
     internal var mGroupNameTitleView : GroupNameTitleView?
     
-    internal var m_SelectedGroupViewModel : GroupViewModel?
+    internal var m_SelectedGroupViewModel : GroupViewModel? {
+        didSet {
+            guard let _titleView = self.mGroupNameTitleView else {
+                return
+            }
+            
+            guard let _group = self.m_SelectedGroupViewModel?.m_Group else {
+                return
+            }
+            
+            _titleView.setGroupName(_group.mName)
+        }
+    }
     
     private var m_RequestUserLocationTimer : Timer?
     private var m_MarkerDict = Dictionary<String, GMSMarker>()
@@ -163,6 +175,7 @@ class CirclesViewController: UIViewController, SegueHandler {
 
     internal func showListGroupView() {
         
+        self.m_ListGroupsView.getAllGroups()
         m_ListGroupsView.tag = TAG_LIST_GROUP_VIEW
         m_ListGroupsView.isHidden = false
         
@@ -315,7 +328,11 @@ extension CirclesViewController : ListGroupViewDelegate {
 }
 
 extension CirclesViewController : CreateGroupViewControllerDelegate {
-    func createNewGroupSuccessful(withGroupId _groupId: Int!) {
+
+    func createNewGroupSuccessful(withGroupId _groupId: Int!, withGroupName _groupName: String) {
+        
+        self.m_SelectedGroupViewModel = GroupViewModel(withGroup: Group(withID: _groupId, withName: _groupName))
+        
         self.getGroupDetails(withGroupId: _groupId)
     }
     

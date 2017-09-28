@@ -8,10 +8,15 @@
 
 import UIKit
 
+protocol InviteMemberViewControllerDelegate : class {
+    func didInviteUserSuccessful(_ userProfile : UserProfile);
+}
+
 class InviteMembersViewController: UIViewController {
 
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tblSearchResults: UITableView!
+    weak var m_Delegate : InviteMemberViewControllerDelegate?
     
     var m_UserResults : [UserProfile]?
     var m_GroupId : Int = -1
@@ -117,6 +122,10 @@ extension InviteMembersViewController : UserProfileTableViewCellDelegate {
                 
                 let _cell = self.tblSearchResults.cellForRow(at: IndexPath(item: _index, section: 0)) as! UserProfileTableViewCell
                 _cell.btnInvite.isHidden = true
+                
+                if let _inviteSuccessDelegate = self.m_Delegate?.didInviteUserSuccessful {
+                    _inviteSuccessDelegate(_userProfile)
+                }
                 
                 break
             case .USER_IN_GROUP:

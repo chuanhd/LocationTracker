@@ -73,12 +73,12 @@ extension Group {
                                                 return (ServerResponse(), nil)
     }
     
-    static func createNewGroupResource(_ name : String!, _ desc : String!, _ colorHex : String!) -> Resource<String> {
+    static func createNewGroupResource(_ name : String!, _ desc : String!, _ colorHex : String!) -> Resource<Int> {
         let params : [String : Any] = [ConnectionService.SERVER_REQ_KEY.USER_ID : AppController.sharedInstance.mUniqueToken,
                                        ConnectionService.SERVER_REQ_KEY.GROUP_NAME : name,
                                        ConnectionService.SERVER_REQ_KEY.DESCRIPTION : desc]
         
-        return Resource<String>(withURL : App.Group.createGroup.url,
+        return Resource<Int>(withURL : App.Group.createGroup.url,
                                      withMethod : HTTPMethod.post,
                                      withParams : params) { data in
                                         
@@ -93,7 +93,7 @@ extension Group {
                                             switch _code {
                                             case .SUCCESS:
                                                 
-                                                let groupId = _json["data"][0]["groupid"].stringValue
+                                                let groupId = _json["data"][0]["groupid"].intValue
                                                 
                                                 return (ServerResponse(withCode : .SUCCESS, withStatus : _status), [groupId])
                                             case .FAILURE:

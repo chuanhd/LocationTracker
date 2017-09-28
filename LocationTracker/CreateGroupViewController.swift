@@ -9,7 +9,7 @@
 import UIKit
 
 protocol CreateGroupViewControllerDelegate : class {
-    func createNewGroupSuccessful(withGroupId _groupId : Int!)
+    func createNewGroupSuccessful(withGroupId _groupId : Int!, withGroupName _groupName : String)
 }
 
 class CreateGroupViewController: UIViewController {
@@ -57,12 +57,14 @@ class CreateGroupViewController: UIViewController {
                     return
                 }
                 
-                if let createSuccessful = self.delegate?.createNewGroupSuccessful(withGroupId:) {
+                if let createSuccessful = self.delegate?.createNewGroupSuccessful {
                     let _groupId = _groupIds[0]
-                    createSuccessful(_groupId)
+                    createSuccessful(_groupId, self.txtGroupName.text!)
                 }
                 
-                self.dismiss(animated: true, completion: nil)
+                DispatchQueue.main.async {
+                    self.navigationController?.popViewController(animated: true)
+                }
                 
                 break
             case .FAILURE:
