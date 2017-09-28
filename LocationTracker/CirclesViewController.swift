@@ -33,7 +33,8 @@ class CirclesViewController: UIViewController, SegueHandler {
     
     internal var mGroupNameTitleView : GroupNameTitleView?
     
-    internal var mSelectedGroup : Group?
+//    internal var mSelectedGroup : Group?
+    internal var m_SelectedGroupViewModel : GroupViewModel?
     
     private var m_RequestUserLocationTimer : Timer?
     private var m_MarkerDict = Dictionary<String, GMSMarker>()
@@ -54,8 +55,7 @@ class CirclesViewController: UIViewController, SegueHandler {
         ConnectionService.load(UserProfile.login, true) {(_ response : ServerResponse, _ myProfile : [Any]?, _ error : Error?) in
             switch response.code {
             case .SUCCESS:
-                self.m_ListGroupsView.getAllGroups()
-                self.mCirclePresenter.startLocationUpdates()
+                self.fetchingDataForApp()
                 break
             case .USER_NOT_EXIST:
                 self.presentCreateNewUserViewController()
@@ -198,7 +198,7 @@ class CirclesViewController: UIViewController, SegueHandler {
     }
     
     internal func requestUsersLocation() {
-        guard let _selectedGroup = self.mSelectedGroup else {
+        guard let _selectedGroup = self.m_SelectedGroupViewModel?.m_Group else {
             return
         }
         for _userInfo in _selectedGroup.mUsers {
@@ -223,7 +223,7 @@ class CirclesViewController: UIViewController, SegueHandler {
                 let _lon = _positions[0]["lon"]
                 
                 DispatchQueue.main.async {
-                    self.syncUserLocationMarker(_userId, _lat!, _lon!)
+                    self.m_SelectedGroupViewModel?.createOrUpdateMarkerForUser(withId: _userId, withLat: Double(_lat!), withLong: Double(_lon!), onMap: self._gmsMapView)
                 }
                 
                 break
@@ -236,26 +236,28 @@ class CirclesViewController: UIViewController, SegueHandler {
         }
     }
     
-    internal func syncUserLocationMarker(_ userId : String, _ lat : Float, _ lon : Float) {
-        if let _marker = m_MarkerDict[userId] {
-            let _newLocation = CLLocation(latitude: Double(lat), longitude: Double(lon))
-            _marker.position = _newLocation.coordinate
-        } else {
-            
-            let position = CLLocationCoordinate2D(latitude: Double(lat), longitude: Double(lon))
-            let _marker = GMSMarker(position: position)
-            _marker.map = _gmsMapView
-            let _customMarkerIconView = CustomMarkerIconView(frame: CGRect(x: 0, y: 0, width: 60, height: 60))
-            if let _selectedGroup = self.mSelectedGroup {
-                if let _userProfile = (_selectedGroup.mUsers.filter { $0.mId == userId}).first {
-                    _customMarkerIconView.loadImage(fromURL: URL(string: _userProfile.mAvatarURLStr)!)
+    internal func fetchingDataForApp() {
+        AppController.sharedInstance.fetchOwnProfile { (_response, _error) in
+            switch _response.code {
+            case .SUCCESS:
+                
+                DispatchQueue.main.async {
+                    self.mCirclePresenter.startLocationUpdates()
+                    if self.m_SelectedGroupViewModel == nil {
+                        self.mMembersCollectionView.reloadData()
+                    }
                 }
+                
+                break
+            case .FAILURE:
+                //TODO: show message to retry
+                print("Fail to fetch my profile")
+                break
+            default:
+                break
             }
-            
-            _marker.iconView = _customMarkerIconView
-            m_MarkerDict[userId] = _marker
-            
         }
+        self.m_ListGroupsView.getAllGroups()
     }
 }
 
@@ -263,6 +265,12 @@ extension CirclesViewController : GroupLocationPresenterDelegate {
     func locationDidUpdate(_newLocation : CLLocation) {
         self.view.setNeedsLayout()
         print("new location: \(_newLocation.coordinate)")
+        
+        if let _myProfile = AppController.sharedInstance.mOwnProfile {
+            _myProfile.mLatitude = _newLocation.coordinate.latitude
+            _myProfile.mLongtitude = _newLocation.coordinate.longitude
+        }
+        
         _myLocationMarker.position = _newLocation.coordinate
         _gmsMapView.camera = GMSCameraPosition.camera(withTarget: _newLocation.coordinate, zoom: Constants.GoogleMapsConfigs.DEFAULT_ZOOM)
         self.view.layoutIfNeeded()
@@ -273,8 +281,7 @@ extension CirclesViewController : GroupLocationPresenterDelegate {
 
 extension CirclesViewController : CreateUserViewControlerDelegate {
     func userInfoUpdateSuccessful() {
-        self.mCirclePresenter.startLocationUpdates()
-        self.m_ListGroupsView.getAllGroups()
+        fetchingDataForApp()
     }
 }
 
@@ -292,7 +299,7 @@ extension CirclesViewController : ListGroupViewDelegate {
     
     func didSelectGroup(_ _group : Group) {
         self.hideListGroupView()
-        self.mSelectedGroup = _group
+        self.m_SelectedGroupViewModel = GroupViewModel(withGroup: _group)
         self.getGroupDetails(withGroupId: _group.mId)
         self.mGroupNameTitleView?.setGroupName(_group.mName)
 //        self.mGroupNameTitleView?.lblGroupName.text = _group.mName
@@ -318,7 +325,7 @@ extension CirclesViewController : CreateGroupViewControllerDelegate {
                     return
                 }
                 
-                if let _selectedGroup = self.mSelectedGroup {
+                if let _selectedGroup = self.m_SelectedGroupViewModel?.m_Group {
                     _selectedGroup.mUsers = users
                     self.mMembersCollectionView.reloadData()
                     self.startRequestUserLocationTimer()
@@ -336,13 +343,22 @@ extension CirclesViewController : CreateGroupViewControllerDelegate {
 
 extension CirclesViewController : UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+        if let _selectedGroup = self.m_SelectedGroupViewModel?.m_Group {
+            let _userProfile = _selectedGroup.mUsers[indexPath.row]
+            let _coordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(_userProfile.mLatitude), longitude: CLLocationDegrees(_userProfile.mLongtitude))
+            let _update = GMSCameraUpdate.setTarget(_coordinate)
+            self._gmsMapView.moveCamera(_update)
+        } else {
+            if let _myProfile = AppController.sharedInstance.mOwnProfile {
+                
+            }
+        }
     }
 }
 
 extension CirclesViewController : UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if let _selectedGroup = self.mSelectedGroup {
+        if let _selectedGroup = self.m_SelectedGroupViewModel?.m_Group {
             return _selectedGroup.mUsers.count
         }
         return 1
@@ -353,11 +369,13 @@ extension CirclesViewController : UICollectionViewDataSource {
             return UICollectionViewCell()
         }
         
-        if let _selectedGroup = self.mSelectedGroup {
+        if let _selectedGroup = self.m_SelectedGroupViewModel?.m_Group {
             let _userProfile = _selectedGroup.mUsers[indexPath.row] 
             _cell.bindDataToView(_userProfile)
         } else {
-            
+            if let _myProfile = AppController.sharedInstance.mOwnProfile {
+                _cell.bindDataToView(_myProfile)
+            }
         }
         
         return _cell
@@ -414,13 +432,11 @@ extension CirclesViewController : SetDestinationViewDelegate {
         if let _setDestinationView = self.view.viewWithTag(TAG_SET_DESTINATION_VIEW) as? SetDestinationView {
             _setDestinationView.removeFromSuperview()
             
-            guard let _selectedGroup = self.mSelectedGroup else {
+            guard let _selectedGroup = self.m_SelectedGroupViewModel?.m_Group else {
                 return
             }
             
-            guard let _isMaster = (_selectedGroup.mUsers.filter({ ( _userProfile ) -> Bool in
-                return _userProfile.m_IsMaster == true
-            })).first?.m_IsMaster, _isMaster == true else {
+            guard _selectedGroup.groupMasterUserId() == AppController.sharedInstance.mUniqueToken else {
                 return
             }
         
@@ -428,6 +444,11 @@ extension CirclesViewController : SetDestinationViewDelegate {
             ConnectionService.load(Group.setDestination(_selectedGroup.mId, AppController.sharedInstance.mUniqueToken, Float(_coordinate.latitude), Float(_coordinate.longitude)), true, completion: { ( _response, _result, _error) in
                 switch _response.code {
                 case .SUCCESS:
+                    
+                    DispatchQueue.main.async {
+                        self.m_SelectedGroupViewModel!.createOrUpdateDestinationMarker(withLat: Double(_coordinate.latitude), withLong: Double(_coordinate.longitude), onMap: self._gmsMapView)
+                    }
+                    
                     break
                 case .FAILURE:
                     print("Fail to set destination of group")

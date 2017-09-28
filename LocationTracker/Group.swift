@@ -20,6 +20,16 @@ class Group {
         self.mName = _name;
     }
     
+    func groupMasterUserId() -> String {
+        guard let _masterProfile = (self.mUsers.filter { (_profile) -> Bool in
+            return _profile.m_IsMaster == true
+        }).first else {
+            return ""
+        }
+        
+        return _masterProfile.mId
+    }
+    
 }
 
 extension Group {
@@ -52,7 +62,6 @@ extension Group {
                                                             }
                                                         }
                                             
-                                                        
                                                         return (ServerResponse(withCode : .SUCCESS, withStatus : _status), groups)
                                                     case .GROUP_NOT_EXISTS:
                                                         return (ServerResponse(withCode : .GROUP_NOT_EXISTS, withStatus : _status), nil)
@@ -120,8 +129,8 @@ extension Group {
                                             for _userJSON in _userJSONs {
                                                 let _userId = _userJSON["userid"].stringValue
                                                 let _userName = _userJSON["username"].stringValue
-                                                let _userLat = _userJSON["lat"].floatValue
-                                                let _userLong = _userJSON["lon"].floatValue
+                                                let _userLat = _userJSON["lat"].doubleValue
+                                                let _userLong = _userJSON["lon"].doubleValue
                                                 let _userImage = _userJSON["userimage"].stringValue
                                                 
                                                 let _user = UserProfile(withId: _userId, withAvatar: _userImage, withName: _userName, withLat: _userLat, withLong: _userLong)

@@ -11,8 +11,10 @@
 		7BDBA1318D926CE606372126 /* Pods_LocationTracker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D30F9678E2A8D602BB989CF /* Pods_LocationTracker.framework */; };
 		850A0FFA1F28850F0001DC6E /* SegueHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850A0FF91F28850F0001DC6E /* SegueHandler.swift */; };
 		850A0FFC1F28A89E0001DC6E /* CreateUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850A0FFB1F28A89E0001DC6E /* CreateUserViewController.swift */; };
+		855ACFCA1F7D0B0800896941 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 855ACFC91F7D0B0800896941 /* UserViewModel.swift */; };
 		8576A6171F32DE1100D5338C /* Resources.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8576A6161F32DE1100D5338C /* Resources.xcassets */; };
 		857C92661F385E2B00E15C70 /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857C92651F385E2B00E15C70 /* Group.swift */; };
+		85AC13FD1F7CDF4900DF764A /* GroupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AC13FC1F7CDF4900DF764A /* GroupViewModel.swift */; };
 		85E2EC071F41894C00CDBF29 /* CreateGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E2EC061F41894C00CDBF29 /* CreateGroupViewController.swift */; };
 		85E2EC091F41AD4600CDBF29 /* ListGroupsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E2EC081F41AD4500CDBF29 /* ListGroupsViewController.swift */; };
 		85E2EC0C1F41AF2400CDBF29 /* GroupTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E2EC0A1F41AF2400CDBF29 /* GroupTableViewCell.swift */; };
@@ -80,8 +82,10 @@
 		7B975EC5E2D48CBADE5C0706 /* Pods-LocationTrackerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LocationTrackerTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-LocationTrackerTests/Pods-LocationTrackerTests.release.xcconfig"; sourceTree = "<group>"; };
 		850A0FF91F28850F0001DC6E /* SegueHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegueHandler.swift; sourceTree = "<group>"; };
 		850A0FFB1F28A89E0001DC6E /* CreateUserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateUserViewController.swift; sourceTree = "<group>"; };
+		855ACFC91F7D0B0800896941 /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		8576A6161F32DE1100D5338C /* Resources.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Resources.xcassets; sourceTree = "<group>"; };
 		857C92651F385E2B00E15C70 /* Group.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
+		85AC13FC1F7CDF4900DF764A /* GroupViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupViewModel.swift; sourceTree = "<group>"; };
 		85E2EC061F41894C00CDBF29 /* CreateGroupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateGroupViewController.swift; sourceTree = "<group>"; };
 		85E2EC081F41AD4500CDBF29 /* ListGroupsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListGroupsViewController.swift; sourceTree = "<group>"; };
 		85E2EC0A1F41AF2400CDBF29 /* GroupTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupTableViewCell.swift; sourceTree = "<group>"; };
@@ -202,6 +206,8 @@
 			isa = PBXGroup;
 			children = (
 				AC84F5581F7A9A9D00BB8328 /* AddressViewModel.swift */,
+				85AC13FC1F7CDF4900DF764A /* GroupViewModel.swift */,
+				855ACFC91F7D0B0800896941 /* UserViewModel.swift */,
 			);
 			name = ViewModels;
 			sourceTree = "<group>";
@@ -577,9 +583,13 @@
 				"${BUILT_PRODUCTS_DIR}/AWSS3/AWSS3.framework",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/ChromaColorPicker/ChromaColorPicker.framework",
+				"${BUILT_PRODUCTS_DIR}/HexColors/HexColors.framework",
 				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Locksmith/Locksmith.framework",
+				"${BUILT_PRODUCTS_DIR}/PPTopMostController/PPTopMostController.framework",
+				"${BUILT_PRODUCTS_DIR}/RMessage/RMessage.framework",
 				"${BUILT_PRODUCTS_DIR}/RappleProgressHUD/RappleProgressHUD.framework",
+				"${BUILT_PRODUCTS_DIR}/SCLAlertView/SCLAlertView.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SideMenu/SideMenu.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
@@ -594,9 +604,13 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSS3.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChromaColorPicker.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HexColors.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Locksmith.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PPTopMostController.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RMessage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RappleProgressHUD.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SCLAlertView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SideMenu.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
@@ -698,6 +712,7 @@
 				AC84F5531F7950AD00BB8328 /* CustomMarkerIconView.swift in Sources */,
 				AC52DFB71F21024C0032F853 /* CirclesViewController.swift in Sources */,
 				AC98FE9D1F24FD7A00261588 /* Utils.swift in Sources */,
+				85AC13FD1F7CDF4900DF764A /* GroupViewModel.swift in Sources */,
 				AC8C80561F1FA7E300CEC79B /* AppDelegate.swift in Sources */,
 				85E2EC0C1F41AF2400CDBF29 /* GroupTableViewCell.swift in Sources */,
 				AC98FE9B1F24FBE300261588 /* User.swift in Sources */,
@@ -709,6 +724,7 @@
 				AC52DFC11F24EDDC0032F853 /* GroupLocationPresenter.swift in Sources */,
 				ACAAA1FC1F754C300059AE46 /* UserProfileTableViewCell.swift in Sources */,
 				85E2EC091F41AD4600CDBF29 /* ListGroupsViewController.swift in Sources */,
+				855ACFCA1F7D0B0800896941 /* UserViewModel.swift in Sources */,
 				AC98FEA21F24FEC200261588 /* GroupInfoPresenter.swift in Sources */,
 				AC46047D1F41F77000A348B5 /* GroupNameTitleView.swift in Sources */,
 				AC46047F1F4B396800A348B5 /* JoinGroupViewController.swift in Sources */,

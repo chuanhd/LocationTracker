@@ -14,11 +14,11 @@ class UserProfile {
     public var mId : String = ""
     public var mUsername : String = ""
     public var mAvatarURLStr : String = ""
-    public var mLatitude : Float = -1
-    public var mLongtitude : Float = -1
+    public var mLatitude : Double = -1
+    public var mLongtitude : Double = -1
     public var m_IsMaster = false
         
-    init(withId _id : String, withAvatar _avatarURLStr : String, withName _name : String, withLat _lat : Float, withLong _long : Float) {
+    init(withId _id : String, withAvatar _avatarURLStr : String, withName _name : String, withLat _lat : Double, withLong _long : Double) {
         mId = _id
         mUsername = _name
         mAvatarURLStr = _avatarURLStr
@@ -26,7 +26,7 @@ class UserProfile {
         mLongtitude = _long
     }
     
-    func updateUserLocation(withNewLat _lat : Float, withNewLong _long : Float) {
+    func updateUserLocation(withNewLat _lat : Double, withNewLong _long : Double) {
         mLatitude = _lat
         mLongtitude = _long
     }
@@ -96,31 +96,34 @@ extension UserProfile {
         }
     }
 
-    static func getUserInfo(_ email : String!, _ name : String!, _ phone : String!, _ avatarURL : String?) -> Resource<UserProfile> {
-        var params : [String : Any] = [ConnectionService.SERVER_REQ_KEY.USER_ID : AppController.sharedInstance.mUniqueToken,
-                                       ConnectionService.SERVER_REQ_KEY.EMAIL : email,
-                                       ConnectionService.SERVER_REQ_KEY.USERNAME : name,
-                                       ConnectionService.SERVER_REQ_KEY.PHONE_NUMBER : phone]
+    static func getUserInfo(_ userId : String) -> Resource<UserProfile> {
+        let params : [String : Any] = [ConnectionService.SERVER_REQ_KEY.USER_ID : userId]
         
-        if let avatarURL = avatarURL {
-            params[ConnectionService.SERVER_REQ_KEY.AVATAR] = avatarURL
-        }
-        
-        return Resource<UserProfile>(withURL : App.Myself.updateMyInfo.url,
-                                     withMethod : HTTPMethod.post,
+        return Resource<UserProfile>(withURL : App.User.getInfo.url,
+                                     withMethod : HTTPMethod.get,
                                      withParams : params) { data in
                                         
                                         let _json = JSON(data : data)
                                         
                                         print("JSON: \(_json)") // serialized json response
                                         
-                                        
                                         if let _codeStr = _json["code"].string,
                                             let _code = SERVER_RESPONSE_CODE(rawValue: _codeStr),
                                             let _status = _json["status"].string{
                                             switch _code {
                                             case .SUCCESS:
-                                                return (ServerResponse(withCode : .SUCCESS, withStatus : _status), nil)
+                                                
+//                                                var users = [UserProfile]()
+                                                let _userJSON = _json["data"]
+                                                
+                                                let _userId = _userJSON["userid"].stringValue
+                                                let _userName = _userJSON["username"].stringValue
+                                                let _userImage = _userJSON["userimage"].stringValue
+                                                
+                                                let _user = UserProfile(withId: _userId, withAvatar: _userImage, withName: _userName, withLat: 0, withLong: 0)
+                                                
+                                                
+                                                return (ServerResponse(withCode : .SUCCESS, withStatus : _status), [_user])
                                             case .FAILURE:
                                                 return (ServerResponse(withCode : .FAILURE, withStatus : _status), nil)
                                             default:
@@ -221,8 +224,6 @@ extension UserProfile {
                                                     for _userJSON in _userJSONs {
                                                         let _userId = _userJSON["userid"].stringValue
                                                         let _userName = _userJSON["username"].stringValue
-//                                                        let _userLat = _userJSON["lat"].floatValue
-//                                                        let _userLong = _userJSON["lon"].floatValue
                                                         let _userImage = _userJSON["userimage"].stringValue
                                                         
                                                         let _user = UserProfile(withId: _userId, withAvatar: _userImage, withName: _userName, withLat: 0, withLong: 0)
