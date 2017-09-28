@@ -25,8 +25,7 @@ class GroupViewModel {
     
     func createOrUpdateMarkerForUser(withId userId : String, withLat lat : Double, withLong lon: Double, onMap _mapView : GMSMapView) {
         if let _marker = m_MarkerDict[userId] {
-            let _newLocation = CLLocation(latitude: lat, longitude: lon)
-            _marker.position = _newLocation.coordinate
+            _marker.position = CLLocationCoordinate2D(latitude: lat, longitude: lon)
         } else {
             
             let position = CLLocationCoordinate2D(latitude: lat, longitude: lon)
@@ -47,8 +46,7 @@ class GroupViewModel {
     
     func createOrUpdateDestinationMarker(withLat lat : Double, withLong lon: Double, onMap _mapView : GMSMapView) {
         if let _destinationMarker = self.m_DestinationMarker {
-            let _newLocation = CLLocation(latitude: lat, longitude: lon)
-            _destinationMarker.position = _newLocation.coordinate
+            _destinationMarker.position = CLLocationCoordinate2D(latitude: lat, longitude: lon)
         } else {
             let position = CLLocationCoordinate2D(latitude: lat, longitude: lon)
             m_DestinationMarker = GMSMarker(position: position)

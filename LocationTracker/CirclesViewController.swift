@@ -26,21 +26,15 @@ class CirclesViewController: UIViewController, SegueHandler {
         case PresentGroupMembersView = "PresentGroupMembersView"
     }
     
-    internal let _myLocationMarker = GMSMarker();
-    
     internal let mCirclePresenter = GroupLocationPresenter()
     private let mCircleInfoPresenter = GroupInfoPresenter()
     
     internal var mGroupNameTitleView : GroupNameTitleView?
     
-//    internal var mSelectedGroup : Group?
     internal var m_SelectedGroupViewModel : GroupViewModel?
     
     private var m_RequestUserLocationTimer : Timer?
     private var m_MarkerDict = Dictionary<String, GMSMarker>()
-    
-    // Hack for iOS 11
-    private lazy var m_NavBarActionButton_iOS11 = UIButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,12 +64,6 @@ class CirclesViewController: UIViewController, SegueHandler {
         _gmsMapView.settings.scrollGestures = true
         _gmsMapView.settings.zoomGestures = true
         _gmsMapView.delegate = self
-        
-        // Creates a marker in the center of the map.
-        _myLocationMarker.position = CLLocationCoordinate2D(latitude: -33.86, longitude: 151.20)
-        _myLocationMarker.title = "Sydney"
-        _myLocationMarker.snippet = "Australia"
-        _myLocationMarker.map = _gmsMapView
         
         mCirclePresenter.delegate = self
         
@@ -237,15 +225,26 @@ class CirclesViewController: UIViewController, SegueHandler {
     }
     
     internal func fetchingDataForApp() {
-        AppController.sharedInstance.fetchOwnProfile { (_response, _error) in
+        AppController.sharedInstance.fetchOwnProfile(showLoading: true) { (_response, _error) in
             switch _response.code {
             case .SUCCESS:
                 
+                self.m_SelectedGroupViewModel = GroupViewModel(withGroup: Group(withID: -1, withName: "My Circle"))
+                let _contained = self.m_SelectedGroupViewModel!.m_Group!.mUsers.contains(where: { (_profile) -> Bool in
+                    if _profile.mId == AppController.sharedInstance.mOwnProfile?.mId {
+                        return true
+                    }
+                    
+                    return false
+                })
+                
+                if !_contained {
+                    self.m_SelectedGroupViewModel!.m_Group!.mUsers.append(AppController.sharedInstance.mOwnProfile!)
+                }
+                
                 DispatchQueue.main.async {
                     self.mCirclePresenter.startLocationUpdates()
-                    if self.m_SelectedGroupViewModel == nil {
-                        self.mMembersCollectionView.reloadData()
-                    }
+                    self.mMembersCollectionView.reloadData()
                 }
                 
                 break
@@ -269,10 +268,14 @@ extension CirclesViewController : GroupLocationPresenterDelegate {
         if let _myProfile = AppController.sharedInstance.mOwnProfile {
             _myProfile.mLatitude = _newLocation.coordinate.latitude
             _myProfile.mLongtitude = _newLocation.coordinate.longitude
+            
+            self.m_SelectedGroupViewModel?.createOrUpdateMarkerForUser(withId: _myProfile.mId, withLat: _myProfile.mLatitude, withLong: _myProfile.mLongtitude, onMap: self._gmsMapView)
+            
+            let _coordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(_myProfile.mLatitude), longitude: CLLocationDegrees(_myProfile.mLongtitude))
+            let _update = GMSCameraUpdate.setTarget(_coordinate)
+            self._gmsMapView.moveCamera(_update)
         }
         
-        _myLocationMarker.position = _newLocation.coordinate
-        _gmsMapView.camera = GMSCameraPosition.camera(withTarget: _newLocation.coordinate, zoom: Constants.GoogleMapsConfigs.DEFAULT_ZOOM)
         self.view.layoutIfNeeded()
         
         populateMyCurrentLocation(_newLocation)
@@ -430,17 +433,15 @@ extension CirclesViewController : GMSMapViewDelegate {
 extension CirclesViewController : SetDestinationViewDelegate {
     func didSetDestination(at _coordinate: CLLocationCoordinate2D) {
         if let _setDestinationView = self.view.viewWithTag(TAG_SET_DESTINATION_VIEW) as? SetDestinationView {
-            _setDestinationView.removeFromSuperview()
-            
+        
             guard let _selectedGroup = self.m_SelectedGroupViewModel?.m_Group else {
                 return
             }
             
-            guard _selectedGroup.groupMasterUserId() == AppController.sharedInstance.mUniqueToken else {
-                return
-            }
+//            guard _selectedGroup.groupMasterUserId() == AppController.sharedInstance.mUniqueToken else {
+//                return
+//            }
         
-            
             ConnectionService.load(Group.setDestination(_selectedGroup.mId, AppController.sharedInstance.mUniqueToken, Float(_coordinate.latitude), Float(_coordinate.longitude)), true, completion: { ( _response, _result, _error) in
                 switch _response.code {
                 case .SUCCESS:
@@ -457,6 +458,8 @@ extension CirclesViewController : SetDestinationViewDelegate {
                     break
                 }
             })
+            
+            _setDestinationView.removeFromSuperview()
         }
     }
 }
