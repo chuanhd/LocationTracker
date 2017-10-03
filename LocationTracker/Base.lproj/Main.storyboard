@@ -106,11 +106,23 @@
                                     <constraint firstAttribute="width" constant="375" id="KKi-nB-2qX"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LRd-55-seg">
+                                <rect key="frame" x="321" y="513" width="46" height="46"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="46" id="4Wz-QL-Mtt"/>
+                                    <constraint firstAttribute="width" constant="46" id="AaD-JJ-Ant"/>
+                                </constraints>
+                                <state key="normal" image="navigation"/>
+                                <connections>
+                                    <action selector="btnNavigationPressed:" destination="O9N-c0-cMH" eventType="touchUpInside" id="vDh-cA-74R"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="SsK-R0-3nu" secondAttribute="trailing" id="0WF-4F-GYB"/>
                             <constraint firstItem="IY8-y7-K9E" firstAttribute="leading" secondItem="Gcg-d8-oQr" secondAttribute="leading" id="4f2-Mk-0tU"/>
+                            <constraint firstAttribute="trailing" secondItem="LRd-55-seg" secondAttribute="trailing" constant="8" id="94c-YJ-gZf"/>
                             <constraint firstAttribute="trailing" secondItem="IY8-y7-K9E" secondAttribute="trailing" id="CF3-JD-Nop"/>
                             <constraint firstItem="SsK-R0-3nu" firstAttribute="leading" secondItem="Gcg-d8-oQr" secondAttribute="leading" id="CSR-BE-XSP"/>
                             <constraint firstItem="5vL-ur-bRv" firstAttribute="top" secondItem="IY8-y7-K9E" secondAttribute="bottom" id="VHI-6E-OYk"/>
@@ -119,6 +131,7 @@
                             <constraint firstAttribute="trailing" secondItem="Xoi-f7-aUq" secondAttribute="trailing" id="vvj-ph-l9f"/>
                             <constraint firstItem="Xoi-f7-aUq" firstAttribute="top" secondItem="Xab-5d-KHw" secondAttribute="bottom" id="xJg-92-mwZ"/>
                             <constraint firstItem="IY8-y7-K9E" firstAttribute="top" secondItem="Xab-5d-KHw" secondAttribute="bottom" id="zFh-9f-n2d"/>
+                            <constraint firstItem="SsK-R0-3nu" firstAttribute="top" secondItem="LRd-55-seg" secondAttribute="bottom" constant="8" id="zoQ-xc-U0H"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="My Circle" id="Dl9-v5-YIA">
@@ -816,5 +829,6 @@
     </scenes>
     <resources>
         <image name="default_avatar" width="120" height="120"/>
+        <image name="navigation" width="40" height="40"/>
     </resources>
 </document>

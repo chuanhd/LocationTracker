@@ -14,6 +14,8 @@ class Group {
     public var mId : Int = -1
     public var mName : String = ""
     public var mUsers = [UserProfile]()
+    public var m_DestLat : Double?
+    public var m_DestLon : Double?
     
     init(withID _id : Int, withName _name : String) {
         self.mId = _id;
@@ -54,8 +56,12 @@ extension Group {
                                                             for _groupJSON in _groupJSONs {
                                                                 let _groupId = _groupJSON["groupid"].intValue
                                                                 let _groupName = _groupJSON["groupname"].stringValue
+                                                                let _groupLat = _groupJSON["lat"].double
+                                                                let _groupLon = _groupJSON["lon"].double
                                                                 
                                                                 let _group = Group(withID: _groupId, withName: _groupName)
+                                                                _group.m_DestLat = _groupLat
+                                                                _group.m_DestLon = _groupLon
                                                                 
                                                                 groups.append(_group)
                                                                 

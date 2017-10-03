@@ -59,7 +59,7 @@ class InviteMembersViewController: UIViewController {
                 
                 break
             case .FAILURE:
-                print("Fail to get group details")
+                print("Fail to search user")
                 break
             default:
                 break

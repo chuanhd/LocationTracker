@@ -19,6 +19,7 @@
 		85E2EC091F41AD4600CDBF29 /* ListGroupsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E2EC081F41AD4500CDBF29 /* ListGroupsViewController.swift */; };
 		85E2EC0C1F41AF2400CDBF29 /* GroupTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E2EC0A1F41AF2400CDBF29 /* GroupTableViewCell.swift */; };
 		85E2EC0D1F41AF2400CDBF29 /* GroupTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85E2EC0B1F41AF2400CDBF29 /* GroupTableViewCell.xib */; };
+		AC357C1E1F83D8ED003E0F2E /* GoogleMapsDirectionsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC357C1D1F83D8ED003E0F2E /* GoogleMapsDirectionsHelper.swift */; };
 		AC4604791F41F07600A348B5 /* CommonTableDatasource.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4604781F41F07600A348B5 /* CommonTableDatasource.swift */; };
 		AC46047B1F41F6C200A348B5 /* GroupNameTitleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC46047A1F41F6C200A348B5 /* GroupNameTitleView.xib */; };
 		AC46047D1F41F77000A348B5 /* GroupNameTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC46047C1F41F77000A348B5 /* GroupNameTitleView.swift */; };
@@ -90,6 +91,7 @@
 		85E2EC081F41AD4500CDBF29 /* ListGroupsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListGroupsViewController.swift; sourceTree = "<group>"; };
 		85E2EC0A1F41AF2400CDBF29 /* GroupTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupTableViewCell.swift; sourceTree = "<group>"; };
 		85E2EC0B1F41AF2400CDBF29 /* GroupTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GroupTableViewCell.xib; sourceTree = "<group>"; };
+		AC357C1D1F83D8ED003E0F2E /* GoogleMapsDirectionsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleMapsDirectionsHelper.swift; sourceTree = "<group>"; };
 		AC4604781F41F07600A348B5 /* CommonTableDatasource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonTableDatasource.swift; sourceTree = "<group>"; };
 		AC46047A1F41F6C200A348B5 /* GroupNameTitleView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GroupNameTitleView.xib; sourceTree = "<group>"; };
 		AC46047C1F41F77000A348B5 /* GroupNameTitleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupNameTitleView.swift; sourceTree = "<group>"; };
@@ -189,6 +191,7 @@
 				AC52DFB11F20FFC60032F853 /* Consts.swift */,
 				AC98FE9C1F24FD7A00261588 /* Utils.swift */,
 				850A0FF91F28850F0001DC6E /* SegueHandler.swift */,
+				AC357C1D1F83D8ED003E0F2E /* GoogleMapsDirectionsHelper.swift */,
 			);
 			name = Others;
 			sourceTree = "<group>";
@@ -724,6 +727,7 @@
 				AC52DFC11F24EDDC0032F853 /* GroupLocationPresenter.swift in Sources */,
 				ACAAA1FC1F754C300059AE46 /* UserProfileTableViewCell.swift in Sources */,
 				85E2EC091F41AD4600CDBF29 /* ListGroupsViewController.swift in Sources */,
+				AC357C1E1F83D8ED003E0F2E /* GoogleMapsDirectionsHelper.swift in Sources */,
 				855ACFCA1F7D0B0800896941 /* UserViewModel.swift in Sources */,
 				AC98FEA21F24FEC200261588 /* GroupInfoPresenter.swift in Sources */,
 				AC46047D1F41F77000A348B5 /* GroupNameTitleView.swift in Sources */,

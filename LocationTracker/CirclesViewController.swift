@@ -229,7 +229,7 @@ class CirclesViewController: UIViewController, SegueHandler {
                 
                 break
             case .FAILURE:
-                print("Fail to get group details")
+                print("Fail to get user location")
                 break
             default:
                 break
@@ -271,6 +271,29 @@ class CirclesViewController: UIViewController, SegueHandler {
         }
         self.m_ListGroupsView.getAllGroups()
     }
+    
+    @IBAction func btnNavigationPressed(_ sender: Any) {
+        
+        guard let _selectedGroup = self.m_SelectedGroupViewModel?.m_Group else {
+            return
+        }
+        
+        guard _selectedGroup.mId != -1 else {
+            return
+        }
+        
+        guard let _destLat = _selectedGroup.m_DestLat, let _destLon = _selectedGroup.m_DestLon else {
+            return
+        }
+        
+        if let _myProfile = AppController.sharedInstance.mOwnProfile {
+            let _origin = CLLocationCoordinate2D(latitude: _myProfile.mLatitude, longitude: _myProfile.mLongtitude)
+            let _destination = CLLocationCoordinate2D(latitude: _destLat, longitude: _destLon)
+            GoogleMapsDirectionsHelper.getDirection(from: _origin, to: _destination)
+        }
+        
+    }
+    
 }
 
 extension CirclesViewController : GroupLocationPresenterDelegate {
@@ -369,9 +392,9 @@ extension CirclesViewController : UICollectionViewDelegate {
             let _update = GMSCameraUpdate.setTarget(_coordinate)
             self._gmsMapView.moveCamera(_update)
         } else {
-            if let _myProfile = AppController.sharedInstance.mOwnProfile {
-                
-            }
+//            if let _myProfile = AppController.sharedInstance.mOwnProfile {
+//
+//            }
         }
     }
 }
@@ -465,6 +488,8 @@ extension CirclesViewController : SetDestinationViewDelegate {
                     
                     DispatchQueue.main.async {
                         self.m_SelectedGroupViewModel!.createOrUpdateDestinationMarker(withLat: Double(_coordinate.latitude), withLong: Double(_coordinate.longitude), onMap: self._gmsMapView)
+                        self.m_SelectedGroupViewModel!.m_Group?.m_DestLat = _coordinate.latitude
+                        self.m_SelectedGroupViewModel!.m_Group?.m_DestLon = _coordinate.longitude
                     }
                     
                     break
