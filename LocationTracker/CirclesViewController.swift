@@ -8,6 +8,7 @@
 
 import UIKit
 import GoogleMaps
+import RMessage
 
 class CirclesViewController: UIViewController, SegueHandler {
     
@@ -17,6 +18,7 @@ class CirclesViewController: UIViewController, SegueHandler {
     @IBOutlet weak var _gmsMapView: GMSMapView!
     @IBOutlet weak var mMembersCollectionView : UICollectionView!
     @IBOutlet weak var m_ListGroupsView : ListGroupsView!
+    @IBOutlet weak var m_GettingDirectionsIndicator : UIActivityIndicatorView!
     
     enum SegueIdentifier : String {
         case PresentCreateNewUserView  = "PresentCreateNewUserView"
@@ -89,6 +91,8 @@ class CirclesViewController: UIViewController, SegueHandler {
         _flowLayout.scrollDirection = UICollectionViewScrollDirection.horizontal
         _flowLayout.minimumInteritemSpacing = 10
         mMembersCollectionView.collectionViewLayout = _flowLayout
+        
+        m_GettingDirectionsIndicator.isHidden = true
     }
 
     override func didReceiveMemoryWarning() {
@@ -262,8 +266,16 @@ class CirclesViewController: UIViewController, SegueHandler {
                 
                 break
             case .FAILURE:
-                //TODO: show message to retry
                 print("Fail to fetch my profile")
+                DispatchQueue.main.async {
+                    
+                    let retryCallback : () -> () = {
+                        self.fetchingDataForApp()
+                    }
+                    
+                    RMessage.showNotification(withTitle: "Error", subtitle: "Fail to get app data", iconImage: nil, type: RMessageType.error, customTypeName: nil, duration: TimeInterval(RMessageDuration.automatic.rawValue), callback: nil, buttonTitle: "Retry", buttonCallback: retryCallback, at: RMessagePosition.top, canBeDismissedByUser: false)
+
+                }
                 break
             default:
                 break
@@ -286,10 +298,41 @@ class CirclesViewController: UIViewController, SegueHandler {
             return
         }
         
+        self.m_GettingDirectionsIndicator.startAnimating()
+        self.m_GettingDirectionsIndicator.isHidden = false
+        
         if let _myProfile = AppController.sharedInstance.mOwnProfile {
             let _origin = CLLocationCoordinate2D(latitude: _myProfile.mLatitude, longitude: _myProfile.mLongtitude)
             let _destination = CLLocationCoordinate2D(latitude: _destLat, longitude: _destLon)
-            GoogleMapsDirectionsHelper.getDirection(from: _origin, to: _destination)
+            GoogleMapsDirectionsHelper.getDirection(from: _origin, to: _destination,
+                                                    completion: { ( _response, _polyline, _error) in
+                                                        
+                                                        DispatchQueue.main.async {
+                                                            self.m_GettingDirectionsIndicator.stopAnimating()
+                                                            self.m_GettingDirectionsIndicator.isHidden = true
+                                                        }
+                                                        
+                                                        switch _response.code {
+                                                        case .SUCCESS:
+                                                            
+                                                            DispatchQueue.main.async {
+                                                                _polyline?.map = self._gmsMapView
+                                                            }
+                                                            
+                                                        case .FAILURE:
+                                                            print("Fail to get direction from my location to group destination")
+                                                            
+                                                            DispatchQueue.main.async {
+                                                                RMessage.showNotification(withTitle: "Failed", subtitle: "Failed to get direction from your location to your group's destination", type: RMessageType.error, customTypeName: nil, duration: TimeInterval(RMessageDuration.automatic.rawValue), callback: nil)
+                                                            }
+                                                            
+                                                            break
+                                                        default:
+                                                            break
+                                                        }
+                                                        
+                                                        
+            })
         }
         
     }
@@ -342,6 +385,10 @@ extension CirclesViewController : ListGroupViewDelegate {
         self.getGroupDetails(withGroupId: _group.mId)
         self.mGroupNameTitleView?.setGroupName(_group.mName)
 //        self.mGroupNameTitleView?.lblGroupName.text = _group.mName
+        DispatchQueue.main.async {
+            self.m_SelectedGroupViewModel?.createOrUpdateDestinationMarker(onMap: self._gmsMapView)
+        }
+        
     }
     
     func didConfigureGroup(_ _group: Group) {
@@ -487,9 +534,10 @@ extension CirclesViewController : SetDestinationViewDelegate {
                 case .SUCCESS:
                     
                     DispatchQueue.main.async {
-                        self.m_SelectedGroupViewModel!.createOrUpdateDestinationMarker(withLat: Double(_coordinate.latitude), withLong: Double(_coordinate.longitude), onMap: self._gmsMapView)
                         self.m_SelectedGroupViewModel!.m_Group?.m_DestLat = _coordinate.latitude
                         self.m_SelectedGroupViewModel!.m_Group?.m_DestLon = _coordinate.longitude
+                        self.m_SelectedGroupViewModel!.createOrUpdateDestinationMarker(onMap: self._gmsMapView)
+                        
                     }
                     
                     break

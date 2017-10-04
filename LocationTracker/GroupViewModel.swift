@@ -44,11 +44,16 @@ class GroupViewModel {
         }
     }
     
-    func createOrUpdateDestinationMarker(withLat lat : Double, withLong lon: Double, onMap _mapView : GMSMapView) {
+    func createOrUpdateDestinationMarker(onMap _mapView : GMSMapView) {
+        
+        guard let _lat = self.m_Group?.m_DestLat, let _lon = self.m_Group?.m_DestLon else {
+            return
+        }
+        
         if let _destinationMarker = self.m_DestinationMarker {
-            _destinationMarker.position = CLLocationCoordinate2D(latitude: lat, longitude: lon)
+            _destinationMarker.position = CLLocationCoordinate2D(latitude: _lat, longitude: _lon)
         } else {
-            let position = CLLocationCoordinate2D(latitude: lat, longitude: lon)
+            let position = CLLocationCoordinate2D(latitude: _lon, longitude: _lon)
             m_DestinationMarker = GMSMarker(position: position)
             m_DestinationMarker?.map = _mapView
         }

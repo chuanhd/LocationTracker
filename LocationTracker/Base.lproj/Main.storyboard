@@ -117,6 +117,13 @@
                                     <action selector="btnNavigationPressed:" destination="O9N-c0-cMH" eventType="touchUpInside" id="vDh-cA-74R"/>
                                 </connections>
                             </button>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="TcY-sV-iFO">
+                                <rect key="frame" x="326" y="518" width="36" height="36"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="36" id="9Tf-pU-jkV"/>
+                                    <constraint firstAttribute="width" constant="36" id="Ocw-wH-DYm"/>
+                                </constraints>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -125,6 +132,8 @@
                             <constraint firstAttribute="trailing" secondItem="LRd-55-seg" secondAttribute="trailing" constant="8" id="94c-YJ-gZf"/>
                             <constraint firstAttribute="trailing" secondItem="IY8-y7-K9E" secondAttribute="trailing" id="CF3-JD-Nop"/>
                             <constraint firstItem="SsK-R0-3nu" firstAttribute="leading" secondItem="Gcg-d8-oQr" secondAttribute="leading" id="CSR-BE-XSP"/>
+                            <constraint firstItem="TcY-sV-iFO" firstAttribute="centerY" secondItem="LRd-55-seg" secondAttribute="centerY" id="K1w-S8-jV8"/>
+                            <constraint firstItem="TcY-sV-iFO" firstAttribute="centerX" secondItem="LRd-55-seg" secondAttribute="centerX" id="LRX-3k-H4c"/>
                             <constraint firstItem="5vL-ur-bRv" firstAttribute="top" secondItem="IY8-y7-K9E" secondAttribute="bottom" id="VHI-6E-OYk"/>
                             <constraint firstItem="Xoi-f7-aUq" firstAttribute="leading" secondItem="Gcg-d8-oQr" secondAttribute="leading" id="jZr-wS-xHX"/>
                             <constraint firstItem="5vL-ur-bRv" firstAttribute="top" secondItem="SsK-R0-3nu" secondAttribute="bottom" id="jvm-1i-hWo"/>
@@ -145,6 +154,7 @@
                     <connections>
                         <outlet property="_gmsMapView" destination="IY8-y7-K9E" id="4oH-Pa-Tik"/>
                         <outlet property="mMembersCollectionView" destination="SsK-R0-3nu" id="kwn-rP-Q7W"/>
+                        <outlet property="m_GettingDirectionsIndicator" destination="TcY-sV-iFO" id="ucn-78-XMh"/>
                         <outlet property="m_ListGroupsView" destination="Xoi-f7-aUq" id="yjk-KQ-pNr"/>
                         <segue destination="7AH-q8-0I0" kind="presentation" identifier="PresentCreateNewUserView" id="DG8-Pe-M3x"/>
                         <segue destination="fto-nv-kY3" kind="show" identifier="PresentCreateNewGroupView" id="SCY-2n-jkw"/>

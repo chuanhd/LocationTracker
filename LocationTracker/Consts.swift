@@ -30,6 +30,7 @@ struct Constants {
     
     struct ErrorCode {
         static let INVALID_DATA = 1412001 // Happens when a data is not correct (incorrect type, nil, ...)
+        static let EXTERNAL_LIB_ERROR = 1412002
     }
     
     
