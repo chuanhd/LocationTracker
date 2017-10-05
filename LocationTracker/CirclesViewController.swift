@@ -9,6 +9,7 @@
 import UIKit
 import GoogleMaps
 import RMessage
+import SCLAlertView
 
 class CirclesViewController: UIViewController, SegueHandler {
     
@@ -488,7 +489,8 @@ extension CirclesViewController : GMSMapViewDelegate {
     }
     
     func mapView(_ mapView: GMSMapView, didLongPressAt coordinate: CLLocationCoordinate2D) {
-        showSetDestinationView(at: coordinate)
+//        showSetDestinationView(at: coordinate)
+        showActionSheet(at: coordinate)
     }
     
     func showSetDestinationView(at _coordicate : CLLocationCoordinate2D) {
@@ -515,6 +517,26 @@ extension CirclesViewController : GMSMapViewDelegate {
             
         }
     }
+    
+    func showImagesPickerView() {
+        
+    }
+    
+    func showActionSheet(at _coordicate : CLLocationCoordinate2D) {
+        let _appearance = SCLAlertView.SCLAppearance(
+            showCloseButton: false,
+            hideWhenBackgroundViewIsTapped : true
+        )
+        
+        let _alert = SCLAlertView(appearance: _appearance)
+        _alert.addButton("Add images", target: self, selector: #selector(CirclesViewController.showImagesPickerView))
+//        _alert.addButton("Set Destination", target: self, selector: #selector(CirclesViewController.showSetDestinationView(at:)))
+        _alert.addButton("Set destination") { [unowned self] in
+            self.showSetDestinationView(at: _coordicate)
+        }
+        
+        _alert.showInfo("Select your action", subTitle: "Please select one of below actions")
+    }
 }
 
 extension CirclesViewController : SetDestinationViewDelegate {
@@ -524,10 +546,6 @@ extension CirclesViewController : SetDestinationViewDelegate {
             guard let _selectedGroup = self.m_SelectedGroupViewModel?.m_Group else {
                 return
             }
-            
-//            guard _selectedGroup.groupMasterUserId() == AppController.sharedInstance.mUniqueToken else {
-//                return
-//            }
         
             ConnectionService.load(Group.setDestination(_selectedGroup.mId, AppController.sharedInstance.mUniqueToken, Float(_coordinate.latitude), Float(_coordinate.longitude)), true, completion: { ( _response, _result, _error) in
                 switch _response.code {

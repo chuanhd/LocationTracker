@@ -21,7 +21,7 @@ target 'LocationTracker' do
   pod 'ChromaColorPicker'
   pod 'SDWebImage', '~> 4.0'
   pod 'SnapKit', '3.0.2'
-  pod 'SCLAlertView'
+  pod 'SCLAlertView', '0.7.0'
   pod 'RMessage'
 
   # Pods for LocationTracker
