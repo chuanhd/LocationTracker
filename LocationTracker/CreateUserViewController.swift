@@ -77,7 +77,7 @@ class CreateUserViewController: UIViewController {
     @IBAction func doneBtnPressed(_ sender: Any) {
         
         if let _img = self.imgViewAvatar.image {
-            ConnectionService.uploadImageToS3Server(_img) {(_ url : URL?, _ error : Error?) in
+            ConnectionService.uploadImageToS3Server(_img, true) {(_ url : URL?, _ error : Error?) in
                 if let error = error {
                     DispatchQueue.main.async {
                         self.createUserFailed(withError: error)

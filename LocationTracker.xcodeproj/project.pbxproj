@@ -19,6 +19,7 @@
 		85E2EC091F41AD4600CDBF29 /* ListGroupsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E2EC081F41AD4500CDBF29 /* ListGroupsViewController.swift */; };
 		85E2EC0C1F41AF2400CDBF29 /* GroupTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E2EC0A1F41AF2400CDBF29 /* GroupTableViewCell.swift */; };
 		85E2EC0D1F41AF2400CDBF29 /* GroupTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85E2EC0B1F41AF2400CDBF29 /* GroupTableViewCell.xib */; };
+		AC277E781F8BD9A00056CD73 /* CustomImageMarkerIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC277E771F8BD9A00056CD73 /* CustomImageMarkerIconView.swift */; };
 		AC357C1E1F83D8ED003E0F2E /* GoogleMapsDirectionsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC357C1D1F83D8ED003E0F2E /* GoogleMapsDirectionsHelper.swift */; };
 		AC4604791F41F07600A348B5 /* CommonTableDatasource.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4604781F41F07600A348B5 /* CommonTableDatasource.swift */; };
 		AC46047B1F41F6C200A348B5 /* GroupNameTitleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC46047A1F41F6C200A348B5 /* GroupNameTitleView.xib */; };
@@ -91,6 +92,7 @@
 		85E2EC081F41AD4500CDBF29 /* ListGroupsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListGroupsViewController.swift; sourceTree = "<group>"; };
 		85E2EC0A1F41AF2400CDBF29 /* GroupTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupTableViewCell.swift; sourceTree = "<group>"; };
 		85E2EC0B1F41AF2400CDBF29 /* GroupTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GroupTableViewCell.xib; sourceTree = "<group>"; };
+		AC277E771F8BD9A00056CD73 /* CustomImageMarkerIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomImageMarkerIconView.swift; sourceTree = "<group>"; };
 		AC357C1D1F83D8ED003E0F2E /* GoogleMapsDirectionsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleMapsDirectionsHelper.swift; sourceTree = "<group>"; };
 		AC4604781F41F07600A348B5 /* CommonTableDatasource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonTableDatasource.swift; sourceTree = "<group>"; };
 		AC46047A1F41F6C200A348B5 /* GroupNameTitleView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GroupNameTitleView.xib; sourceTree = "<group>"; };
@@ -255,6 +257,7 @@
 				AC84F5521F7950AD00BB8328 /* CustomMarkerIconView.swift */,
 				AC84F5541F795CE000BB8328 /* SetDestinationView.swift */,
 				AC84F5561F795CEB00BB8328 /* SetDestinationView.xib */,
+				AC277E771F8BD9A00056CD73 /* CustomImageMarkerIconView.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -713,6 +716,7 @@
 				ACF01A641F53274B00D76922 /* GroupMemberTableViewCell.swift in Sources */,
 				AC6EF2671F7425E100ADC2D3 /* InviteMembersViewController.swift in Sources */,
 				AC84F5531F7950AD00BB8328 /* CustomMarkerIconView.swift in Sources */,
+				AC277E781F8BD9A00056CD73 /* CustomImageMarkerIconView.swift in Sources */,
 				AC52DFB71F21024C0032F853 /* CirclesViewController.swift in Sources */,
 				AC98FE9D1F24FD7A00261588 /* Utils.swift in Sources */,
 				85AC13FD1F7CDF4900DF764A /* GroupViewModel.swift in Sources */,

@@ -287,7 +287,7 @@ class CirclesViewController: UIViewController, SegueHandler {
     
     @IBAction func btnNavigationPressed(_ sender: Any) {
         
-        guard let _selectedGroup = self.m_SelectedGroupViewModel?.m_Group else {
+        guard let _selectedGroupViewModel = self.m_SelectedGroupViewModel, let _selectedGroup = m_SelectedGroupViewModel?.m_Group else {
             return
         }
         
@@ -295,49 +295,33 @@ class CirclesViewController: UIViewController, SegueHandler {
             return
         }
         
-        guard let _destLat = _selectedGroup.m_DestLat, let _destLon = _selectedGroup.m_DestLon else {
-            return
-        }
-        
         self.m_GettingDirectionsIndicator.startAnimating()
         self.m_GettingDirectionsIndicator.isHidden = false
         
-        if let _myProfile = AppController.sharedInstance.mOwnProfile {
-            let _origin = CLLocationCoordinate2D(latitude: _myProfile.mLatitude, longitude: _myProfile.mLongtitude)
-            let _destination = CLLocationCoordinate2D(latitude: _destLat, longitude: _destLon)
-            GoogleMapsDirectionsHelper.getDirection(from: _origin, to: _destination,
-                                                    completion: { ( _response, _polyline, _error) in
-                                                        
-                                                        DispatchQueue.main.async {
-                                                            self.m_GettingDirectionsIndicator.stopAnimating()
-                                                            self.m_GettingDirectionsIndicator.isHidden = true
-                                                        }
-                                                        
-                                                        switch _response.code {
-                                                        case .SUCCESS:
-                                                            
-                                                            DispatchQueue.main.async {
-                                                                _polyline?.map = self._gmsMapView
-                                                            }
-                                                            
-                                                        case .FAILURE:
-                                                            print("Fail to get direction from my location to group destination")
-                                                            
-                                                            DispatchQueue.main.async {
-                                                                RMessage.showNotification(withTitle: "Failed", subtitle: "Failed to get direction from your location to your group's destination", type: RMessageType.error, customTypeName: nil, duration: TimeInterval(RMessageDuration.automatic.rawValue), callback: nil)
-                                                            }
-                                                            
-                                                            break
-                                                        default:
-                                                            break
-                                                        }
-                                                        
-                                                        
-            })
+        _selectedGroupViewModel.createOrUpdateRouteToGroupDestination(onMap: self._gmsMapView) { [unowned self] (_error) in
+            
+            DispatchQueue.main.async {
+                self.m_GettingDirectionsIndicator.stopAnimating()
+                self.m_GettingDirectionsIndicator.isHidden = true
+            }
+
+            if _error != nil {
+                DispatchQueue.main.async {
+                    RMessage.showNotification(withTitle: "Failed", subtitle: "Failed to get direction from your location to your group's destination", type: RMessageType.error, customTypeName: nil, duration: TimeInterval(RMessageDuration.automatic.rawValue), callback: nil)
+                }
+
+            }
         }
-        
     }
     
+    @IBAction func btnImageUploadPressed(_ sender: Any) {
+        let _imgPickerViewController = UIImagePickerController();
+        _imgPickerViewController.delegate = self;
+        _imgPickerViewController.allowsEditing = false;
+        _imgPickerViewController.sourceType = .photoLibrary;
+        
+        self.present(_imgPickerViewController, animated: true, completion: nil);
+    }
 }
 
 extension CirclesViewController : GroupLocationPresenterDelegate {
@@ -387,6 +371,7 @@ extension CirclesViewController : ListGroupViewDelegate {
         self.mGroupNameTitleView?.setGroupName(_group.mName)
 //        self.mGroupNameTitleView?.lblGroupName.text = _group.mName
         DispatchQueue.main.async {
+            self._gmsMapView.clear()
             self.m_SelectedGroupViewModel?.createOrUpdateDestinationMarker(onMap: self._gmsMapView)
         }
         
@@ -489,8 +474,8 @@ extension CirclesViewController : GMSMapViewDelegate {
     }
     
     func mapView(_ mapView: GMSMapView, didLongPressAt coordinate: CLLocationCoordinate2D) {
-//        showSetDestinationView(at: coordinate)
-        showActionSheet(at: coordinate)
+        showSetDestinationView(at: coordinate)
+//        showActionSheet(at: coordinate)
     }
     
     func showSetDestinationView(at _coordicate : CLLocationCoordinate2D) {
@@ -570,4 +555,57 @@ extension CirclesViewController : SetDestinationViewDelegate {
             _setDestinationView.removeFromSuperview()
         }
     }
+}
+
+extension CirclesViewController : UIImagePickerControllerDelegate {
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        self.dismiss(animated: true, completion: nil);
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        
+        
+        if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+//            self.imgViewAvatar.contentMode = .scaleAspectFill
+//            self.imgViewAvatar.image = pickedImage
+            
+            self.dismiss(animated: true, completion: nil);
+            
+            if let _myProfile = AppController.sharedInstance.mOwnProfile,
+                let _selectedGroup = self.m_SelectedGroupViewModel?.m_Group {
+                ConnectionService.uploadImageToS3Server(pickedImage, true) {(_ url : URL?, _ error : Error?) in
+                    if error != nil {
+                        DispatchQueue.main.async {
+                            
+                            RMessage.showNotification(withTitle: "Failed", subtitle: "Failed to upload image to server", type: RMessageType.error, customTypeName: nil, duration: TimeInterval(RMessageDuration.automatic.rawValue), callback: nil)
+                        }
+                        return
+                    }
+                    
+                    ConnectionService.load(UserProfile.uploadImage(_myProfile.mLatitude, _myProfile.mLongtitude, url!.absoluteString, _selectedGroup.mId)) { (_ response : ServerResponse, _ myProfile : [Any]?, _ error : Error?) in
+                        DispatchQueue.main.async {
+                            switch response.code {
+                            case .SUCCESS:
+                                
+                                
+                                
+                                break
+                            case .FAILURE:
+                                
+                                break
+                            default:
+                                break
+                            }
+                        }
+                    }
+                    
+                }
+            }
+        }
+    }
+}
+
+
+extension CirclesViewController : UINavigationControllerDelegate {
+    
 }

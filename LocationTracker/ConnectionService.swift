@@ -51,6 +51,7 @@ enum App {
         case getInfo
         case getLocation
         case searchUser
+        case uploadImage
     }
     
     enum Myself {
@@ -69,6 +70,8 @@ extension App.User : Url {
             return URL(string: "api/memberlocation", relativeTo: BASE_URL)!
         case .searchUser:
             return URL(string: "api/searchuser", relativeTo: BASE_URL)!
+        case .uploadImage:
+            return URL(string: "api/imageupload", relativeTo: BASE_URL)!
         }
     }
 }
@@ -184,15 +187,16 @@ class ConnectionService {
              }
              */
             
+            
+            
             switch response.result {
             case .success:
-                
+
                 if showProgress {
                     DispatchQueue.main.async {
-                        RappleActivityIndicatorView.stopAnimation(completionIndicator: .success, completionLabel: "Completed.", completionTimeout: 1.0)
+                        RappleActivityIndicatorView.stopAnimation(completionIndicator: .success, completionLabel: "Success.", completionTimeout: 1.0)
                     }
                 }
-                
                 
                 print("Validation Successful")
                 if let data = response.data {
@@ -201,6 +205,7 @@ class ConnectionService {
                 }
             case .failure(let error):
                 print(error)
+                
                 if showProgress {
                     DispatchQueue.main.async {
                         RappleActivityIndicatorView.stopAnimation(completionIndicator: .failed, completionLabel: "Failed.", completionTimeout: 1.0)
@@ -212,16 +217,22 @@ class ConnectionService {
         }
     }
     
-    class func uploadImageToS3Server(_ image : UIImage, completion: @escaping (_ targetURL : URL?, _ error : Error?) -> ()) {
+    class func uploadImageToS3Server(_ image : UIImage, _ showProgress : Bool = true, completion: @escaping (_ targetURL : URL?, _ error : Error?) -> ()) {
         
         guard let data = UIImagePNGRepresentation(image) else {
             completion(nil, UserFriendlyError(withDescription: "Can not represent data from selected image", withCode: Constants.ErrorCode.INVALID_DATA))
             return
         }
+        
+        if showProgress {
+            RappleActivityIndicatorView.startAnimating(attributes: RappleModernAttributes)
+            RappleActivityIndicatorView.setProgress(0.0);
+        }
 
         let expression = AWSS3TransferUtilityUploadExpression()
         expression.progressBlock = {(task : AWSS3TransferUtilityTask, progress : Progress) in
             print("upload progress: \(progress)")
+            RappleActivityIndicatorView.setProgress(CGFloat(progress.fractionCompleted));
         }
         
         let fileName = "public/images/\(AppController.sharedInstance.mUniqueToken)_\(Date().timeIntervalSince1970).png"
@@ -238,6 +249,12 @@ class ConnectionService {
         
         let transferUtility = AWSS3TransferUtility.default()
         transferUtility.uploadData(data, bucket: Constants.AmazonS3Config.BucketName, key: fileName, contentType: "image/png", expression: expression, completionHandler: completionHandler).continueWith { (task) -> Any? in
+            
+            if showProgress {
+                DispatchQueue.main.async {
+                    RappleActivityIndicatorView.stopAnimation(completionIndicator: .failed, completionLabel: "Failed.", completionTimeout: 1.0)
+                }
+            }
             
             if let error = task.error {
                 print("Upload task error: \(error)")

@@ -25,7 +25,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="kOc-1R-ykZ" id="SCy-au-wuK">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -33,7 +33,7 @@
                                         <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fM0-CI-hUl" id="QXw-IB-ocY">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -41,7 +41,7 @@
                                         <rect key="frame" x="0.0" y="88" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fed-po-xj4" id="9RX-K5-7eV">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -57,7 +57,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PfU-Cz-pj8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1876" y="1467"/>
+            <point key="canvasLocation" x="297" y="1912"/>
         </scene>
         <!--My Circle-->
         <scene sceneID="4bj-4n-44d">
@@ -117,6 +117,17 @@
                                     <action selector="btnNavigationPressed:" destination="O9N-c0-cMH" eventType="touchUpInside" id="vDh-cA-74R"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BJn-4f-vBP">
+                                <rect key="frame" x="319" y="457" width="48" height="48"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="48" id="FKx-S4-xo8"/>
+                                    <constraint firstAttribute="height" constant="48" id="tCN-qH-nao"/>
+                                </constraints>
+                                <state key="normal" image="image_upload"/>
+                                <connections>
+                                    <action selector="btnImageUploadPressed:" destination="O9N-c0-cMH" eventType="touchUpInside" id="srM-eM-2lv"/>
+                                </connections>
+                            </button>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="TcY-sV-iFO">
                                 <rect key="frame" x="326" y="518" width="36" height="36"/>
                                 <constraints>
@@ -132,9 +143,11 @@
                             <constraint firstAttribute="trailing" secondItem="LRd-55-seg" secondAttribute="trailing" constant="8" id="94c-YJ-gZf"/>
                             <constraint firstAttribute="trailing" secondItem="IY8-y7-K9E" secondAttribute="trailing" id="CF3-JD-Nop"/>
                             <constraint firstItem="SsK-R0-3nu" firstAttribute="leading" secondItem="Gcg-d8-oQr" secondAttribute="leading" id="CSR-BE-XSP"/>
+                            <constraint firstAttribute="trailing" secondItem="BJn-4f-vBP" secondAttribute="trailing" constant="8" id="E7N-ZH-TBO"/>
                             <constraint firstItem="TcY-sV-iFO" firstAttribute="centerY" secondItem="LRd-55-seg" secondAttribute="centerY" id="K1w-S8-jV8"/>
                             <constraint firstItem="TcY-sV-iFO" firstAttribute="centerX" secondItem="LRd-55-seg" secondAttribute="centerX" id="LRX-3k-H4c"/>
                             <constraint firstItem="5vL-ur-bRv" firstAttribute="top" secondItem="IY8-y7-K9E" secondAttribute="bottom" id="VHI-6E-OYk"/>
+                            <constraint firstItem="LRd-55-seg" firstAttribute="top" secondItem="BJn-4f-vBP" secondAttribute="bottom" constant="8" id="aQq-a4-5pf"/>
                             <constraint firstItem="Xoi-f7-aUq" firstAttribute="leading" secondItem="Gcg-d8-oQr" secondAttribute="leading" id="jZr-wS-xHX"/>
                             <constraint firstItem="5vL-ur-bRv" firstAttribute="top" secondItem="SsK-R0-3nu" secondAttribute="bottom" id="jvm-1i-hWo"/>
                             <constraint firstAttribute="trailing" secondItem="Xoi-f7-aUq" secondAttribute="trailing" id="vvj-ph-l9f"/>
@@ -331,7 +344,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="353" y="1467"/>
+            <point key="canvasLocation" x="-414" y="1102"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="HMc-EE-ipQ">
@@ -573,7 +586,7 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="QGe-KL-u4l" id="rYs-rh-ceL">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="79.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yC4-HQ-8yb">
@@ -662,7 +675,7 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="12G-W6-Jtv" id="FA0-a0-qxi">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="79.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8tN-Cp-AXu">
@@ -834,11 +847,12 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ob5-VE-CQL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1030" y="1467"/>
+            <point key="canvasLocation" x="297" y="1101"/>
         </scene>
     </scenes>
     <resources>
         <image name="default_avatar" width="120" height="120"/>
+        <image name="image_upload" width="48" height="34"/>
         <image name="navigation" width="40" height="40"/>
     </resources>
 </document>
