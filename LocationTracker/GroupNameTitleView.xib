@@ -15,15 +15,8 @@
             <rect key="frame" x="0.0" y="0.0" width="121" height="32"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_dropdown" translatesAutoresizingMaskIntoConstraints="NO" id="fft-s5-JYw">
-                    <rect key="frame" x="93" y="6" width="20" height="20"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="20" id="0f9-Wc-e05"/>
-                        <constraint firstAttribute="height" constant="20" id="wpj-sq-UxO"/>
-                    </constraints>
-                </imageView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MCJ-zw-kuD">
-                    <rect key="frame" x="0.0" y="0.0" width="93" height="32"/>
+                    <rect key="frame" x="0.0" y="0.0" width="121" height="32"/>
                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                     <state key="normal" title="My Circle">
                         <color key="titleColor" red="0.32372191550000001" green="0.71051764490000002" blue="0.66279280190000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -35,24 +28,18 @@
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="fft-s5-JYw" secondAttribute="trailing" constant="8" id="BHq-es-P6i"/>
+                <constraint firstItem="MCJ-zw-kuD" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="Rsj-oM-LEU"/>
                 <constraint firstItem="MCJ-zw-kuD" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="YeA-7r-e9M"/>
                 <constraint firstAttribute="bottom" secondItem="MCJ-zw-kuD" secondAttribute="bottom" id="dcM-XE-lYx"/>
                 <constraint firstItem="MCJ-zw-kuD" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="gWC-gl-q53"/>
-                <constraint firstItem="fft-s5-JYw" firstAttribute="leading" secondItem="MCJ-zw-kuD" secondAttribute="trailing" id="tgW-TI-eKl"/>
-                <constraint firstItem="fft-s5-JYw" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="xxb-OV-2xk"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <nil key="simulatedTopBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="btnGroupName" destination="MCJ-zw-kuD" id="7gR-ls-n3z"/>
-                <outlet property="imgDropdownIndicator" destination="fft-s5-JYw" id="Cuq-QY-REo"/>
             </connections>
             <point key="canvasLocation" x="-166.5" y="-272"/>
         </view>
     </objects>
-    <resources>
-        <image name="icon_dropdown" width="20" height="20"/>
-    </resources>
 </document>

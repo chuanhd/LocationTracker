@@ -97,7 +97,7 @@ class GroupViewModel {
         }
     }
     
-    func createOrUpdateImageMarker(withId userId : String, withLat lat : Double, withLong lon: Double, onMap _mapView : GMSMapView) {
+    func createOrUpdateImageMarker(withUserId userId : String, withGroupId groupId : Int, withLat lat : Double, withLong lon: Double, onMap _mapView : GMSMapView) {
         let _dictKey = "\(userId)_\(lat)_\(lon)"
         if let _marker = m_ImageMarkerDict[_dictKey] {
             _marker.position = CLLocationCoordinate2D(latitude: lat, longitude: lat)

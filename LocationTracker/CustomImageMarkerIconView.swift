@@ -8,6 +8,7 @@
 
 import UIKit
 import SDWebImage
+import SnapKit
 
 class CustomImageMarkerIconView : UIImageView {
     override init(frame: CGRect) {
@@ -30,8 +31,20 @@ class CustomImageMarkerIconView : UIImageView {
     }
     
     func loadImage(fromURL _url : URL) {
-        self.sd_setImage(with: _url, placeholderImage: UIImage(named: "default_avatar.png"), options: SDWebImageOptions.continueInBackground) { (_image, _error, _cacheType, _otherUrl) in
-            
+        
+        let _activitiIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
+        self.addSubview(_activitiIndicator)
+        _activitiIndicator.snp.makeConstraints { (maker) in
+            maker.center.equalTo(self.snp.center)
+            maker.width.equalTo(30.0)
+            maker.height.equalTo(30.0)
+        }
+        
+        _activitiIndicator.startAnimating()
+        
+        self.sd_setImage(with: _url, placeholderImage: UIImage(named: "no_photo_available.png"), options: SDWebImageOptions.continueInBackground) { (_image, _error, _cacheType, _otherUrl) in
+            _activitiIndicator.stopAnimating();
+            _activitiIndicator.removeFromSuperview()
         }
     }
 }

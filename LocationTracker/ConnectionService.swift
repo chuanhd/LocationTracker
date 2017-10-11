@@ -239,9 +239,24 @@ class ConnectionService {
         let completionHandler : AWSS3TransferUtilityUploadCompletionHandlerBlock = { (task : AWSS3TransferUtilityUploadTask, error : Error?) in
             if let error = error {
                 print("Upload failed error: \(error)");
+                
+                if showProgress {
+                    DispatchQueue.main.async {
+                        RappleActivityIndicatorView.stopAnimation(completionIndicator: .failed, completionLabel: "Failed.", completionTimeout: 1.0)
+                    }
+                }
+                
                 completion(nil, error)
+
             } else {
                 print("Successfully uploaded");
+                
+                if showProgress {
+                    DispatchQueue.main.async {
+                        RappleActivityIndicatorView.stopAnimation(completionIndicator: .success, completionLabel: "Success", completionTimeout: 1.0)
+                    }
+                }
+                
                 completion(getS3URL(fileName), nil)
             }
         }
@@ -250,16 +265,19 @@ class ConnectionService {
         let transferUtility = AWSS3TransferUtility.default()
         transferUtility.uploadData(data, bucket: Constants.AmazonS3Config.BucketName, key: fileName, contentType: "image/png", expression: expression, completionHandler: completionHandler).continueWith { (task) -> Any? in
             
-            if showProgress {
-                DispatchQueue.main.async {
-                    RappleActivityIndicatorView.stopAnimation(completionIndicator: .failed, completionLabel: "Failed.", completionTimeout: 1.0)
-                }
-            }
-            
             if let error = task.error {
                 print("Upload task error: \(error)")
                 completion(nil, error)
+                
+                if showProgress {
+                    DispatchQueue.main.async {
+                        RappleActivityIndicatorView.stopAnimation(completionIndicator: .failed, completionLabel: "Failed.", completionTimeout: 1.0)
+                    }
+                }
+                
+                return nil
             }
+
             
             if let _ = task.result {
                 print("Begin uploading...")

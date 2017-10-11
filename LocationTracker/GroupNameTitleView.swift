@@ -15,7 +15,6 @@ protocol GroupNameTitleViewDelegate : class {
 class GroupNameTitleView: UIView {
 
     @IBOutlet weak var btnGroupName: UIButton!
-    @IBOutlet weak var imgDropdownIndicator: UIImageView!
     weak var m_Delegate : GroupNameTitleViewDelegate?
     
     /*

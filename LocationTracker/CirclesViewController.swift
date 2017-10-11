@@ -187,9 +187,7 @@ class CirclesViewController: UIViewController, SegueHandler {
     }
     
     internal func hideListGroupView() {
-        
         m_ListGroupsView.isHidden = true
-        mGroupNameTitleView?.imgDropdownIndicator.transform = CGAffineTransform(rotationAngle: 0)
     }
     
     internal func startRequestUserLocationTimer() {
@@ -322,6 +320,22 @@ class CirclesViewController: UIViewController, SegueHandler {
         
         self.present(_imgPickerViewController, animated: true, completion: nil);
     }
+    @IBAction func btnRefreshPressed(_ sender: Any) {
+        guard let _selectedGroupViewModel = self.m_SelectedGroupViewModel, let _group = m_SelectedGroupViewModel?.m_Group else {
+            return
+        }
+        
+        if _group.mId == -1 {
+            return
+        }
+        
+        self.getGroupDetails(withGroupId: _group.mId)
+        DispatchQueue.main.async {
+            self._gmsMapView.clear()
+            _selectedGroupViewModel.createOrUpdateDestinationMarker(onMap: self._gmsMapView)
+        }
+        
+    }
 }
 
 extension CirclesViewController : GroupLocationPresenterDelegate {
@@ -369,7 +383,6 @@ extension CirclesViewController : ListGroupViewDelegate {
         self.m_SelectedGroupViewModel = GroupViewModel(withGroup: _group)
         self.getGroupDetails(withGroupId: _group.mId)
         self.mGroupNameTitleView?.setGroupName(_group.mName)
-//        self.mGroupNameTitleView?.lblGroupName.text = _group.mName
         DispatchQueue.main.async {
             self._gmsMapView.clear()
             self.m_SelectedGroupViewModel?.createOrUpdateDestinationMarker(onMap: self._gmsMapView)
@@ -572,7 +585,7 @@ extension CirclesViewController : UIImagePickerControllerDelegate {
             self.dismiss(animated: true, completion: nil);
             
             if let _myProfile = AppController.sharedInstance.mOwnProfile,
-                let _selectedGroup = self.m_SelectedGroupViewModel?.m_Group {
+                let _selectedGroupViewModel = self.m_SelectedGroupViewModel {
                 ConnectionService.uploadImageToS3Server(pickedImage, true) {(_ url : URL?, _ error : Error?) in
                     if error != nil {
                         DispatchQueue.main.async {
@@ -582,15 +595,22 @@ extension CirclesViewController : UIImagePickerControllerDelegate {
                         return
                     }
                     
-                    ConnectionService.load(UserProfile.uploadImage(_myProfile.mLatitude, _myProfile.mLongtitude, url!.absoluteString, _selectedGroup.mId)) { (_ response : ServerResponse, _ myProfile : [Any]?, _ error : Error?) in
+                    ConnectionService.load(UserProfile.uploadImage(_myProfile.mLatitude, _myProfile.mLongtitude, url!.absoluteString, _selectedGroupViewModel.m_Group!.mId)) { (_ response : ServerResponse, _ myProfile : [Any]?, _ error : Error?) in
                         DispatchQueue.main.async {
                             switch response.code {
                             case .SUCCESS:
                                 
-                                
+                                DispatchQueue.main.async {
+                                    _selectedGroupViewModel.createOrUpdateImageMarker(withUserId: _myProfile.mId, withGroupId: _selectedGroupViewModel.m_Group!.mId, withLat: _myProfile.mLatitude, withLong: _myProfile.mLongtitude, onMap: self._gmsMapView)
+                                }
                                 
                                 break
                             case .FAILURE:
+                                
+                                DispatchQueue.main.async {
+                                    
+                                    RMessage.showNotification(withTitle: "Failed", subtitle: "Failed to upload image for group", type: RMessageType.error, customTypeName: nil, duration: TimeInterval(RMessageDuration.automatic.rawValue), callback: nil)
+                                }
                                 
                                 break
                             default:
