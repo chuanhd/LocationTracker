@@ -32,6 +32,7 @@ class AppController {
                 }
                 
                 AppController.sharedInstance.mOwnProfile = _users.first
+                AppController.sharedInstance.mOwnProfile!.mId = AppController.sharedInstance.mUniqueToken
                 
                 break
             case .FAILURE:

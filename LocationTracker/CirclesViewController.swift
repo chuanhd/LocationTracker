@@ -384,7 +384,7 @@ extension CirclesViewController : ListGroupViewDelegate {
         self.getGroupDetails(withGroupId: _group.mId)
         self.mGroupNameTitleView?.setGroupName(_group.mName)
         DispatchQueue.main.async {
-            self._gmsMapView.clear()
+            self.m_SelectedGroupViewModel?.clearGroupMarkersAndRouteOnMap()
             self.m_SelectedGroupViewModel?.createOrUpdateDestinationMarker(onMap: self._gmsMapView)
         }
         

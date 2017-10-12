@@ -25,6 +25,7 @@ class GroupLocationPresenter : NSObject {
     public func startLocationUpdates() {
         mLocationService.delegate = self
         mLocationService.activityType = .other
+        mLocationService.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
         mLocationService.distanceFilter = 10
         mLocationService.startUpdatingLocation()
     }
@@ -37,7 +38,9 @@ extension GroupLocationPresenter : CLLocationManagerDelegate {
             
             print("New Location fetched with horizontal accuracy: \(newLocation.horizontalAccuracy)")
             
-            guard newLocation.horizontalAccuracy < 200 && abs(howRecent) < 10 else { continue }
+            guard newLocation.horizontalAccuracy < 200
+                && newLocation.verticalAccuracy < 200
+                && abs(howRecent) < 10 else { continue }
             
             delegate?.locationDidUpdate(_newLocation: newLocation)
             

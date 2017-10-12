@@ -127,7 +127,19 @@ class GroupViewModel {
         return m_DestinationMarker
     }
     
-    
+    func clearGroupMarkersAndRouteOnMap() {
+        let _notMyself = m_MarkerDict.filter { (_userId, _marker) -> Bool in
+            return _userId != AppController.sharedInstance.mUniqueToken
+        }
+        
+        _notMyself.forEach { (_, _marker) in
+            _marker.map = nil
+        }
+        
+        if let _polyline = self.m_Polyline {
+            _polyline.map = nil
+        }
+    }
     
     
     
