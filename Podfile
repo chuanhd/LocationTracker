@@ -23,6 +23,7 @@ target 'LocationTracker' do
   pod 'SnapKit', '3.0.2'
   pod 'SCLAlertView', '0.7.0'
   pod 'RMessage'
+  pod 'Lightbox', '<2.0'
 
   # Pods for LocationTracker
 

@@ -45,6 +45,7 @@ enum App {
         case addMember
         case removeMember
         case setDestination
+        case getImages
     }
     
     enum User {
@@ -104,6 +105,8 @@ extension App.Group : Url {
             return URL(string : "api/user/removeGroupMember", relativeTo: BASE_URL)!
         case .setDestination():
             return URL(string : "/api/locationPick", relativeTo: BASE_URL)!
+        case .getImages():
+            return URL(string : "/api/getimages", relativeTo: BASE_URL)!
         }
     }
 }
@@ -289,6 +292,6 @@ class ConnectionService {
     }
     
     internal class func getS3URL(_ fileName : String) -> URL {
-        return URL(string: "\(Constants.AmazonS3Config.AmazonS3BaseURL)/\(Constants.AmazonS3Config.BucketName)/public/images/\(fileName)")!
+        return URL(string: "\(Constants.AmazonS3Config.AmazonS3BaseURL)\(Constants.AmazonS3Config.BucketName)/\(fileName)")!
     }
 }

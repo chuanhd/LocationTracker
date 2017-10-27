@@ -10,12 +10,20 @@ import Foundation
 import SwiftyJSON
 import Alamofire
 
+struct GroupImage {
+    var m_Lat : Double
+    var m_Lon : Double
+    var m_OwnerID : String
+    var m_Url : URL
+}
+
 class Group {
     public var mId : Int = -1
     public var mName : String = ""
     public var mUsers = [UserProfile]()
     public var m_DestLat : Double?
     public var m_DestLon : Double?
+    public var m_ArrGroupImages : [GroupImage]?
     
     init(withID _id : Int, withName _name : String) {
         self.mId = _id;
@@ -213,6 +221,42 @@ extension Group {
                                             switch _code {
                                             case .SUCCESS:
                                                 return (ServerResponse(withCode : .SUCCESS, withStatus : _status), nil)
+                                            case .FAILURE:
+                                                return (ServerResponse(withCode : .FAILURE, withStatus : _status), nil)
+                                            default:
+                                                break
+                                            }
+                                        }
+                                        
+                                        return (ServerResponse(), nil)
+        }
+    }
+    
+    static func createGetGroupImagesResource(_ groupId : Int!) -> Resource<Dictionary<String, Any>> {
+        
+        return Resource<Dictionary<String, Any>>(withURL : App.Group.getImages.url,
+                                     withMethod : HTTPMethod.get,
+                                     withParams : [ConnectionService.SERVER_REQ_KEY.GROUP_ID : groupId]) { data in
+                                        
+                                        let _json = JSON(data : data)
+                                        
+                                        print("JSON: \(_json)") // serialized json response
+                                        
+                                        if let _codeStr = _json["code"].string,
+                                            let _code = SERVER_RESPONSE_CODE(rawValue: _codeStr),
+                                            let _status = _json["status"].string{
+                                            switch _code {
+                                            case .SUCCESS:
+                                                
+                                                var _dicts = [Dictionary<String, Any>]()
+                                                
+                                                if let _imageJSONs = _json["data"].array {
+                                                    for _imageJSON in _imageJSONs {
+                                                        _dicts.append(_imageJSON.dictionaryObject!)
+                                                    }
+                                                }
+                                                
+                                                return (ServerResponse(withCode : .SUCCESS, withStatus : _status), _dicts)
                                             case .FAILURE:
                                                 return (ServerResponse(withCode : .FAILURE, withStatus : _status), nil)
                                             default:

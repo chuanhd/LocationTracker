@@ -11,6 +11,9 @@ import SDWebImage
 import SnapKit
 
 class CustomImageMarkerIconView : UIImageView {
+    
+    public var m_ImageURL : URL?
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -32,19 +35,24 @@ class CustomImageMarkerIconView : UIImageView {
     
     func loadImage(fromURL _url : URL) {
         
-        let _activitiIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
+        let _activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
         self.addSubview(_activitiIndicator)
-        _activitiIndicator.snp.makeConstraints { (maker) in
+        _activityIndicator.snp.makeConstraints { (maker) in
             maker.center.equalTo(self.snp.center)
             maker.width.equalTo(30.0)
             maker.height.equalTo(30.0)
         }
         
-        _activitiIndicator.startAnimating()
+        _activityIndicator.startAnimating()
+        
+        self.m_ImageURL = _url
         
         self.sd_setImage(with: _url, placeholderImage: UIImage(named: "no_photo_available.png"), options: SDWebImageOptions.continueInBackground) { (_image, _error, _cacheType, _otherUrl) in
-            _activitiIndicator.stopAnimating();
-            _activitiIndicator.removeFromSuperview()
+            
+            print("Load image error: \(_error.debugDescription)")
+            
+            _activityIndicator.stopAnimating();
+            _activityIndicator.removeFromSuperview()
         }
     }
 }

@@ -10,6 +10,7 @@ import UIKit
 import GoogleMaps
 import RMessage
 import SCLAlertView
+import Lightbox
 
 class CirclesViewController: UIViewController, SegueHandler {
     
@@ -329,12 +330,13 @@ class CirclesViewController: UIViewController, SegueHandler {
             return
         }
         
-        self.getGroupDetails(withGroupId: _group.mId)
-        DispatchQueue.main.async {
-            self._gmsMapView.clear()
-            _selectedGroupViewModel.createOrUpdateDestinationMarker(onMap: self._gmsMapView)
-        }
+//        DispatchQueue.main.async {
+//            self._gmsMapView.clear()
+//            _selectedGroupViewModel.createOrUpdateDestinationMarker(onMap: self._gmsMapView)
+//        }
         
+        self.getGroupDetails(withGroupId: _group.mId)
+        self.getGroupImages(withGroupId: _group.mId)
     }
 }
 
@@ -382,6 +384,7 @@ extension CirclesViewController : ListGroupViewDelegate {
         self.hideListGroupView()
         self.m_SelectedGroupViewModel = GroupViewModel(withGroup: _group)
         self.getGroupDetails(withGroupId: _group.mId)
+        self.getGroupImages(withGroupId: _group.mId)
         self.mGroupNameTitleView?.setGroupName(_group.mName)
         DispatchQueue.main.async {
             self.m_SelectedGroupViewModel?.clearGroupMarkersAndRouteOnMap()
@@ -403,6 +406,7 @@ extension CirclesViewController : CreateGroupViewControllerDelegate {
         self.m_SelectedGroupViewModel = GroupViewModel(withGroup: Group(withID: _groupId, withName: _groupName))
         
         self.getGroupDetails(withGroupId: _groupId)
+        
     }
     
     func getGroupDetails(withGroupId _groupId : Int) {
@@ -422,6 +426,40 @@ extension CirclesViewController : CreateGroupViewControllerDelegate {
                 break
             case .FAILURE:
                 print("Fail to get group details")
+                break
+            default:
+                break
+            }
+        }
+    }
+    
+    func getGroupImages(withGroupId _groupId: Int) {
+        ConnectionService.load(Group.createGetGroupImagesResource(_groupId)) { (_ response : ServerResponse, _ dicts : [Any]?, _ error : Error?) in
+            switch response.code {
+            case .SUCCESS:
+                
+                guard let _dicts = dicts as? [Dictionary<String, Any>] else {
+                    return
+                }
+                
+                if let _selectedGroupModel = self.m_SelectedGroupViewModel, let _selectedGroup = self.m_SelectedGroupViewModel?.m_Group {
+                    var _arr = [GroupImage]()
+                    for _dict in _dicts {
+                        let _obj = GroupImage(m_Lat: _dict["lat"] as! Double,
+                                              m_Lon: _dict["lon"] as! Double,
+                                              m_OwnerID: _dict["userid"] as! String,
+                                              m_Url: URL(string: _dict["url"] as! String)!)
+                        _selectedGroupModel.createOrUpdateImageMarker(withGroupImage: _obj, onMap: self._gmsMapView)
+                        _arr.append(_obj)
+                        
+                    }
+                    
+                    _selectedGroup.m_ArrGroupImages = _arr
+                }
+                
+                break
+            case .FAILURE:
+                print("Fail to get group images")
                 break
             default:
                 break
@@ -488,7 +526,6 @@ extension CirclesViewController : GMSMapViewDelegate {
     
     func mapView(_ mapView: GMSMapView, didLongPressAt coordinate: CLLocationCoordinate2D) {
         showSetDestinationView(at: coordinate)
-//        showActionSheet(at: coordinate)
     }
     
     func showSetDestinationView(at _coordicate : CLLocationCoordinate2D) {
@@ -516,24 +553,28 @@ extension CirclesViewController : GMSMapViewDelegate {
         }
     }
     
-    func showImagesPickerView() {
-        
-    }
-    
-    func showActionSheet(at _coordicate : CLLocationCoordinate2D) {
-        let _appearance = SCLAlertView.SCLAppearance(
-            showCloseButton: false,
-            hideWhenBackgroundViewIsTapped : true
-        )
-        
-        let _alert = SCLAlertView(appearance: _appearance)
-        _alert.addButton("Add images", target: self, selector: #selector(CirclesViewController.showImagesPickerView))
-//        _alert.addButton("Set Destination", target: self, selector: #selector(CirclesViewController.showSetDestinationView(at:)))
-        _alert.addButton("Set destination") { [unowned self] in
-            self.showSetDestinationView(at: _coordicate)
+    func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
+        guard let _groupViewModel = self.m_SelectedGroupViewModel else {
+            return false
         }
         
-        _alert.showInfo("Select your action", subTitle: "Please select one of below actions")
+        if _groupViewModel.isImageMarker(marker) {
+            
+            if let _customMarkerIconView = marker.iconView as? CustomImageMarkerIconView {
+                let images = [
+                    LightboxImage(imageURL: _customMarkerIconView.m_ImageURL!)
+                ]
+
+                let _imageViewController = LightboxController(images: images)
+                _imageViewController.dynamicBackground = true
+                
+                present(_imageViewController, animated: true, completion: nil)
+            }
+            
+            return true
+        }
+        
+        return false
     }
 }
 
@@ -595,13 +636,15 @@ extension CirclesViewController : UIImagePickerControllerDelegate {
                         return
                     }
                     
+                    print("Image uploaded url: \(String(describing: url?.absoluteString))")
+                    
                     ConnectionService.load(UserProfile.uploadImage(_myProfile.mLatitude, _myProfile.mLongtitude, url!.absoluteString, _selectedGroupViewModel.m_Group!.mId)) { (_ response : ServerResponse, _ myProfile : [Any]?, _ error : Error?) in
                         DispatchQueue.main.async {
                             switch response.code {
                             case .SUCCESS:
                                 
                                 DispatchQueue.main.async {
-                                    _selectedGroupViewModel.createOrUpdateImageMarker(withUserId: _myProfile.mId, withGroupId: _selectedGroupViewModel.m_Group!.mId, withLat: _myProfile.mLatitude, withLong: _myProfile.mLongtitude, onMap: self._gmsMapView)
+                                    _selectedGroupViewModel.createOrUpdateImageMarker(withUserId: _myProfile.mId, withLat: _myProfile.mLatitude, withLong: _myProfile.mLongtitude, withImageUrl: url!, onMap: self._gmsMapView)
                                 }
                                 
                                 break

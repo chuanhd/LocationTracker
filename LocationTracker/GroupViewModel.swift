@@ -8,8 +8,9 @@
 
 import UIKit
 import GoogleMaps
+import Lightbox
 
-class GroupViewModel {
+class GroupViewModel : NSObject {
     var m_Group : Group?
     
     private var m_MarkerDict = Dictionary<String, GMSMarker>()
@@ -97,7 +98,7 @@ class GroupViewModel {
         }
     }
     
-    func createOrUpdateImageMarker(withUserId userId : String, withGroupId groupId : Int, withLat lat : Double, withLong lon: Double, onMap _mapView : GMSMapView) {
+    func createOrUpdateImageMarker(withUserId userId : String, withLat lat : Double, withLong lon: Double, withImageUrl url : URL, onMap _mapView : GMSMapView) {
         let _dictKey = "\(userId)_\(lat)_\(lon)"
         if let _marker = m_ImageMarkerDict[_dictKey] {
             _marker.position = CLLocationCoordinate2D(latitude: lat, longitude: lat)
@@ -107,16 +108,16 @@ class GroupViewModel {
             let _marker = GMSMarker(position: position)
             _marker.map = _mapView
             let _customMarkerIconView = CustomImageMarkerIconView(frame: CGRect(x: 0, y: 0, width: 40, height: 60))
-//            if let _selectedGroup = self.m_Group {
-//                if let _userProfile = (_selectedGroup.mUsers.filter { $0.mId == userId}).first {
-//                    _customMarkerIconView.loadImage(fromURL: URL(string: _userProfile.mAvatarURLStr)!)
-//                }
-//            }
+            _customMarkerIconView.loadImage(fromURL: url)
             
             _marker.iconView = _customMarkerIconView
             m_ImageMarkerDict[userId] = _marker
             
         }
+    }
+    
+    func createOrUpdateImageMarker(withGroupImage _groupImage : GroupImage, onMap _mapView : GMSMapView) {
+        self.createOrUpdateImageMarker(withUserId: _groupImage.m_OwnerID, withLat: _groupImage.m_Lat, withLong: _groupImage.m_Lon, withImageUrl: _groupImage.m_Url, onMap: _mapView)
     }
     
     func getMarkerForUser(withUserId _userId : String) -> GMSMarker? {
@@ -141,6 +142,20 @@ class GroupViewModel {
         }
     }
     
-    
-    
+    func isImageMarker(_ _marker : GMSMarker) -> Bool {
+        return m_ImageMarkerDict.values.contains(_marker)
+    }
+}
+
+extension GroupViewModel : GMSMapViewDelegate {
+    func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
+        
+//        if self.isImageMarker(marker) {
+//            if let _customMarkerIconView = marker.iconView as? CustomImageMarkerIconView {
+//
+//            }
+//        }
+        
+        return false
+    }
 }
