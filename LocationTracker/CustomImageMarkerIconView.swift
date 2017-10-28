@@ -28,7 +28,8 @@ class CustomImageMarkerIconView : UIImageView {
     
     internal func setupView() {
         self.clipsToBounds = true
-        let _borderColor = UIColor(red: 46/255.0, green: 177/255.0, blue: 135/255.0, alpha: 1)
+//        let _borderColor = UIColor(red: 46/255.0, green: 177/255.0, blue: 135/255.0, alpha: 1)
+        let _borderColor = UIColor.white
         self.layer.borderColor = _borderColor.cgColor
         self.layer.borderWidth = 2.0
     }
@@ -36,7 +37,7 @@ class CustomImageMarkerIconView : UIImageView {
     func loadImage(fromURL _url : URL) {
         
         let _activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
-        self.addSubview(_activitiIndicator)
+        self.addSubview(_activityIndicator)
         _activityIndicator.snp.makeConstraints { (maker) in
             maker.center.equalTo(self.snp.center)
             maker.width.equalTo(30.0)

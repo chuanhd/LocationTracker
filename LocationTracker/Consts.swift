@@ -33,5 +33,11 @@ struct Constants {
         static let EXTERNAL_LIB_ERROR = 1412002
     }
     
+    enum ZIndex : Int32 {
+        case ZERO = 0
+        case ONE = 1
+        case TWO = 2
+        case THREE = 3
+    }
     
 }

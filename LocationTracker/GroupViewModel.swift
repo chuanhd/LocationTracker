@@ -36,6 +36,7 @@ class GroupViewModel : NSObject {
                     _customMarkerIconView.loadImage(fromURL: URL(string: _userProfile.mAvatarURLStr)!)
                 }
             }
+            _marker.zIndex = Constants.ZIndex.ZERO.rawValue;
             
             _marker.iconView = _customMarkerIconView
             m_MarkerDict[userId] = _marker
@@ -56,6 +57,8 @@ class GroupViewModel : NSObject {
             self.m_DestinationMarker = GMSMarker(position: position)
             self.m_DestinationMarker!.map = _mapView
         }
+        
+        self.m_DestinationMarker!.zIndex = Constants.ZIndex.TWO.rawValue;
     }
     
     func createOrUpdateRouteToGroupDestination(onMap _mapView : GMSMapView, completion: @escaping (_ error : Error?) -> ()) {
@@ -113,6 +116,7 @@ class GroupViewModel : NSObject {
             _marker.iconView = _customMarkerIconView
             m_ImageMarkerDict[userId] = _marker
             
+            _marker.zIndex = Constants.ZIndex.ONE.rawValue;
         }
     }
     
@@ -137,6 +141,10 @@ class GroupViewModel : NSObject {
             _marker.map = nil
         }
         
+        clearRouteOnMap()
+    }
+    
+    func clearRouteOnMap() {
         if let _polyline = self.m_Polyline {
             _polyline.map = nil
         }

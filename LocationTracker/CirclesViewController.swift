@@ -286,11 +286,10 @@ class CirclesViewController: UIViewController, SegueHandler {
     
     @IBAction func btnNavigationPressed(_ sender: Any) {
         
-        guard let _selectedGroupViewModel = self.m_SelectedGroupViewModel, let _selectedGroup = m_SelectedGroupViewModel?.m_Group else {
-            return
-        }
-        
-        guard _selectedGroup.mId != -1 else {
+        guard let _selectedGroupViewModel = self.m_SelectedGroupViewModel, let _selectedGroup = m_SelectedGroupViewModel?.m_Group, _selectedGroup.mId != -1 else {
+            
+            RMessage.showNotification(withTitle: "Notification", subtitle: "Please select or create a group", type: RMessageType.warning, customTypeName: nil, duration: TimeInterval(RMessageDuration.automatic.rawValue), callback: nil)
+            
             return
         }
         
@@ -314,6 +313,14 @@ class CirclesViewController: UIViewController, SegueHandler {
     }
     
     @IBAction func btnImageUploadPressed(_ sender: Any) {
+        
+        guard let _selectedGroup = self.m_SelectedGroupViewModel?.m_Group, _selectedGroup.mId != -1 else {
+            
+            RMessage.showNotification(withTitle: "Notification", subtitle: "Please select or create a group", type: RMessageType.warning, customTypeName: nil, duration: TimeInterval(RMessageDuration.automatic.rawValue), callback: nil)
+            
+            return
+        }
+        
         let _imgPickerViewController = UIImagePickerController();
         _imgPickerViewController.delegate = self;
         _imgPickerViewController.allowsEditing = false;
@@ -322,7 +329,7 @@ class CirclesViewController: UIViewController, SegueHandler {
         self.present(_imgPickerViewController, animated: true, completion: nil);
     }
     @IBAction func btnRefreshPressed(_ sender: Any) {
-        guard let _selectedGroupViewModel = self.m_SelectedGroupViewModel, let _group = m_SelectedGroupViewModel?.m_Group else {
+        guard let _group = m_SelectedGroupViewModel?.m_Group else {
             return
         }
         
@@ -390,7 +397,6 @@ extension CirclesViewController : ListGroupViewDelegate {
             self.m_SelectedGroupViewModel?.clearGroupMarkersAndRouteOnMap()
             self.m_SelectedGroupViewModel?.createOrUpdateDestinationMarker(onMap: self._gmsMapView)
         }
-        
     }
     
     func didConfigureGroup(_ _group: Group) {
@@ -525,6 +531,14 @@ extension CirclesViewController : GMSMapViewDelegate {
     }
     
     func mapView(_ mapView: GMSMapView, didLongPressAt coordinate: CLLocationCoordinate2D) {
+        
+        guard let _selectedGroup = self.m_SelectedGroupViewModel?.m_Group, _selectedGroup.mId != -1 else {
+            
+            RMessage.showNotification(withTitle: "Notification", subtitle: "Please select or create a group", type: RMessageType.warning, customTypeName: nil, duration: TimeInterval(RMessageDuration.automatic.rawValue), callback: nil)
+            
+            return
+        }
+        
         showSetDestinationView(at: coordinate)
     }
     
@@ -593,8 +607,8 @@ extension CirclesViewController : SetDestinationViewDelegate {
                     DispatchQueue.main.async {
                         self.m_SelectedGroupViewModel!.m_Group?.m_DestLat = _coordinate.latitude
                         self.m_SelectedGroupViewModel!.m_Group?.m_DestLon = _coordinate.longitude
+                        self.m_SelectedGroupViewModel!.clearRouteOnMap()
                         self.m_SelectedGroupViewModel!.createOrUpdateDestinationMarker(onMap: self._gmsMapView)
-                        
                     }
                     
                     break
