@@ -22,7 +22,7 @@ class AppController {
     
     private init() {}
     
-    func fetchOwnProfile(showLoading _show : Bool = false, completion: @escaping (_ response : ServerResponse, _ error : Error?) -> ()) {
+    public func fetchOwnProfile(showLoading _show : Bool = false, completion: @escaping (_ response : ServerResponse, _ error : Error?) -> ()) {
         ConnectionService.load(UserProfile.getUserInfo(AppController.sharedInstance.mUniqueToken), _show) { (_response, _result, _error) in
             switch _response.code {
             case .SUCCESS:

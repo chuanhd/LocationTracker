@@ -146,8 +146,10 @@ extension Group {
                                                 let _userLat = _userJSON["lat"].doubleValue
                                                 let _userLong = _userJSON["lon"].doubleValue
                                                 let _userImage = _userJSON["userimage"].stringValue
+                                                let _email = _userJSON["email"].stringValue
+                                                let _phoneNumber = _userJSON["phoneNumber"].stringValue
                                                 
-                                                let _user = UserProfile(withId: _userId, withAvatar: _userImage, withName: _userName, withLat: _userLat, withLong: _userLong)
+                                                let _user = UserProfile(withId: _userId, withAvatar: _userImage, withEmail: _email, withName: _userName, withPhoneNumber: _phoneNumber, withLat: _userLat, withLong: _userLong)
                                                 _user.m_IsMaster = _userJSON["master"].boolValue
                                                 
                                                 users.append(_user)

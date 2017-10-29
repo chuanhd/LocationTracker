@@ -20,6 +20,7 @@ struct Constants {
         static let GroupTableViewCellIdentifier = "GroupTableViewCellIdentifier"
         static let GroupMemberTableViewCellIdentifier = "GroupMemberTableViewCellIdentifier"
         static let UserProfileTableViewCell = "UserProfileTableViewCell"
+        static let SideMenuTableViewCell = "SideMenuTableViewCell"
     }
     
     struct AmazonS3Config {

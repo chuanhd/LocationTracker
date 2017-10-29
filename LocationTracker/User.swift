@@ -14,13 +14,24 @@ class UserProfile {
     public var mId : String = ""
     public var mUsername : String = ""
     public var mAvatarURLStr : String = ""
+    public var mEmail : String = ""
+    public var mPhoneNumber : String = ""
     public var mLatitude : Double = -1
     public var mLongtitude : Double = -1
     public var m_IsMaster = false
         
-    init(withId _id : String, withAvatar _avatarURLStr : String, withName _name : String, withLat _lat : Double, withLong _long : Double) {
+    init(withId _id : String,
+         withAvatar _avatarURLStr : String,
+         withEmail _email : String,
+         withName _name : String,
+         withPhoneNumber _phoneNumber : String,
+         withLat _lat : Double,
+         withLong _long : Double) {
+        
         mId = _id
         mUsername = _name
+        mPhoneNumber = _phoneNumber
+        mEmail = _email
         mAvatarURLStr = _avatarURLStr
         mLatitude = _lat
         mLongtitude = _long
@@ -118,9 +129,11 @@ extension UserProfile {
                                                 
                                                 let _userId = _userJSON["userid"].stringValue
                                                 let _userName = _userJSON["username"].stringValue
+                                                let _email = _userJSON["email"].stringValue
                                                 let _userImage = _userJSON["userimage"].stringValue
+                                                let _phoneNumber = _userJSON["phonenumber"].stringValue
                                                 
-                                                let _user = UserProfile(withId: _userId, withAvatar: _userImage, withName: _userName, withLat: 0, withLong: 0)
+                                                let _user = UserProfile(withId: _userId, withAvatar: _userImage, withEmail: _email, withName: _userName, withPhoneNumber: _phoneNumber, withLat: 0, withLong: 0)
                                                 
                                                 
                                                 return (ServerResponse(withCode : .SUCCESS, withStatus : _status), [_user])
@@ -225,8 +238,9 @@ extension UserProfile {
                                                         let _userId = _userJSON["userid"].stringValue
                                                         let _userName = _userJSON["username"].stringValue
                                                         let _userImage = _userJSON["userimage"].stringValue
-                                                        
-                                                        let _user = UserProfile(withId: _userId, withAvatar: _userImage, withName: _userName, withLat: 0, withLong: 0)
+                                                        let _email = _userJSON["email"].stringValue
+                                                        let _phoneNumber = _userJSON["phonenumber"].stringValue
+                                                        let _user = UserProfile(withId: _userId, withAvatar: _userImage, withEmail: _email, withName: _userName, withPhoneNumber: _phoneNumber, withLat: 0, withLong: 0)
                                                         
                                                         users.append(_user)
                                                         

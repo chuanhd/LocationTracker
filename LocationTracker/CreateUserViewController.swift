@@ -100,7 +100,6 @@ class CreateUserViewController: UIViewController {
                         }
                     }
                 }
-
             }
         }
     }
