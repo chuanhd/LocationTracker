@@ -289,7 +289,7 @@
                                 <rect key="frame" x="16" y="122" width="343" height="47"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Email" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sAs-Xo-vmY">
-                                        <rect key="frame" x="8" y="13" width="41" height="21"/>
+                                        <rect key="frame" x="8" y="13" width="99" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -310,6 +310,7 @@
                                     <constraint firstAttribute="height" constant="47" id="8zv-aj-hrg"/>
                                     <constraint firstAttribute="trailing" secondItem="ldl-BT-S9m" secondAttribute="trailing" constant="8" id="Ese-Qd-f0a"/>
                                     <constraint firstItem="sAs-Xo-vmY" firstAttribute="leading" secondItem="KCz-E9-Hlj" secondAttribute="leading" constant="8" id="NOa-z7-4Pq"/>
+                                    <constraint firstItem="ldl-BT-S9m" firstAttribute="leading" secondItem="sAs-Xo-vmY" secondAttribute="trailing" constant="8" id="Uur-4T-gqg"/>
                                     <constraint firstItem="sAs-Xo-vmY" firstAttribute="centerY" secondItem="KCz-E9-Hlj" secondAttribute="centerY" id="XCU-9q-0Az"/>
                                 </constraints>
                             </view>
@@ -317,7 +318,7 @@
                                 <rect key="frame" x="16" y="177" width="343" height="47"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3hU-5s-159">
-                                        <rect key="frame" x="8" y="13" width="45" height="21"/>
+                                        <rect key="frame" x="8" y="13" width="99" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -335,6 +336,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="3hU-5s-159" firstAttribute="leading" secondItem="NaA-2X-9Kd" secondAttribute="leading" constant="8" id="4YZ-SX-mnk"/>
+                                    <constraint firstItem="ZLw-RJ-XTe" firstAttribute="leading" secondItem="3hU-5s-159" secondAttribute="trailing" constant="8" id="Dpa-gK-gEC"/>
                                     <constraint firstItem="ZLw-RJ-XTe" firstAttribute="centerY" secondItem="NaA-2X-9Kd" secondAttribute="centerY" id="TNE-dL-vla"/>
                                     <constraint firstAttribute="trailing" secondItem="ZLw-RJ-XTe" secondAttribute="trailing" constant="8" id="jc7-GZ-FCm"/>
                                     <constraint firstAttribute="height" constant="47" id="nG8-nq-BYL"/>
@@ -345,7 +347,7 @@
                                 <rect key="frame" x="16" y="232" width="343" height="47"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Phone" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aEz-7X-8Xd">
-                                        <rect key="frame" x="8" y="13" width="49" height="21"/>
+                                        <rect key="frame" x="8" y="13" width="99" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -365,6 +367,7 @@
                                     <constraint firstAttribute="trailing" secondItem="DIW-nI-erh" secondAttribute="trailing" constant="8" id="6yb-x6-afL"/>
                                     <constraint firstItem="aEz-7X-8Xd" firstAttribute="leading" secondItem="7WP-1t-etY" secondAttribute="leading" constant="8" id="B2c-MB-etu"/>
                                     <constraint firstAttribute="height" constant="47" id="STo-GW-0Ga"/>
+                                    <constraint firstItem="DIW-nI-erh" firstAttribute="leading" secondItem="aEz-7X-8Xd" secondAttribute="trailing" constant="8" id="TVW-yM-BxN"/>
                                     <constraint firstItem="DIW-nI-erh" firstAttribute="centerY" secondItem="7WP-1t-etY" secondAttribute="centerY" id="gB4-Ci-27I"/>
                                     <constraint firstItem="aEz-7X-8Xd" firstAttribute="centerY" secondItem="7WP-1t-etY" secondAttribute="centerY" id="r2f-R3-foQ"/>
                                 </constraints>

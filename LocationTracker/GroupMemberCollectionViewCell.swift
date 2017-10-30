@@ -27,7 +27,9 @@ class GroupMemberCollectionViewCell: UICollectionViewCell {
     
     func bindDataToView(_ _data : UserProfile!) {
         imgAvatar.sd_setImage(with: URL(string: _data.mAvatarURLStr), placeholderImage: UIImage(named: "default_avatar"), options: SDWebImageOptions.continueInBackground) { (image, error, type, url) in
-            
+            if let _error = error {
+                print("Load image failed with error \(_error)")
+            }
         }
         self.lblUsername.text = _data.mUsername
     }

@@ -221,8 +221,18 @@ class ConnectionService {
     }
     
     class func uploadImageToS3Server(_ image : UIImage, _ showProgress : Bool = true, completion: @escaping (_ targetURL : URL?, _ error : Error?) -> ()) {
+
+        var _tempImage : UIImage? = image
         
-        guard let data = UIImagePNGRepresentation(image) else {
+        if image.imageOrientation != UIImageOrientation.up || image.imageOrientation != UIImageOrientation.upMirrored {
+            let imgSize = image.size
+            UIGraphicsBeginImageContext(imgSize)
+            image.draw(in: CGRect(x: 0, y: 0, width: imgSize.width, height: imgSize.height))
+            _tempImage = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+        }
+        
+        guard let _notNilImage = _tempImage, let data = UIImagePNGRepresentation(_notNilImage) else {
             completion(nil, UserFriendlyError(withDescription: "Can not represent data from selected image", withCode: Constants.ErrorCode.INVALID_DATA))
             return
         }
