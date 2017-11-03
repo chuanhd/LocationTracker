@@ -18,6 +18,24 @@ class GroupViewModel : NSObject {
     private var m_DestinationMarker : GMSMarker?
     private var m_Polyline : GMSPolyline?
     
+    deinit {
+        if let _destinationMarker = self.m_DestinationMarker {
+            _destinationMarker.map = nil
+        }
+
+        if let _route = self.m_Polyline {
+            _route.map = nil
+        }
+
+        m_MarkerDict.forEach { (_, _marker) in
+            _marker.map = nil
+        }
+
+        m_ImageMarkerDict.forEach { (_, _marker) in
+            _marker.map = nil
+        }
+    }
+    
     init(withGroup _group : Group) {
         self.m_Group = _group
     }
@@ -41,6 +59,25 @@ class GroupViewModel : NSObject {
             _marker.iconView = _customMarkerIconView
             m_MarkerDict[userId] = _marker
             
+        }
+    }
+    
+    func updateMarkerImageForUsers() {
+        guard let _group = self.m_Group else {
+            return
+        }
+        for _userInfo in _group.mUsers {
+            self.updateMarkerImageForUser(withID: _userInfo.mId)
+        }
+    }
+    
+    func updateMarkerImageForUser(withID _userId : String) {
+        if let _marker = m_MarkerDict[_userId], let _imgViewAvatar = _marker.iconView as? CustomMarkerIconView {
+            if let _selectedGroup = self.m_Group {
+                if let _userProfile = (_selectedGroup.mUsers.filter { $0.mId == _userId}).first {
+                    _imgViewAvatar.loadImage(fromURL: URL(string: _userProfile.mAvatarURLStr)!)
+                }
+            }
         }
     }
     
@@ -133,15 +170,28 @@ class GroupViewModel : NSObject {
     }
     
     func clearGroupMarkersAndRouteOnMap() {
-        let _notMyself = m_MarkerDict.filter { (_userId, _marker) -> Bool in
-            return _userId != AppController.sharedInstance.mUniqueToken
-        }
+        print("Before clear location marker: ", m_MarkerDict.count)
         
-        _notMyself.forEach { (_, _marker) in
+//        let _notMyself = m_MarkerDict.filter { (_userId, _marker) -> Bool in
+//            return _userId != AppController.sharedInstance.mUniqueToken
+//        }
+//
+//        var _removedIds = [String]()
+//        _notMyself.forEach { (_userId, _marker) in
+//            _marker.map = nil
+//            _removedIds.append(_userId)
+//        }
+//
+//        _removedIds.forEach { (_userId) in
+//            m_MarkerDict.removeValue(forKey: _userId)
+//        }
+        
+        m_MarkerDict.forEach { (_, _marker) in
             _marker.map = nil
         }
         
         clearRouteOnMap()
+
     }
     
     func clearRouteOnMap() {

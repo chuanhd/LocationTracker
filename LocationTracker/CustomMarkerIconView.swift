@@ -18,6 +18,8 @@ class CustomMarkerIconView: UIImageView {
         // Drawing code
     }
     */
+    
+    public var m_ImageUrl : URL?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -40,8 +42,12 @@ class CustomMarkerIconView: UIImageView {
     }
     
     func loadImage(fromURL _url : URL) {
-        self.sd_setImage(with: _url, placeholderImage: UIImage(named: "default_avatar.png"), options: SDWebImageOptions.continueInBackground) { (_image, _error, _cacheType, _otherUrl) in
-            
+        if self.m_ImageUrl != _url {
+            self.sd_setImage(with: _url, placeholderImage: UIImage(named: "default_avatar.png"), options: SDWebImageOptions.continueInBackground) { (_image, _error, _cacheType, _otherUrl) in
+                
+            }
         }
+        self.m_ImageUrl = _url
+        
     }
 }

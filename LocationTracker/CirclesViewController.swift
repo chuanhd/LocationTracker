@@ -202,6 +202,15 @@ class CirclesViewController: UIViewController, SegueHandler {
         m_RequestUserLocationTimer!.fire()
     }
     
+    internal func fetchingDataTimerCallback() {
+        guard let _selectedGroup = self.m_SelectedGroupViewModel?.m_Group else {
+            return
+        }
+        
+        self.requestUsersLocation()
+        self.getGroupDetails(withGroupId: _selectedGroup.mId)
+    }
+    
     internal func requestUsersLocation() {
         guard let _selectedGroup = self.m_SelectedGroupViewModel?.m_Group else {
             return
@@ -328,6 +337,7 @@ class CirclesViewController: UIViewController, SegueHandler {
         
         self.present(_imgPickerViewController, animated: true, completion: nil);
     }
+    
     @IBAction func btnRefreshPressed(_ sender: Any) {
         guard let _group = m_SelectedGroupViewModel?.m_Group else {
             return
@@ -394,8 +404,12 @@ extension CirclesViewController : ListGroupViewDelegate {
         self.getGroupImages(withGroupId: _group.mId)
         self.mGroupNameTitleView?.setGroupName(_group.mName)
         DispatchQueue.main.async {
-            self.m_SelectedGroupViewModel?.clearGroupMarkersAndRouteOnMap()
+//            self.m_SelectedGroupViewModel?.clearGroupMarkersAndRouteOnMap()
             self.m_SelectedGroupViewModel?.createOrUpdateDestinationMarker(onMap: self._gmsMapView)
+            
+            if let _myProfile = AppController.sharedInstance.mOwnProfile {
+                self.m_SelectedGroupViewModel?.createOrUpdateMarkerForUser(withId: _myProfile.mId, withLat: _myProfile.mLatitude, withLong: _myProfile.mLongtitude, onMap: self._gmsMapView)
+            }
         }
     }
     
@@ -413,6 +427,10 @@ extension CirclesViewController : CreateGroupViewControllerDelegate {
         
         self.getGroupDetails(withGroupId: _groupId)
         
+        if let _myProfile = AppController.sharedInstance.mOwnProfile {
+            self.m_SelectedGroupViewModel?.createOrUpdateMarkerForUser(withId: _myProfile.mId, withLat: _myProfile.mLatitude, withLong: _myProfile.mLongtitude, onMap: self._gmsMapView)
+        }
+        
     }
     
     func getGroupDetails(withGroupId _groupId : Int) {
@@ -429,6 +447,9 @@ extension CirclesViewController : CreateGroupViewControllerDelegate {
                     self.mMembersCollectionView.reloadData()
                     self.startRequestUserLocationTimer()
                 }
+                
+                self.m_SelectedGroupViewModel?.updateMarkerImageForUsers()
+                
                 break
             case .FAILURE:
                 print("Fail to get group details")
