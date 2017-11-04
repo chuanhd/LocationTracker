@@ -10,6 +10,11 @@ import UIKit
 import SDWebImage
 import RMessage
 
+protocol EditProfileViewControllerDelegate : class{
+    func updateInfoSuccessful(withNewModel _newModel : UserViewModel)
+    func updateInfoFailed()
+}
+
 class EditProfileViewController: UIViewController {
     
     @IBOutlet weak var lblUsername : UILabel!
@@ -17,6 +22,8 @@ class EditProfileViewController: UIViewController {
     @IBOutlet weak var txtPhoneNumber : UITextField!
     @IBOutlet weak var imgAvatar : UIImageView!
     @IBOutlet weak var btnEdit : UIBarButtonItem!
+    
+    weak var delegate : EditProfileViewControllerDelegate?
     
     enum ControllerState : Int {
         case VIEW = 0
@@ -125,21 +132,24 @@ class EditProfileViewController: UIViewController {
                     return
                 }
                 
+                DispatchQueue.main.async {
                 ConnectionService.load(UserProfile.createUpdateMyInfoResource(self.txtEmail.text, self.m_UserProfile?.m_Username, self.txtPhoneNumber.text, url?.absoluteString), true) { (_ response : ServerResponse, _ myProfile : [Any]?, _ error : Error?) in
-                    // MyProfile should be [UserProfile]
-                    DispatchQueue.main.async {
-                        switch response.code {
-                        case .SUCCESS:
-                            self.updateUserProfileSuccessfully(url?.absoluteString)
-                            break
-                        case .FAILURE:
-                            self.updateUserFailed(withError: error)
-                            break
-                        default:
-                            break
+                        // MyProfile should be [UserProfile]
+                        DispatchQueue.main.async {
+                            switch response.code {
+                            case .SUCCESS:
+                                self.updateUserProfileSuccessfully(url?.absoluteString)
+                                break
+                            case .FAILURE:
+                                self.updateUserFailed(withError: error)
+                                break
+                            default:
+                                break
+                            }
                         }
                     }
                 }
+                
             }
         } else {
             ConnectionService.load(UserProfile.createUpdateMyInfoResource(self.txtEmail.text, self.m_UserProfile?.m_Username, self.txtPhoneNumber.text, nil), true) { (_ response : ServerResponse, _ myProfile : [Any]?, _ error : Error?) in
@@ -162,12 +172,17 @@ class EditProfileViewController: UIViewController {
     
     private func updateUserProfileSuccessfully(_ avatarUrlString : String?) {
         
-        self.m_UserProfile?.updateUserProfileModel(self.txtEmail.text, self.txtPhoneNumber.text, avatarUrlString)
+        self.m_UserProfile!.updateUserProfileModel(self.txtEmail.text, self.txtPhoneNumber.text, avatarUrlString)
+        AppController.sharedInstance.mOwnProfile = self.m_UserProfile!.m_UserProfile
         
         DispatchQueue.main.async {
             self.syncEditStatus(false)
             
             RMessage.showNotification(withTitle: "Success", subtitle: "Update profile successfully", type: RMessageType.success, customTypeName: nil, duration: TimeInterval(RMessageDuration.automatic.rawValue), callback: nil)
+        }
+        
+        if let _delegateMethod = self.delegate?.updateInfoSuccessful {
+            _delegateMethod(self.m_UserProfile!)
         }
     }
     

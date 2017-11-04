@@ -13,6 +13,7 @@ class GroupMemberCollectionViewCell: UICollectionViewCell {
 
     @IBOutlet weak var imgAvatar: UIImageView!
     @IBOutlet weak var lblUsername: UILabel!
+    @IBOutlet weak var viewLoadingIndicator: UIActivityIndicatorView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -26,9 +27,23 @@ class GroupMemberCollectionViewCell: UICollectionViewCell {
     }
     
     func bindDataToView(_ _data : UserProfile!) {
-        imgAvatar.sd_setImage(with: URL(string: _data.mAvatarURLStr), placeholderImage: UIImage(named: "default_avatar"), options: SDWebImageOptions.continueInBackground) { (image, error, type, url) in
-            if let _error = error {
-                print("Load image failed with error \(_error)")
+        var _placeHolderImage = self.imgAvatar.image
+        if _placeHolderImage == nil {
+            _placeHolderImage = UIImage(named: "default_avatar")
+        }
+        imgAvatar.sd_setImage(with: URL(string: _data.mAvatarURLStr), placeholderImage: _placeHolderImage, options: SDWebImageOptions.continueInBackground, progress: { (receivedSize, expectedSize, targetURL) in
+            DispatchQueue.main.async {
+                self.viewLoadingIndicator.startAnimating()
+                self.viewLoadingIndicator.isHidden = false
+            }
+        }) { (image, error, type, url) in
+            DispatchQueue.main.async {
+                self.viewLoadingIndicator.stopAnimating()
+                self.viewLoadingIndicator.isHidden = true
+                if let _error = error {
+                    print("Load image failed with error \(_error)")
+//                    self.imgAvatar.image = UIImage(named: "default_avatar")
+                }
             }
         }
         self.lblUsername.text = _data.mUsername

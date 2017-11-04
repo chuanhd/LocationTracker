@@ -192,12 +192,12 @@ class CirclesViewController: UIViewController, SegueHandler {
     }
     
     internal func startRequestUserLocationTimer() {
-        if m_RequestUserLocationTimer != nil {
-            m_RequestUserLocationTimer!.invalidate();
-            m_RequestUserLocationTimer = nil;
+        if let _timer = m_RequestUserLocationTimer {
+            _timer.fire()
+            return
         }
         
-        m_RequestUserLocationTimer = Timer.scheduledTimer(timeInterval: 30, target: self, selector: #selector(CirclesViewController.requestUsersLocation), userInfo: nil, repeats: true);
+        m_RequestUserLocationTimer = Timer.scheduledTimer(timeInterval: 30, target: self, selector: #selector(CirclesViewController.fetchingDataTimerCallback), userInfo: nil, repeats: true);
         
         m_RequestUserLocationTimer!.fire()
     }
@@ -207,8 +207,8 @@ class CirclesViewController: UIViewController, SegueHandler {
             return
         }
         
-        self.requestUsersLocation()
-        self.getGroupDetails(withGroupId: _selectedGroup.mId)
+//        self.requestUsersLocation()
+        self.getGroupDetails(withGroupId: _selectedGroup.mId, showProgress: false)
     }
     
     internal func requestUsersLocation() {
@@ -352,7 +352,7 @@ class CirclesViewController: UIViewController, SegueHandler {
 //            _selectedGroupViewModel.createOrUpdateDestinationMarker(onMap: self._gmsMapView)
 //        }
         
-        self.getGroupDetails(withGroupId: _group.mId)
+        self.getGroupDetails(withGroupId: _group.mId, showProgress: true)
         self.getGroupImages(withGroupId: _group.mId)
     }
 }
@@ -433,8 +433,8 @@ extension CirclesViewController : CreateGroupViewControllerDelegate {
         
     }
     
-    func getGroupDetails(withGroupId _groupId : Int) {
-        ConnectionService.load(Group.createGetGroupDetailResource(_groupId)) { (_ response : ServerResponse, _ users : [Any]?, _ error : Error?) in
+    func getGroupDetails(withGroupId _groupId : Int, showProgress _showProgress : Bool = true) {
+        ConnectionService.load(Group.createGetGroupDetailResource(_groupId), _showProgress) { (_ response : ServerResponse, _ users : [Any]?, _ error : Error?) in
             switch response.code {
             case .SUCCESS:
                 
@@ -445,10 +445,18 @@ extension CirclesViewController : CreateGroupViewControllerDelegate {
                 if let _selectedGroup = self.m_SelectedGroupViewModel?.m_Group {
                     _selectedGroup.mUsers = users
                     self.mMembersCollectionView.reloadData()
-                    self.startRequestUserLocationTimer()
+                    
+                    for _userProfile in users {
+                        DispatchQueue.main.async {
+                            self.m_SelectedGroupViewModel?.createOrUpdateMarkerForUser(withId: _userProfile.mId, withLat: _userProfile.mLatitude, withLong: _userProfile.mLongtitude, onMap: self._gmsMapView)
+                        }
+                    }
+                    
                 }
                 
-                self.m_SelectedGroupViewModel?.updateMarkerImageForUsers()
+                DispatchQueue.main.async {
+                   self.m_SelectedGroupViewModel?.updateMarkerImageForUsers()
+                }
                 
                 break
             case .FAILURE:
@@ -703,6 +711,27 @@ extension CirclesViewController : UIImagePickerControllerDelegate {
     }
 }
 
+extension CirclesViewController : EditProfileViewControllerDelegate {
+    func updateInfoSuccessful(withNewModel _newModel: UserViewModel) {
+        if let _users = self.m_SelectedGroupViewModel?.m_Group?.mUsers {
+            
+            for (_index, _profile) in _users.enumerated() {
+                if _profile.mId == _newModel.m_UserProfile?.mId {
+                    self.m_SelectedGroupViewModel?.m_Group?.mUsers[_index] = _newModel.m_UserProfile!
+                    DispatchQueue.main.async {
+                        self.mMembersCollectionView.reloadItems(at: [IndexPath(item: _index, section: 0)])
+                        self.m_SelectedGroupViewModel?.createOrUpdateMarkerForUser(withId: _profile.mId, withLat: nil, withLong: nil, onMap: self._gmsMapView)
+                    }
+                }
+            }
+            
+        }
+    }
+    
+    func updateInfoFailed() {
+        
+    }
+}
 
 extension CirclesViewController : UINavigationControllerDelegate {
     

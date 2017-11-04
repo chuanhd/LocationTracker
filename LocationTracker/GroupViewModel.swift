@@ -40,25 +40,37 @@ class GroupViewModel : NSObject {
         self.m_Group = _group
     }
     
-    func createOrUpdateMarkerForUser(withId userId : String, withLat lat : Double, withLong lon: Double, onMap _mapView : GMSMapView) {
-        if let _marker = m_MarkerDict[userId] {
-            _marker.position = CLLocationCoordinate2D(latitude: lat, longitude: lon)
-        } else {
-            
-            let position = CLLocationCoordinate2D(latitude: lat, longitude: lon)
-            let _marker = GMSMarker(position: position)
-            _marker.map = _mapView
-            let _customMarkerIconView = CustomMarkerIconView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
-            if let _selectedGroup = self.m_Group {
-                if let _userProfile = (_selectedGroup.mUsers.filter { $0.mId == userId}).first {
-                    _customMarkerIconView.loadImage(fromURL: URL(string: _userProfile.mAvatarURLStr)!)
-                }
+    func createOrUpdateMarkerForUser(withId userId : String, withLat lat : Double?, withLong lon: Double?, onMap _mapView : GMSMapView) {
+        
+        if let _lat = lat, let _lon = lon {
+            if let _marker = m_MarkerDict[userId] {
+                _marker.position = CLLocationCoordinate2D(latitude: _lat, longitude: _lon)
+            } else {
+                
+                let position = CLLocationCoordinate2D(latitude: _lat, longitude: _lon)
+                let _marker = GMSMarker(position: position)
+                _marker.map = _mapView
+                _marker.zIndex = Constants.ZIndex.ZERO.rawValue;
+                m_MarkerDict[userId] = _marker
             }
-            _marker.zIndex = Constants.ZIndex.ZERO.rawValue;
-            
-            _marker.iconView = _customMarkerIconView
-            m_MarkerDict[userId] = _marker
-            
+        }
+        
+        if let _marker = m_MarkerDict[userId] {
+            if let _customMarkerIconView = _marker.iconView as? CustomMarkerIconView {
+                if let _selectedGroup = self.m_Group {
+                    if let _userProfile = (_selectedGroup.mUsers.filter { $0.mId == userId}).first {
+                        _customMarkerIconView.loadImage(fromURL: URL(string: _userProfile.mAvatarURLStr)!)
+                    }
+                }
+            } else {
+                let _customMarkerIconView = CustomMarkerIconView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+                if let _selectedGroup = self.m_Group {
+                    if let _userProfile = (_selectedGroup.mUsers.filter { $0.mId == userId}).first {
+                        _customMarkerIconView.loadImage(fromURL: URL(string: _userProfile.mAvatarURLStr)!)
+                    }
+                }
+                _marker.iconView = _customMarkerIconView
+            }
         }
     }
     

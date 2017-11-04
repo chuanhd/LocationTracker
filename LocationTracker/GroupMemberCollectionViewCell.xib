@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -24,6 +25,9 @@
                             <constraint firstAttribute="width" constant="60" id="oTe-RM-GlL"/>
                         </constraints>
                     </imageView>
+                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="AXf-Sc-1pQ">
+                        <rect key="frame" x="20" y="20" width="20" height="20"/>
+                    </activityIndicatorView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5xn-8i-Gdr">
                         <rect key="frame" x="0.0" y="62" width="60" height="18"/>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
@@ -37,7 +41,9 @@
                 <constraint firstAttribute="bottom" secondItem="5xn-8i-Gdr" secondAttribute="bottom" id="6EB-T5-wva"/>
                 <constraint firstItem="hBA-lQ-YCu" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="6ZR-5O-sx9"/>
                 <constraint firstAttribute="trailing" secondItem="hBA-lQ-YCu" secondAttribute="trailing" id="JnS-cA-ItE"/>
+                <constraint firstItem="AXf-Sc-1pQ" firstAttribute="centerX" secondItem="hBA-lQ-YCu" secondAttribute="centerX" id="OBq-p0-Wyp"/>
                 <constraint firstAttribute="bottom" secondItem="5xn-8i-Gdr" secondAttribute="bottom" id="eoN-KI-DNd"/>
+                <constraint firstItem="AXf-Sc-1pQ" firstAttribute="centerY" secondItem="hBA-lQ-YCu" secondAttribute="centerY" id="evu-JU-2MC"/>
                 <constraint firstAttribute="trailing" secondItem="5xn-8i-Gdr" secondAttribute="trailing" id="fpL-jY-Eiv"/>
                 <constraint firstItem="hBA-lQ-YCu" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="gS6-if-f6s"/>
                 <constraint firstAttribute="trailing" secondItem="5xn-8i-Gdr" secondAttribute="trailing" id="j0R-HL-xeu"/>
@@ -47,6 +53,7 @@
             <connections>
                 <outlet property="imgAvatar" destination="hBA-lQ-YCu" id="l3a-00-jtC"/>
                 <outlet property="lblUsername" destination="5xn-8i-Gdr" id="vFJ-Wy-Ihm"/>
+                <outlet property="viewLoadingIndicator" destination="AXf-Sc-1pQ" id="bts-lh-08B"/>
             </connections>
         </collectionViewCell>
     </objects>

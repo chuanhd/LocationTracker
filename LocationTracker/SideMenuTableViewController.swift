@@ -107,6 +107,19 @@ class SideMenuTableViewController: UITableViewController, SegueHandler {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        switch (segueIdentifier(for: segue)) {
+        case .PresentUpdateUserProfileView:
+            guard let _dest = segue.destination as? EditProfileViewController else {
+                fatalError("CreateUserViewController not found");
+            }
+            
+            if let _navViewController = UIApplication.shared.keyWindow?.rootViewController as? UINavigationController,
+                let _circleViewController = _navViewController.viewControllers.first as? CirclesViewController {
+                _dest.delegate = _circleViewController
+            }
+            
+            break
+        }
     }
     
 
