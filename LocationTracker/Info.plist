@@ -34,6 +34,8 @@
 	<string>Location Tracker needs access to your location in order to populate your location to other members in the group</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>App needs to access to Photo Library to get your profile picture</string>
+    <key>NSCameraUsageDescription</key>
+    <string>The app needs to access to Camera to take picture</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>location</string>

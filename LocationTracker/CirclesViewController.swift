@@ -22,6 +22,8 @@ class CirclesViewController: UIViewController, SegueHandler {
     @IBOutlet weak var m_ListGroupsView : ListGroupsView!
     @IBOutlet weak var m_GettingDirectionsIndicator : UIActivityIndicatorView!
     
+    internal var m_FocusOnMyLocation = true
+    
     enum SegueIdentifier : String {
         case PresentCreateNewUserView  = "PresentCreateNewUserView"
         case ShowSideMenuView = "ShowSideMenuView"
@@ -330,12 +332,34 @@ class CirclesViewController: UIViewController, SegueHandler {
             return
         }
         
-        let _imgPickerViewController = UIImagePickerController();
-        _imgPickerViewController.delegate = self;
-        _imgPickerViewController.allowsEditing = false;
-        _imgPickerViewController.sourceType = .photoLibrary;
+        let _imageSourcePicker = UIAlertController.init(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.actionSheet)
+        let _cameraSourceAction = UIAlertAction(title: "Camera", style: UIAlertActionStyle.default) { (_action) in
+            let _imgPickerViewController = UIImagePickerController();
+            _imgPickerViewController.delegate = self;
+            _imgPickerViewController.allowsEditing = false;
+            _imgPickerViewController.sourceType = .camera;
+            
+            self.present(_imgPickerViewController, animated: true, completion: nil);
+
+        }
+        let _photoLibSourceAction = UIAlertAction(title: "Photo Library", style: UIAlertActionStyle.default) { (_action) in
+            let _imgPickerViewController = UIImagePickerController();
+            _imgPickerViewController.delegate = self;
+            _imgPickerViewController.allowsEditing = false;
+            _imgPickerViewController.sourceType = .photoLibrary;
+            
+            self.present(_imgPickerViewController, animated: true, completion: nil);
+
+        }
+        let _cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel) { (_action) in
+            
+        }
+        _imageSourcePicker.addAction(_cameraSourceAction)
+        _imageSourcePicker.addAction(_photoLibSourceAction)
+        _imageSourcePicker.addAction(_cancelAction)
         
-        self.present(_imgPickerViewController, animated: true, completion: nil);
+        self.present(_imageSourcePicker, animated: true, completion: nil)
+        
     }
     
     @IBAction func btnRefreshPressed(_ sender: Any) {
@@ -368,9 +392,13 @@ extension CirclesViewController : GroupLocationPresenterDelegate {
             
             self.m_SelectedGroupViewModel?.createOrUpdateMarkerForUser(withId: _myProfile.mId, withLat: _myProfile.mLatitude, withLong: _myProfile.mLongtitude, onMap: self._gmsMapView)
             
-            let _coordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(_myProfile.mLatitude), longitude: CLLocationDegrees(_myProfile.mLongtitude))
-            let _update = GMSCameraUpdate.setTarget(_coordinate)
-            self._gmsMapView.moveCamera(_update)
+            if m_FocusOnMyLocation {
+                let _coordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(_myProfile.mLatitude), longitude: CLLocationDegrees(_myProfile.mLongtitude))
+                let _update = GMSCameraUpdate.setTarget(_coordinate)
+                self._gmsMapView.moveCamera(_update)
+                m_FocusOnMyLocation = false
+            }
+            
         }
         
         self.view.layoutIfNeeded()
