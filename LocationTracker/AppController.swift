@@ -46,6 +46,14 @@ class AppController {
         }
     }
     
+    public func isMasterOfGroup(_ group : Group?) -> Bool {
+        guard let _group = group else {
+            return false
+        }
+        
+        return _group.groupMasterUserId() == AppController.sharedInstance.mUniqueToken
+    }
+    
 }
 
 extension AppController {

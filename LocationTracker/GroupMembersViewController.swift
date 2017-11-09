@@ -7,6 +7,11 @@
 //
 
 import UIKit
+import RMessage
+
+protocol GroupMembersViewControllerDelegate : class {
+    func memberDidLeaveGroup(_ groupId : Int)
+}
 
 class GroupMembersViewController: UIViewController, SegueHandler {
     
@@ -15,6 +20,14 @@ class GroupMembersViewController: UIViewController, SegueHandler {
     }
 
     @IBOutlet weak var tblGroupMembers: UITableView!
+    @IBOutlet weak var viewInviteMember : UIView!
+    @IBOutlet weak var constraintInviteMemberViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var btnLeaveOrManageGroup: UIBarButtonItem!
+    
+    weak var delegate : GroupMembersViewControllerDelegate?
+    
+    private let m_constraintInviteMemberViewHeightValue : CGFloat = 48
+    
     var m_Group : Group?
     
     override func viewDidLoad() {
@@ -24,6 +37,7 @@ class GroupMembersViewController: UIViewController, SegueHandler {
         tblGroupMembers.dataSource = self
         tblGroupMembers.delegate = self
         fetchGroupDetails()
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -69,7 +83,10 @@ class GroupMembersViewController: UIViewController, SegueHandler {
                 }
                 
                 _group.mUsers = users
-                self.tblGroupMembers.reloadData()
+                DispatchQueue.main.async {
+                    self.syncUIBasedOnMasterStatus(AppController.sharedInstance.isMasterOfGroup(_group))
+                    self.tblGroupMembers.reloadData()
+                }
 
                 break
             case .FAILURE:
@@ -87,8 +104,61 @@ class GroupMembersViewController: UIViewController, SegueHandler {
     
     @IBAction func manageGroupBtnPressed(_ sender: Any) {
         
+        guard let _group = self.m_Group else {
+            return
+        }
+        
+        if AppController.sharedInstance.isMasterOfGroup(_group) {
+            
+        } else {
+            self.leaveGroup(withGroupId: _group.mId)
+        }
     }
     
+    private func syncUIBasedOnMasterStatus(_ isMaster : Bool) {
+        if isMaster {
+            self.constraintInviteMemberViewHeight.constant = m_constraintInviteMemberViewHeightValue
+            self.btnLeaveOrManageGroup.title = "Manage"
+            self.btnLeaveOrManageGroup.setTitleTextAttributes([NSForegroundColorAttributeName : UIColor.blue], for: UIControlState.normal)
+        } else {
+            self.constraintInviteMemberViewHeight.constant = 0
+            self.btnLeaveOrManageGroup.title = "Leave"
+            self.btnLeaveOrManageGroup.setTitleTextAttributes([NSForegroundColorAttributeName : UIColor.red], for: UIControlState.normal)
+        }
+        self.view.setNeedsLayout()
+        self.view.layoutIfNeeded()
+    }
+    
+    private func leaveGroup(withGroupId _groupId : Int) {
+        ConnectionService.load(UserProfile.leaveGroup(AppController.sharedInstance.mUniqueToken, _groupId)) { (_serverResponse, _data, _error) in
+            switch _serverResponse.code {
+            case .SUCCESS:
+                
+                RMessage.showNotification(withTitle: "Success", subtitle: "You have left \(self.m_Group!.mName) group", type: RMessageType.success, customTypeName: nil, callback: {
+                })
+                
+                DispatchQueue.main.async {
+                    
+                    guard let delegateMethod = self.delegate?.memberDidLeaveGroup else {
+                        return
+                    }
+                    
+                    delegateMethod(_groupId)
+                    
+                    self.navigationController?.popViewController(animated: true)
+                }
+                
+                break
+            case .FAILURE:
+                
+                RMessage.showNotification(withTitle: "Failed", subtitle: "Failed to leave group", type: RMessageType.error, customTypeName: nil, duration: TimeInterval(RMessageDuration.automatic.rawValue), callback: nil)
+                
+                break
+            default:
+                break
+            }
+        }
+    }
 }
 
 extension GroupMembersViewController : UITableViewDataSource {

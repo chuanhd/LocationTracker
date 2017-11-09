@@ -147,6 +147,7 @@ class CirclesViewController: UIViewController, SegueHandler {
 
             _dest.m_Group = _group
             _dest.navigationItem.title = _group.mName
+            _dest.delegate = self
             
             break
         }
@@ -257,23 +258,7 @@ class CirclesViewController: UIViewController, SegueHandler {
             switch _response.code {
             case .SUCCESS:
                 
-                self.m_SelectedGroupViewModel = GroupViewModel(withGroup: Group(withID: -1, withName: "My Circle"))
-                let _contained = self.m_SelectedGroupViewModel!.m_Group!.mUsers.contains(where: { (_profile) -> Bool in
-                    if _profile.mId == AppController.sharedInstance.mOwnProfile?.mId {
-                        return true
-                    }
-                    
-                    return false
-                })
-                
-                if !_contained {
-                    self.m_SelectedGroupViewModel!.m_Group!.mUsers.append(AppController.sharedInstance.mOwnProfile!)
-                }
-                
-                DispatchQueue.main.async {
-                    self.mCirclePresenter.startLocationUpdates()
-                    self.mMembersCollectionView.reloadData()
-                }
+                self.applyDefaultValuesForNotSelectedGroup();
                 
                 break
             case .FAILURE:
@@ -293,6 +278,26 @@ class CirclesViewController: UIViewController, SegueHandler {
             }
         }
         self.m_ListGroupsView.getAllGroups()
+    }
+    
+    internal func applyDefaultValuesForNotSelectedGroup() {
+        self.m_SelectedGroupViewModel = GroupViewModel(withGroup: Group(withID: -1, withName: "My Circle"))
+        let _contained = self.m_SelectedGroupViewModel!.m_Group!.mUsers.contains(where: { (_profile) -> Bool in
+            if _profile.mId == AppController.sharedInstance.mOwnProfile?.mId {
+                return true
+            }
+            
+            return false
+        })
+        
+        if !_contained {
+            self.m_SelectedGroupViewModel!.m_Group!.mUsers.append(AppController.sharedInstance.mOwnProfile!)
+        }
+        
+        DispatchQueue.main.async {
+            self.mCirclePresenter.startLocationUpdates()
+            self.mMembersCollectionView.reloadData()
+        }
     }
     
     @IBAction func btnNavigationPressed(_ sender: Any) {
@@ -442,7 +447,7 @@ extension CirclesViewController : ListGroupViewDelegate {
     }
     
     func didConfigureGroup(_ _group: Group) {
-        self.hideListGroupView()
+        self.didSelectGroup(_group)
         self.performSegue(withIdentifier: SegueIdentifier.PresentGroupMembersView.rawValue, sender: _group)
     }
 }
@@ -758,6 +763,12 @@ extension CirclesViewController : EditProfileViewControllerDelegate {
     
     func updateInfoFailed() {
         
+    }
+}
+
+extension CirclesViewController : GroupMembersViewControllerDelegate {
+    func memberDidLeaveGroup(_ groupId: Int) {
+        self.applyDefaultValuesForNotSelectedGroup()
     }
 }
 

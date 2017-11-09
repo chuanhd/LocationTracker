@@ -293,4 +293,33 @@ extension UserProfile {
         }
     }
     
+    static func leaveGroup(_ _userId : String, _ _groupId : Int) -> Resource<String>{
+        let params : [String : Any] = [ConnectionService.SERVER_REQ_KEY.USER_ID : _userId,
+                                       ConnectionService.SERVER_REQ_KEY.GROUP_ID : _groupId]
+        
+        return Resource<String>(withURL : App.User.leaveGroup.url,
+                                withMethod : HTTPMethod.delete,
+                                     withParams : params) { data in
+                                        
+                                        let _json = JSON(data : data)
+                                        
+                                        print("JSON: \(_json)") // serialized json response
+                                        
+                                        if let _codeStr = _json["code"].string,
+                                            let _code = SERVER_RESPONSE_CODE(rawValue: _codeStr),
+                                            let _status = _json["status"].string{
+                                            switch _code {
+                                            case .SUCCESS:
+                                                return (ServerResponse(withCode : .SUCCESS, withStatus : _status), nil)
+                                            case .FAILURE:
+                                                return (ServerResponse(withCode : .FAILURE, withStatus : _status), nil)
+                                            default:
+                                                break
+                                            }
+                                        }
+                                        
+                                        return (ServerResponse(), nil)
+        }
+    }
+    
 }
