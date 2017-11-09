@@ -8,6 +8,7 @@
 
 import Foundation
 import Locksmith
+import UIKit
 
 class Utils {
     static func getDeviceId() -> String {
@@ -29,5 +30,12 @@ class Utils {
         return strAppUUID!
     }
     
-    
+    static func createAlertViewController(withTitle _title : String?, withMessage _message : String) -> UIAlertController {
+        let _alertViewController = UIAlertController(title: _title, message: _message, preferredStyle: UIAlertControllerStyle.alert)
+        let _cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel) { (_action) in
+            
+        }
+        _alertViewController.addAction(_cancelAction)
+        return _alertViewController
+    }
 }
