@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RMessage
 
 class JoinGroupViewController: UIViewController {
     
@@ -22,6 +23,10 @@ class JoinGroupViewController: UIViewController {
         // Do any additional setup after loading the view.
         self.m_btnJoinGroup.layer.masksToBounds = true
         self.m_btnJoinGroup.layer.cornerRadius = 4.0
+        
+        let _tapGestureRecognizer  = UITapGestureRecognizer.init(target: self, action: #selector(JoinGroupViewController.handleTapOnRestOfView))
+        _tapGestureRecognizer.delegate = self
+        self.view.addGestureRecognizer(_tapGestureRecognizer)
     }
 
     override func didReceiveMemoryWarning() {
@@ -41,10 +46,72 @@ class JoinGroupViewController: UIViewController {
     */
 
     @IBAction func btnJoinGroupPressed(_ sender: Any) {
+        guard let _groupIdStr = self.m_txtGroupID.text, _groupIdStr.count != 0 else {
+            
+            let _alertController = Utils.createAlertViewController(withTitle: "Warn", withMessage: "Please input group id")
+            self.present(_alertController, animated: true, completion: nil)
+            
+            return
+        }
         
+        guard let _groupId = Int(_groupIdStr) else {
+            
+            let _alertController = Utils.createAlertViewController(withTitle: "Warn", withMessage: "Group id must be a number")
+            self.present(_alertController, animated: true, completion: nil)
+            
+            return
+        }
+        
+        self.joinGroup(withGroupId: _groupId)
     }
     
     internal func handleTapOnRestOfView(_ gestureRecognizer : UITapGestureRecognizer) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    internal func joinGroup(withGroupId _groupId : Int) {
+        ConnectionService.load(Group.inviteUser(_groupId, AppController.sharedInstance.mUniqueToken)) { (_serverResponse, _data, _error) in
+            switch _serverResponse.code {
+            case .SUCCESS:
+                
+                DispatchQueue.main.async {
+                    RMessage.showNotification(withTitle: "Success", subtitle: "You have joined group successfully", type: RMessageType.success, customTypeName: nil, duration: TimeInterval(RMessageDuration.automatic.rawValue), callback: nil)
+                }
+                
+                break
+            case .USER_IN_GROUP:
+                
+                DispatchQueue.main.async {
+                    RMessage.showNotification(withTitle: "Notification", subtitle: "You are already in this group", type: RMessageType.warning, customTypeName: nil, duration: TimeInterval(RMessageDuration.automatic.rawValue), callback: nil)
+                }
+                
+                break
+            case .FAILURE:
+                print("Fail to add member to group")
+                
+                DispatchQueue.main.async {
+                    RMessage.showNotification(withTitle: "Failed", subtitle: "Join group failed. Please check group id or try again later", type: RMessageType.error, customTypeName: nil, duration: TimeInterval(RMessageDuration.automatic.rawValue), callback: nil)
+                }
+                
+                break
+            default:
+                break
+            }
+        }
+    }
+}
+
+extension JoinGroupViewController : UIGestureRecognizerDelegate {
+    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        guard let _tapGestureRecognizer = gestureRecognizer as? UITapGestureRecognizer else {
+            return false
+        }
         
+        let _touchPoint = _tapGestureRecognizer.location(in: self.view)
+        if self.m_ContentView.frame.contains(_touchPoint) {
+            return false
+        }
+        
+        return true
     }
 }
