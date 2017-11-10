@@ -163,7 +163,7 @@ class GroupViewModel : NSObject {
             _customMarkerIconView.loadImage(fromURL: url)
             
             _marker.iconView = _customMarkerIconView
-            m_ImageMarkerDict[userId] = _marker
+            m_ImageMarkerDict[_dictKey] = _marker
             
             _marker.zIndex = Constants.ZIndex.ONE.rawValue;
         }
