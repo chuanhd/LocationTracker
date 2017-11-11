@@ -134,7 +134,7 @@ class GroupMembersViewController: UIViewController, SegueHandler {
             switch _serverResponse.code {
             case .SUCCESS:
                 
-                RMessage.showNotification(withTitle: "Success", subtitle: "You have left \(self.m_Group!.mName) group", type: RMessageType.success, customTypeName: nil, callback: {
+                RMessage.showNotification(withTitle: "Success", subtitle: "You have left '\(self.m_Group!.mName)' group", type: RMessageType.success, customTypeName: nil, callback: {
                 })
                 
                 DispatchQueue.main.async {

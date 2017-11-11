@@ -24,6 +24,8 @@ class Group {
     public var m_DestLat : Double?
     public var m_DestLon : Double?
     public var m_ArrGroupImages : [GroupImage]?
+    public var m_Description : String?
+//    public var m_GroupMasterUserId : String = ""
     
     init(withID _id : Int, withName _name : String) {
         self.mId = _id;
