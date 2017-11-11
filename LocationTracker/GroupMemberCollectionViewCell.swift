@@ -15,6 +15,12 @@ class GroupMemberCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var lblUsername: UILabel!
     @IBOutlet weak var viewLoadingIndicator: UIActivityIndicatorView!
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        self.imgAvatar.image = UIImage(named: "default_avatar")
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
