@@ -134,6 +134,7 @@ class CirclesViewController: UIViewController, SegueHandler {
             }
             
             _dest.modalPresentationStyle = .overCurrentContext
+            _dest.delegate = self
             
             break
         case .PresentGroupMembersView:
@@ -773,19 +774,19 @@ extension CirclesViewController : GroupMembersViewControllerDelegate {
 }
 
 extension CirclesViewController : JoinGroupViewControllerDelegate {
-    func didJoinGroupSuccessful(_ _groupId: Int) {
-//        self.m_SelectedGroupViewModel = GroupViewModel(withGroup: _group)
-//        self.getGroupDetails(withGroupId: _group.mId)
-//        self.getGroupImages(withGroupId: _group.mId)
-//        self.mGroupNameTitleView?.setGroupName(_group.mName)
-//        DispatchQueue.main.async {
-//            //            self.m_SelectedGroupViewModel?.clearGroupMarkersAndRouteOnMap()
-//            self.m_SelectedGroupViewModel?.createOrUpdateDestinationMarker(onMap: self._gmsMapView)
-//
-//            if let _myProfile = AppController.sharedInstance.mOwnProfile {
-//                self.m_SelectedGroupViewModel?.createOrUpdateMarkerForUser(withId: _myProfile.mId, withLat: _myProfile.mLatitude, withLong: _myProfile.mLongtitude, onMap: self._gmsMapView)
-//            }
-//        }
+    func didJoinGroupSuccessful(_ _group: Group) {
+        self.m_SelectedGroupViewModel = GroupViewModel(withGroup: _group)
+        self.getGroupDetails(withGroupId: _group.mId)
+        self.getGroupImages(withGroupId: _group.mId)
+        self.mGroupNameTitleView?.setGroupName(_group.mName)
+        DispatchQueue.main.async {
+            //            self.m_SelectedGroupViewModel?.clearGroupMarkersAndRouteOnMap()
+            self.m_SelectedGroupViewModel?.createOrUpdateDestinationMarker(onMap: self._gmsMapView)
+
+            if let _myProfile = AppController.sharedInstance.mOwnProfile {
+                self.m_SelectedGroupViewModel?.createOrUpdateMarkerForUser(withId: _myProfile.mId, withLat: _myProfile.mLatitude, withLong: _myProfile.mLongtitude, onMap: self._gmsMapView)
+            }
+        }
     }
 }
 

@@ -10,7 +10,7 @@ import UIKit
 import RMessage
 
 protocol JoinGroupViewControllerDelegate : class {
-    func didJoinGroupSuccessful(_ _groupId : Int)
+    func didJoinGroupSuccessful(_ _group : Group)
 }
 
 class JoinGroupViewController: UIViewController {
@@ -83,8 +83,12 @@ class JoinGroupViewController: UIViewController {
                 DispatchQueue.main.async {
                     RMessage.showNotification(withTitle: "Success", subtitle: "You have joined group successfully", type: RMessageType.success, customTypeName: nil, duration: TimeInterval(RMessageDuration.automatic.rawValue), callback: nil)
                     
+                    guard let _groups = _data as? [Group], let _group = _groups.first else {
+                        return
+                    }
+                    
                     if let _delegateMethod = self.delegate?.didJoinGroupSuccessful {
-                        _delegateMethod(_groupId)
+                        _delegateMethod(_group)
                     }
                     
                     self.dismiss(animated: true, completion: nil)

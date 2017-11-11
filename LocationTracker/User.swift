@@ -322,11 +322,11 @@ extension UserProfile {
         }
     }
     
-    static func joinGroup(_ _userId : String, _ _groupId : Int) -> Resource<String> {
+    static func joinGroup(_ _userId : String, _ _groupId : Int) -> Resource<Group> {
         let params : [String : Any] = [ConnectionService.SERVER_REQ_KEY.USER_ID : _userId,
                                        ConnectionService.SERVER_REQ_KEY.GROUP_ID : _groupId]
         
-        return Resource<String>(withURL : App.User.joinGroup.url,
+        return Resource<Group>(withURL : App.User.joinGroup.url,
                                 withMethod : HTTPMethod.post,
                                 withParams : params) { data in
                                     
@@ -336,10 +336,23 @@ extension UserProfile {
                                     
                                     if let _codeStr = _json["code"].string,
                                         let _code = SERVER_RESPONSE_CODE(rawValue: _codeStr),
-                                        let _status = _json["status"].string{
+                                        let _status = _json["status"].string {
+                                        
+                                        let _groupJSON  = _json["data"]
+                                        let _groupId = _groupJSON["groupid"].intValue
+                                        let _groupName = _groupJSON["groupname"].stringValue
+                                        let _groupDesc = _groupJSON["description"].stringValue
+                                        let _groupLat = _groupJSON["lat"].double
+                                        let _groupLon = _groupJSON["lon"].double
+                                        
+                                        let _group = Group(withID: _groupId, withName: _groupName)
+                                        _group.m_DestLat = _groupLat
+                                        _group.m_DestLon = _groupLon
+                                        _group.m_Description = _groupDesc
+                                        
                                         switch _code {
                                         case .SUCCESS:
-                                            return (ServerResponse(withCode : .SUCCESS, withStatus : _status), nil)
+                                            return (ServerResponse(withCode : .SUCCESS, withStatus : _status), [_group])
                                         case .FAILURE:
                                             return (ServerResponse(withCode : .FAILURE, withStatus : _status), nil)
                                         default:
