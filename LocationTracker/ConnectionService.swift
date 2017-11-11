@@ -53,6 +53,7 @@ enum App {
         case getLocation
         case searchUser
         case uploadImage
+        case joinGroup
         case leaveGroup
     }
     
@@ -74,6 +75,8 @@ extension App.User : Url {
             return URL(string: "api/searchuser", relativeTo: BASE_URL)!
         case .uploadImage:
             return URL(string: "api/imageupload", relativeTo: BASE_URL)!
+        case .joinGroup:
+            return URL(string: "/api/joinGroup", relativeTo: BASE_URL)!
         case .leaveGroup:
             return URL(string: "/api/deletemember", relativeTo: BASE_URL)!
         }

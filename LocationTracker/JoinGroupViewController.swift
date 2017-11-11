@@ -9,11 +9,17 @@
 import UIKit
 import RMessage
 
+protocol JoinGroupViewControllerDelegate : class {
+    func didJoinGroupSuccessful(_ _groupId : Int)
+}
+
 class JoinGroupViewController: UIViewController {
     
     @IBOutlet weak var m_ContentView: UIView!
     @IBOutlet weak var m_txtGroupID: UITextField!
     @IBOutlet weak var m_btnJoinGroup: UIButton!
+    
+    weak var delegate : JoinGroupViewControllerDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,12 +76,19 @@ class JoinGroupViewController: UIViewController {
     }
     
     internal func joinGroup(withGroupId _groupId : Int) {
-        ConnectionService.load(Group.inviteUser(_groupId, AppController.sharedInstance.mUniqueToken)) { (_serverResponse, _data, _error) in
+        ConnectionService.load(UserProfile.joinGroup(AppController.sharedInstance.mUniqueToken, _groupId)) { (_serverResponse, _data, _error) in
             switch _serverResponse.code {
             case .SUCCESS:
                 
                 DispatchQueue.main.async {
                     RMessage.showNotification(withTitle: "Success", subtitle: "You have joined group successfully", type: RMessageType.success, customTypeName: nil, duration: TimeInterval(RMessageDuration.automatic.rawValue), callback: nil)
+                    
+                    if let _delegateMethod = self.delegate?.didJoinGroupSuccessful {
+                        _delegateMethod(_groupId)
+                    }
+                    
+                    self.dismiss(animated: true, completion: nil)
+                    
                 }
                 
                 break
