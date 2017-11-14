@@ -15,6 +15,7 @@ struct GroupImage {
     var m_Lon : Double
     var m_OwnerID : String
     var m_Url : URL
+    var m_AuthorName : String
 }
 
 class Group {

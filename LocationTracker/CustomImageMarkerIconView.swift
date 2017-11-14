@@ -13,6 +13,7 @@ import SnapKit
 class CustomImageMarkerIconView : UIImageView {
     
     public var m_ImageURL : URL?
+    public var m_Obj : GroupImage?
     
     override init(frame: CGRect) {
         super.init(frame: frame)

@@ -517,7 +517,8 @@ extension CirclesViewController : CreateGroupViewControllerDelegate {
                         let _obj = GroupImage(m_Lat: _dict["lat"] as! Double,
                                               m_Lon: _dict["lon"] as! Double,
                                               m_OwnerID: _dict["userid"] as! String,
-                                              m_Url: URL(string: _dict["url"] as! String)!)
+                                              m_Url: URL(string: _dict["url"] as! String)!,
+                                              m_AuthorName : _dict["author"] as! String)
                         _selectedGroupModel.createOrUpdateImageMarker(withGroupImage: _obj, onMap: self._gmsMapView)
                         _arr.append(_obj)
                         
@@ -638,8 +639,30 @@ extension CirclesViewController : GMSMapViewDelegate {
         if _groupViewModel.isImageMarker(marker) {
             
             if let _customMarkerIconView = marker.iconView as? CustomImageMarkerIconView {
+                LightboxConfig.loadImage = { imageView, URL, completion in
+                    /*
+                     let imageRequest: URLRequest = URLRequest(url: URL)
+                     
+                     NSURLConnection.sendAsynchronousRequest(imageRequest,
+                     queue: OperationQueue.main,
+                     completionHandler: { _, data, error in
+                     if let data = data, let image = UIImage(data: data) {
+                     imageView.image = image
+                     }
+                     
+                     completion?(error as NSError?, imageView.image)
+                     })
+                     */
+                    
+                    imageView.sd_setImage(with: URL, completed: { (_image, _error, _cacheType, _url) in
+                        completion?(_error as NSError?, _image)
+                    })
+                }
+                let _groupImage = _customMarkerIconView.m_Obj!
                 let images = [
-                    LightboxImage(imageURL: _customMarkerIconView.m_ImageURL!)
+                    LightboxImage(
+                        imageURL: _customMarkerIconView.m_ImageURL!,
+                        text : _groupImage.m_AuthorName)
                 ]
 
                 let _imageViewController = LightboxController(images: images)
@@ -721,7 +744,14 @@ extension CirclesViewController : UIImagePickerControllerDelegate {
                             case .SUCCESS:
                                 
                                 DispatchQueue.main.async {
-                                    _selectedGroupViewModel.createOrUpdateImageMarker(withUserId: _myProfile.mId, withLat: _myProfile.mLatitude, withLong: _myProfile.mLongtitude, withImageUrl: url!, onMap: self._gmsMapView)
+                                    
+                                    let _obj = GroupImage(m_Lat: _myProfile.mLatitude,
+                                                          m_Lon: _myProfile.mLongtitude,
+                                                          m_OwnerID: _myProfile.mId,
+                                                          m_Url: url!,
+                                                          m_AuthorName : _myProfile.mUsername)
+                                    
+                                    _selectedGroupViewModel.createOrUpdateImageMarker(withGroupImage: _obj, onMap: self._gmsMapView)
                                 }
                                 
                                 break

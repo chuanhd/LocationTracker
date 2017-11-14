@@ -149,8 +149,13 @@ class GroupViewModel : NSObject {
             })
         }
     }
-    
-    func createOrUpdateImageMarker(withUserId userId : String, withLat lat : Double, withLong lon: Double, withImageUrl url : URL, onMap _mapView : GMSMapView) {
+
+    func createOrUpdateImageMarker(withGroupImage _groupImage : GroupImage, onMap _mapView : GMSMapView) {
+        
+        let userId =  _groupImage.m_OwnerID;
+        let lat = _groupImage.m_Lat;
+        let lon = _groupImage.m_Lon;
+        let url = _groupImage.m_Url
         let _dictKey = "\(userId)_\(lat)_\(lon)"
         if let _marker = m_ImageMarkerDict[_dictKey] {
             _marker.position = CLLocationCoordinate2D(latitude: lat, longitude: lat)
@@ -161,16 +166,12 @@ class GroupViewModel : NSObject {
             _marker.map = _mapView
             let _customMarkerIconView = CustomImageMarkerIconView(frame: CGRect(x: 0, y: 0, width: 40, height: 60))
             _customMarkerIconView.loadImage(fromURL: url)
-            
+            _customMarkerIconView.m_Obj = _groupImage
             _marker.iconView = _customMarkerIconView
             m_ImageMarkerDict[_dictKey] = _marker
             
             _marker.zIndex = Constants.ZIndex.ONE.rawValue;
         }
-    }
-    
-    func createOrUpdateImageMarker(withGroupImage _groupImage : GroupImage, onMap _mapView : GMSMapView) {
-        self.createOrUpdateImageMarker(withUserId: _groupImage.m_OwnerID, withLat: _groupImage.m_Lat, withLong: _groupImage.m_Lon, withImageUrl: _groupImage.m_Url, onMap: _mapView)
     }
     
     func getMarkerForUser(withUserId _userId : String) -> GMSMarker? {
