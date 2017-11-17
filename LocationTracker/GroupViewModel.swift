@@ -59,14 +59,14 @@ class GroupViewModel : NSObject {
             if let _customMarkerIconView = _marker.iconView as? CustomMarkerIconView {
                 if let _selectedGroup = self.m_Group {
                     if let _userProfile = (_selectedGroup.mUsers.filter { $0.mId == userId}).first {
-                        _customMarkerIconView.loadImage(fromURL: URL(string: _userProfile.mAvatarURLStr)!)
+                        _customMarkerIconView.loadImage(fromURL: URL(string: _userProfile.mAvatarURLStr))
                     }
                 }
             } else {
                 let _customMarkerIconView = CustomMarkerIconView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
                 if let _selectedGroup = self.m_Group {
                     if let _userProfile = (_selectedGroup.mUsers.filter { $0.mId == userId}).first {
-                        _customMarkerIconView.loadImage(fromURL: URL(string: _userProfile.mAvatarURLStr)!)
+                        _customMarkerIconView.loadImage(fromURL: URL(string: _userProfile.mAvatarURLStr))
                     }
                 }
                 _marker.iconView = _customMarkerIconView
@@ -87,7 +87,7 @@ class GroupViewModel : NSObject {
         if let _marker = m_MarkerDict[_userId], let _imgViewAvatar = _marker.iconView as? CustomMarkerIconView {
             if let _selectedGroup = self.m_Group {
                 if let _userProfile = (_selectedGroup.mUsers.filter { $0.mId == _userId}).first {
-                    _imgViewAvatar.loadImage(fromURL: URL(string: _userProfile.mAvatarURLStr)!)
+                    _imgViewAvatar.loadImage(fromURL: URL(string: _userProfile.mAvatarURLStr))
                 }
             }
         }

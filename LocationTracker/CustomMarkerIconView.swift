@@ -41,13 +41,18 @@ class CustomMarkerIconView: UIImageView {
         self.layer.borderWidth = 4.0
     }
     
-    func loadImage(fromURL _url : URL) {
-        if self.m_ImageUrl != _url {
-            self.sd_setImage(with: _url, placeholderImage: UIImage(named: "default_avatar.png"), options: SDWebImageOptions.continueInBackground) { (_image, _error, _cacheType, _otherUrl) in
+    func loadImage(fromURL _url : URL?) {
+        
+        guard let _nonEmptyURL = _url else {
+            return
+        }
+        
+        if self.m_ImageUrl != _nonEmptyURL {
+            self.sd_setImage(with: _nonEmptyURL, placeholderImage: UIImage(named: "default_avatar.png"), options: SDWebImageOptions.continueInBackground) { (_image, _error, _cacheType, _otherUrl) in
                 
             }
         }
-        self.m_ImageUrl = _url
+        self.m_ImageUrl = _nonEmptyURL
         
     }
 }
