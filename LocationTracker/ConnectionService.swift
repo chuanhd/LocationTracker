@@ -55,6 +55,9 @@ enum App {
         case uploadImage
         case joinGroup
         case leaveGroup
+        case checkEmail
+        case checkUsername
+        case checkPhoneNumber
     }
     
     enum Myself {
@@ -79,6 +82,12 @@ extension App.User : Url {
             return URL(string: "/api/joinGroup", relativeTo: BASE_URL)!
         case .leaveGroup:
             return URL(string: "/api/deletemember", relativeTo: BASE_URL)!
+        case .checkEmail:
+            return URL(string: "/api/checkEmail", relativeTo: BASE_URL)!
+        case .checkUsername:
+            return URL(string: "/api/checkUsername", relativeTo: BASE_URL)!
+        case .checkPhoneNumber:
+            return URL(string: "/api/checkPhoneNumber", relativeTo: BASE_URL)!
         }
     }
 }

@@ -363,4 +363,88 @@ extension UserProfile {
                                     return (ServerResponse(), nil)
         }
     }
+    
+    static func checkUsername(_ _username : String) -> Resource<String>{
+        let params : [String : Any] = [ConnectionService.SERVER_REQ_KEY.USERNAME : _username]
+        
+        return Resource<String>(withURL : App.User.checkUsername.url,
+                                withMethod : HTTPMethod.post,
+                                withParams : params) { data in
+                                    
+                                    let _json = JSON(data : data)
+                                    
+                                    print("JSON: \(_json)") // serialized json response
+                                    
+                                    if let _codeStr = _json["code"].string,
+                                        let _code = SERVER_RESPONSE_CODE(rawValue: _codeStr),
+                                        let _status = _json["status"].string{
+                                        switch _code {
+                                        case .SUCCESS:
+                                            return (ServerResponse(withCode : .SUCCESS, withStatus : _status), nil)
+                                        case .FAILURE:
+                                            return (ServerResponse(withCode : .FAILURE, withStatus : _status), nil)
+                                        default:
+                                            break
+                                        }
+                                    }
+                                    
+                                    return (ServerResponse(), nil)
+        }
+    }
+    
+    static func checkPhoneNumber(_ _phoneNumber : String) -> Resource<String>{
+        let params : [String : Any] = [ConnectionService.SERVER_REQ_KEY.PHONE_NUMBER : _phoneNumber]
+        
+        return Resource<String>(withURL : App.User.checkPhoneNumber.url,
+                                withMethod : HTTPMethod.post,
+                                withParams : params) { data in
+                                    
+                                    let _json = JSON(data : data)
+                                    
+                                    print("JSON: \(_json)") // serialized json response
+                                    
+                                    if let _codeStr = _json["code"].string,
+                                        let _code = SERVER_RESPONSE_CODE(rawValue: _codeStr),
+                                        let _status = _json["status"].string{
+                                        switch _code {
+                                        case .SUCCESS:
+                                            return (ServerResponse(withCode : .SUCCESS, withStatus : _status), nil)
+                                        case .FAILURE:
+                                            return (ServerResponse(withCode : .FAILURE, withStatus : _status), nil)
+                                        default:
+                                            break
+                                        }
+                                    }
+                                    
+                                    return (ServerResponse(), nil)
+        }
+    }
+    
+    static func checkEmail(_ _email : String) -> Resource<String>{
+        let params : [String : Any] = [ConnectionService.SERVER_REQ_KEY.EMAIL : _email]
+        
+        return Resource<String>(withURL : App.User.checkEmail.url,
+                                withMethod : HTTPMethod.post,
+                                withParams : params) { data in
+                                    
+                                    let _json = JSON(data : data)
+                                    
+                                    print("JSON: \(_json)") // serialized json response
+                                    
+                                    if let _codeStr = _json["code"].string,
+                                        let _code = SERVER_RESPONSE_CODE(rawValue: _codeStr),
+                                        let _status = _json["status"].string{
+                                        switch _code {
+                                        case .SUCCESS:
+                                            return (ServerResponse(withCode : .SUCCESS, withStatus : _status), nil)
+                                        case .FAILURE:
+                                            return (ServerResponse(withCode : .FAILURE, withStatus : _status), nil)
+                                        default:
+                                            break
+                                        }
+                                    }
+                                    
+                                    return (ServerResponse(), nil)
+        }
+    }
 }

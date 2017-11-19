@@ -23,6 +23,9 @@ class EditProfileViewController: UIViewController {
     @IBOutlet weak var imgAvatar : UIImageView!
     @IBOutlet weak var btnEdit : UIBarButtonItem!
     
+    var isEmailValid = true
+    var isPhoneNumberValid  = true
+    
     weak var delegate : EditProfileViewControllerDelegate?
     
     enum ControllerState : Int {
@@ -55,6 +58,9 @@ class EditProfileViewController: UIViewController {
         
         self.txtEmail.isEnabled = false
         self.txtPhoneNumber.isEnabled = false
+        
+        self.txtEmail.delegate = self
+        self.txtPhoneNumber.delegate = self
         
         let _tapAvatarGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(EditProfileViewController.handleTapOnAvatarGesture(_:)))
         self.imgAvatar.addGestureRecognizer(_tapAvatarGestureRecognizer)
@@ -90,6 +96,22 @@ class EditProfileViewController: UIViewController {
         if self.m_State == ControllerState.VIEW {
             self.syncEditStatus(true)
         } else {
+            
+            guard let _phoneNumberContent = self.txtPhoneNumber.text, _phoneNumberContent.count > 0,
+                let _emailContent = self.txtEmail.text, _emailContent.count > 0 else {
+                
+                RMessage.showNotification(withTitle: "Error", subtitle: "Email and phone number are required", type: RMessageType.error, customTypeName: nil, duration: TimeInterval(RMessageDuration.automatic.rawValue), callback: nil)
+                
+                return
+            }
+            
+            guard isEmailValid && isPhoneNumberValid else {
+                
+                RMessage.showNotification(withTitle: "Error", subtitle: "Email or phone number is in use", type: RMessageType.error, customTypeName: nil, duration: TimeInterval(RMessageDuration.automatic.rawValue), callback: nil)
+                
+                return
+            }
+            
             self.updateProfile()
 //            self.syncEditStatus(false)
         }
@@ -152,7 +174,7 @@ class EditProfileViewController: UIViewController {
                 
             }
         } else {
-            ConnectionService.load(UserProfile.createUpdateMyInfoResource(self.txtEmail.text, self.m_UserProfile?.m_Username, self.txtPhoneNumber.text, nil), true) { (_ response : ServerResponse, _ myProfile : [Any]?, _ error : Error?) in
+            ConnectionService.load(UserProfile.createUpdateMyInfoResource(self.txtEmail.text, self.m_UserProfile?.m_Username, self.txtPhoneNumber.text, self.m_UserProfile?.m_AvatarURL?.absoluteString), true) { (_ response : ServerResponse, _ myProfile : [Any]?, _ error : Error?) in
                 // MyProfile should be [UserProfile]
                 DispatchQueue.main.async {
                     switch response.code {
@@ -211,6 +233,48 @@ extension EditProfileViewController : UIImagePickerControllerDelegate {
         }
         
         self.dismiss(animated: true, completion: nil);
+    }
+}
+
+extension EditProfileViewController : UITextFieldDelegate {
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        guard let _content = textField.text else {
+            return
+        }
+        
+        if textField == self.txtEmail {
+            ConnectionService.load(UserProfile.checkEmail(_content), false, completion: { (_serverResponse, _data, _error) in
+                DispatchQueue.main.async {
+                    switch _serverResponse.code {
+                    case .SUCCESS:
+                        self.isEmailValid = true
+                        break
+                    case .FAILURE:
+                        RMessage.showNotification(withTitle: "Error", subtitle: "Email is already in use", type: RMessageType.error, customTypeName: nil, duration: TimeInterval(RMessageDuration.automatic.rawValue), callback: nil)
+                        self.isEmailValid = false
+                        break
+                    default:
+                        break
+                    }
+                }
+            })
+        } else if textField == self.txtPhoneNumber {
+            ConnectionService.load(UserProfile.checkPhoneNumber(_content), false, completion: { (_serverResponse, _data, _error) in
+                DispatchQueue.main.async {
+                    switch _serverResponse.code {
+                    case .SUCCESS:
+                        self.isPhoneNumberValid = true
+                        break
+                    case .FAILURE:
+                        RMessage.showNotification(withTitle: "Error", subtitle: "Phone number is already in use", type: RMessageType.error, customTypeName: nil, duration: TimeInterval(RMessageDuration.automatic.rawValue), callback: nil)
+                        self.isPhoneNumberValid = false
+                        break
+                    default:
+                        break
+                    }
+                }
+            })
+        }
     }
 }
 
