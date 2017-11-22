@@ -261,15 +261,17 @@ extension CreateUserViewController : UITextFieldDelegate {
                     default:
                         break
                     }
+                    self.lblInputStatus.isHidden = self.validFields
                 }
             })
         } else if textField == self.txtPhoneNumber {
             self.indicatorCheckPhoneNumber.startAnimating()
             ConnectionService.load(UserProfile.checkPhoneNumber(_content), false, completion: { (_serverResponse, _data, _error) in
                 DispatchQueue.main.async {
-                     self.indicatorCheckPhoneNumber.stopAnimating()
+                    self.indicatorCheckPhoneNumber.stopAnimating()
                     switch _serverResponse.code {
                     case .SUCCESS:
+//                        self.phoneNotUsed = true
                         break
                     case .FAILURE:
                         self.validPhoneNumber = false
@@ -278,6 +280,7 @@ extension CreateUserViewController : UITextFieldDelegate {
                     default:
                         break
                     }
+                    self.lblInputStatus.isHidden = self.validFields
                 }
             })
         } else if textField == self.txtName {
@@ -295,9 +298,12 @@ extension CreateUserViewController : UITextFieldDelegate {
                     default:
                         break
                     }
+                    self.lblInputStatus.isHidden = self.validFields
                 }
             })
         }
+        
+        
     }
 }
 
