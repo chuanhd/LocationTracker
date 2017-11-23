@@ -212,6 +212,7 @@ class CirclesViewController: UIViewController, SegueHandler {
         }
         
 //        self.requestUsersLocation()
+        self.getGroupDestination(withGroupId: _selectedGroup.mId)
         self.getGroupDetails(withGroupId: _selectedGroup.mId, showProgress: false)
     }
     
@@ -437,6 +438,7 @@ extension CirclesViewController : ListGroupViewDelegate {
         self.getGroupDetails(withGroupId: _group.mId)
         self.getGroupImages(withGroupId: _group.mId)
         self.mGroupNameTitleView?.setGroupName(_group.mName)
+        self.startRequestUserLocationTimer()
         DispatchQueue.main.async {
 //            self.m_SelectedGroupViewModel?.clearGroupMarkersAndRouteOnMap()
             self.m_SelectedGroupViewModel?.createOrUpdateDestinationMarker(onMap: self._gmsMapView)
@@ -460,6 +462,7 @@ extension CirclesViewController : CreateGroupViewControllerDelegate {
         self.m_SelectedGroupViewModel = GroupViewModel(withGroup: Group(withID: _groupId, withName: _groupName))
         
         self.getGroupDetails(withGroupId: _groupId)
+        self.startRequestUserLocationTimer()
         
         if let _myProfile = AppController.sharedInstance.mOwnProfile {
             self.m_SelectedGroupViewModel?.createOrUpdateMarkerForUser(withId: _myProfile.mId, withLat: _myProfile.mLatitude, withLong: _myProfile.mLongtitude, onMap: self._gmsMapView)
@@ -495,6 +498,35 @@ extension CirclesViewController : CreateGroupViewControllerDelegate {
                 break
             case .FAILURE:
                 print("Fail to get group details")
+                break
+            default:
+                break
+            }
+        }
+    }
+    
+    func getGroupDestination(withGroupId _groupId: Int) {
+        ConnectionService.load(Group.createGetGroupDestinationResource(_groupId), false) { (_response, _data, _error) in
+            switch _response.code {
+            case .SUCCESS:
+                
+                guard let _dests = _data as? [(Double, Double)], let _dest = _dests.first else {
+                    return
+                }
+                
+                guard let _selectedGroup = self.m_SelectedGroupViewModel?.m_Group else {
+                    return
+                }
+                
+                _selectedGroup.m_DestLat = _dest.0
+                _selectedGroup.m_DestLon = _dest.1
+                
+                DispatchQueue.main.async {
+                    self.m_SelectedGroupViewModel?.createOrUpdateDestinationMarker(onMap: self._gmsMapView)
+                }
+                
+                break
+            case .FAILURE:
                 break
             default:
                 break
@@ -807,7 +839,9 @@ extension CirclesViewController : JoinGroupViewControllerDelegate {
     func didJoinGroupSuccessful(_ _group: Group) {
         self.m_SelectedGroupViewModel = GroupViewModel(withGroup: _group)
         self.getGroupDetails(withGroupId: _group.mId)
+        self.getGroupDestination(withGroupId: _group.mId)
         self.getGroupImages(withGroupId: _group.mId)
+        self.startRequestUserLocationTimer()
         self.mGroupNameTitleView?.setGroupName(_group.mName)
         DispatchQueue.main.async {
             //            self.m_SelectedGroupViewModel?.clearGroupMarkersAndRouteOnMap()

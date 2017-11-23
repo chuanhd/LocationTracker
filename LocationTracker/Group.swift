@@ -272,4 +272,39 @@ extension Group {
                                         return (ServerResponse(), nil)
         }
     }
+    
+    static func createGetGroupDestinationResource(_ _groupId : Int) -> Resource<(Double, Double)> {
+        return Resource<(Double, Double)>(withURL : App.Group.getDestination.url,
+                                                 withMethod : HTTPMethod.get,
+                                                 withParams : [ConnectionService.SERVER_REQ_KEY.GROUP_ID : _groupId]) { data in
+                                                    
+                                                    let _json = JSON(data : data)
+                                                    
+                                                    print("JSON: \(_json)") // serialized json response
+                                                    
+                                                    if let _codeStr = _json["code"].string,
+                                                        let _code = SERVER_RESPONSE_CODE(rawValue: _codeStr),
+                                                        let _status = _json["status"].string{
+                                                        switch _code {
+                                                        case .SUCCESS:
+                                                            
+                                                            let _json = JSON(data : data)
+                                                            
+                                                            print("JSON: \(_json)") // serialized json response
+                                                            
+                                                            let _locationJSON = _json["data"]
+                                                            let _lat = _locationJSON["lat"].doubleValue
+                                                            let _long = _locationJSON["lon"].doubleValue
+                                                            
+                                                            return (ServerResponse(withCode : .SUCCESS, withStatus : _status), [(_lat, _long)])
+                                                        case .FAILURE:
+                                                            return (ServerResponse(withCode : .FAILURE, withStatus : _status), nil)
+                                                        default:
+                                                            break
+                                                        }
+                                                    }
+                                                    
+                                                    return (ServerResponse(), nil)
+        }
+    }
 }

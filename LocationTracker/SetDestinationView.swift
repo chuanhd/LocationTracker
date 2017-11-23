@@ -20,8 +20,9 @@ class SetDestinationView: UIView {
     weak var delegate : SetDestinationViewDelegate?
     var m_AddressViewModel : AddressViewModel! {
         didSet {
-            m_AddressViewModel.reverseCoordinate(completion: { [unowned self] in
-                self.lblAddress.text = self.m_AddressViewModel.m_FormattedAddress
+            m_AddressViewModel.reverseCoordinate(completion: { [weak self] in
+                guard let strongSelf = self else { return }
+                strongSelf.lblAddress.text = strongSelf.m_AddressViewModel.m_FormattedAddress
             })
         }
     }
