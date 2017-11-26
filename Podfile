@@ -16,7 +16,7 @@ target 'LocationTracker' do
   pod 'AWSS3'
   pod 'AWSCognito'
   pod 'Whisper'
-  pod 'IQKeyboardManagerSwift', '4.0.10'
+  pod 'IQKeyboardManagerSwift', '~> 5.0'
   pod 'RappleProgressHUD'
   pod 'ChromaColorPicker'
   pod 'SDWebImage', '~> 4.0'
@@ -24,6 +24,7 @@ target 'LocationTracker' do
   pod 'SCLAlertView', '0.7.0'
   pod 'RMessage'
   pod 'Lightbox', '<2.0'
+  pod 'Fingertips', '~> 0.5'
 
   # Pods for LocationTracker
 

@@ -6,6 +6,7 @@ PODS:
   - AWSS3 (2.6.1):
     - AWSCore (= 2.6.1)
   - ChromaColorPicker (1.5.1)
+  - Fingertips (0.5.0)
   - GoogleMaps (2.4.0):
     - GoogleMaps/Maps (= 2.4.0)
   - GoogleMaps/Base (2.4.0)
@@ -42,6 +43,7 @@ DEPENDENCIES:
   - AWSCognito
   - AWSS3
   - ChromaColorPicker
+  - Fingertips (~> 0.5)
   - GoogleMaps
   - GooglePlacePicker
   - GooglePlaces
@@ -74,6 +76,7 @@ SPEC CHECKSUMS:
   AWSCore: e7d37fa0715def975acf1b0d75556576780088b8
   AWSS3: 2e18ede28199a5530955dc1a65434da43dcc4d2c
   ChromaColorPicker: cc7fc1d92569a8a9198fe89d9a420147e508462c
+  Fingertips: 8e557eed25253fcb4bfa25ac4418f8e8add1ad9a
   GoogleMaps: 8436ab5d1c25e36915b2f7416d0c8e3fa2e76c61
   GooglePlacePicker: 755f10343d71280c7b016823e73fbae9625dfa8a
   GooglePlaces: aafe5990fa7951e98e078761bbdaaf236d7e0c65
@@ -93,6 +96,6 @@ SPEC CHECKSUMS:
   Validator: 7942cac1cb41431b416e64dbc7a22d9db3b9892a
   Whisper: 051f25e704bf8992641ffd28b20d5682ddc5f5d3
 
-PODFILE CHECKSUM: 67123a3ade06c197b3814edcf3894235b6262ab6
+PODFILE CHECKSUM: 9491db3dff2655b55a9b8e6e514846ecdfb1dc56
 
 COCOAPODS: 1.3.1

@@ -13,15 +13,17 @@ import AWSCore
 import AWSCognito
 import AWSS3
 import IQKeyboardManagerSwift
+import Fingertips
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
-    var window: UIWindow?
-
+ 
+    var window: MBFingerTipWindow? = MBFingerTipWindow(frame: UIScreen.main.bounds)
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        self.window?.alwaysShowTouches = true
         
         // Initialize Google Maps SDK
         GMSServices.provideAPIKey(Constants.Google_Maps_API_Key);

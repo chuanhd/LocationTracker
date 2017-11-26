@@ -475,20 +475,31 @@ extension CirclesViewController : CreateGroupViewControllerDelegate {
             switch response.code {
             case .SUCCESS:
                 
-                guard let users = users as? [UserProfile] else {
+                guard let _users = users as? [UserProfile] else {
                     return
                 }
                 
                 if let _selectedGroup = self.m_SelectedGroupViewModel?.m_Group {
-                    _selectedGroup.mUsers = users
-                    self.mMembersCollectionView.reloadData()
                     
-                    for _userProfile in users {
-                        DispatchQueue.main.async {
-                            self.m_SelectedGroupViewModel?.createOrUpdateMarkerForUser(withId: _userProfile.mId, withLat: _userProfile.mLatitude, withLong: _userProfile.mLongtitude, onMap: self._gmsMapView)
-                        }
+                    let _newCount = _users.count
+                    let _oldCount = _selectedGroup.mUsers.count
+                    
+                    if _newCount >= _oldCount {
+                        _users.forEach({[unowned self] (_profile) in
+                            self.m_SelectedGroupViewModel?.createOrUpdateMarkerForUser(withId: _profile.mId, withLat: _profile.mLatitude, withLong: _profile.mLongtitude, onMap: self._gmsMapView)
+                        })
+                    } else {
+                        _selectedGroup.mUsers.filter({ (_oldProfile) -> Bool in
+                            return !_users.contains(where: { (_newProfile) -> Bool in
+                                return _newProfile.mId == _oldProfile.mId
+                            })
+                        }).forEach({[unowned self] (_profile) in
+                            self.m_SelectedGroupViewModel?.deleteUserMarkerAndImageMarkers(ofUser: _profile.mId)
+                        })
                     }
                     
+                    _selectedGroup.mUsers = _users
+                    self.mMembersCollectionView.reloadData()
                 }
                 
                 DispatchQueue.main.async {

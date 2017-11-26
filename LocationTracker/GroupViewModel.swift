@@ -182,6 +182,23 @@ class GroupViewModel : NSObject {
         return m_DestinationMarker
     }
     
+    func deleteUserMarkerAndImageMarkers(ofUser _userId : String) {
+        if let _marker = m_MarkerDict[_userId] as? GMSMarker{
+            _marker.map = nil
+        }
+        
+        m_MarkerDict.removeValue(forKey: _userId)
+        
+        m_ImageMarkerDict.filter { (_markerId, _) -> Bool in
+            return _markerId.contains(_userId)
+            }.forEach { (_markerId, _imageMarker) in
+                _imageMarker.map = nil
+                m_ImageMarkerDict.removeValue(forKey: _markerId)
+            }
+        
+        
+    }
+    
     func clearGroupMarkersAndRouteOnMap() {
         print("Before clear location marker: ", m_MarkerDict.count)
         
@@ -204,6 +221,7 @@ class GroupViewModel : NSObject {
         }
         
         clearRouteOnMap()
+        m_MarkerDict.removeAll()
 
     }
     
